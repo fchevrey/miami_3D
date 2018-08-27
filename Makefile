@@ -53,7 +53,7 @@ SDL_TTF_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/sdl2_ttf)
 FMOD_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/fmod)
 FMOD_TAR_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/fmod_tar)
 SDL_VER = 2.0.8
-SDL_MIXER_VER = 2.0.0
+SDL_MIXER_VER = 2.0.2
 SDL_TTF_VER = 2.0.14
 FMOD_VER = fmodstudioapi11008linux
 
@@ -142,7 +142,7 @@ SDL2 :
 	@if [ ! -d "./lib/sdl2" ]; then \
 		echo "\033$(PINK)m⚠\tSDL2 is not installed ! ...\033[0m"; \
 		echo "\033$(CYAN)m➼\tCompiling SDL2-$(SDL_VER) ...\033[0m"; \
-		printf "\033$(YELLOW)m\tIn 3 ...\033[0m"; sleep 1; \
+		printf "\r\033$(YELLOW)m\tIn 3 ...\033[0m"; sleep 1; \
 		printf "\r\033$(YELLOW)m\tIn 2 ...\033[0m"; sleep 1; \
 		printf "\r\033$(YELLOW)3m\tIn 1 ...\033[0m"; sleep 1; printf "\n"; \
 		curl -OL http://www.libsdl.org/release/SDL2-$(SDL_VER).tar.gz && \
@@ -159,8 +159,8 @@ SDL2 :
 	else \
 		echo "\033$(GREEN)m✓\tSDl2-$(SDL_VER) already installed\033[0m"; \
 	fi
-	@if [ ! -d "./lib/sdl2_mixer" ]; then \
-		export SDL2_CONFIG=$(addprefix $(SDL_PATH), /bin/sdl2-config) \
+	if [ ! -d "./lib/sdl2_mixer" ]; then \
+		export SDL2_CONFIG=$(addprefix $(SDL_PATH), /bin/sdl2-config); \
 		echo "\033$(CYAN)m➼\tCompiling SDL2_MIXER-$(SDL_MIXER_VER) ...\033[0m"; \
 		curl -OL http://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-$(SDL_MIXER_VER).tar.gz && \
 		tar -zxvf SDL2_mixer-$(SDL_MIXER_VER).tar.gz && \
@@ -175,8 +175,8 @@ SDL2 :
 	else \
 		echo "\033$(GREEN)m✓\tSDl2_mixer-$(SDL_MIXER_VER) already installed\033[0m"; \
 	fi
-	@if [ ! -d "./lib/sdl2_ttf" ]; then \
-		export SDL2_CONFIG=$(addprefix $(SDL_PATH), /bin/sdl2-config) \
+	if [ ! -d "./lib/sdl2_ttf" ]; then \
+		export SDL2_CONFIG=$(addprefix $(SDL_PATH), /bin/sdl2-config); \
 		echo "\033$(CYAN)m➼\tCompiling SDL2_TTF-$(SDL_TTF_VER) ...\033[0m"; \
 		curl -OL http://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-$(SDL_TTF_VER).tar.gz && \
 		tar -zxvf SDL2_ttf-$(SDL_TTF_VER).tar.gz && \
@@ -191,25 +191,6 @@ SDL2 :
 	else \
 		echo "\033$(GREEN)m✓\tSDl2_ttf-$(SDL_TTF_VER) already installed\033[0m"; \
 	fi
-
-FMOD: SDL2
-	@if [ ! -d "./lib/fmod" ]; then \
-		export SDL2_CONFIG=$(addprefix $(SDL_PATH), /bin/sdl2-config) \
-		echo "\033[033m➼\tCompiling FMOD...\033[0m"; \
-		tar -zxvf $(FMOD_TAR_PATH)/$(FMOD_VER).tar.gz && \
-		sleep 2 &&\
-		mkdir -p $(FMOD_PATH) && \
-		cd $(FMOD_TAR_PATH) && \
-			sleep 2 &&\
-			sh configure --prefix=$(FMOD_PATH) && \
-			make && \
-			make install && \
-		cd .. && \
-		rm -rf $(FMOD_TAR_PATH)/$(FMOD_VER); \
-	else \
-		echo "\033$(GREEN)m✓\tFMOD already installed\033[0m"; \
-	fi
-
 LIBFT:
 	@echo "\033[033m➼\t\033[033mCompiling Libft ...\033[0m"
 	@make -C $(LIBFT_DIR)
