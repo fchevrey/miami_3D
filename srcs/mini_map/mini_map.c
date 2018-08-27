@@ -3,21 +3,6 @@
 
 // pt_to_tex((t_point){j, i}, data->m_img, get_color(0, 140, 85, 0));
 
-void		draw_arrow_player(t_data *data)
-{
-	float angle;
-
-	angle = data->cam->theta;
-	if ((angle > 70 && angle < 100) || (angle > 250 && angle < 295))
-		; /*       |        */
-	else if ((angle < 25) || (angle > 335) || (angle > 155 && angle < 200))
-		; /*       -        */
-	else if ((angle > 25 && angle <= 70) || (angle > 200 && angle <= 250))
-		; /*       /        */
-	else
-		; /*       \        */
-}
-
 void		draw_square_color(t_point up, t_point down, t_data *data, int color)
 {
 	int x;
