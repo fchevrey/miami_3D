@@ -12,6 +12,7 @@ typedef struct 				s_ray
 	t_ptfl					verti;
 	float					dist_h;
 	float					dist_v;
+	float					dist_w_d;
 	int						offset;
 	float					wall_size;
 	int						wall_min;			
