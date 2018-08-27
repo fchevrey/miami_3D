@@ -35,12 +35,35 @@ static void				display_wall(t_data *data)
     }
 }
 
-static void                display_floor(t_data *data)
+static void		display_floor(t_data *data)
 {
-    (void)data;
+ //   (void)data;
+	float		ray_ang;
+	float		max_ang;
+	t_point		pt_tmp;
+	float		ang_inc;
+	int			offset;
+	float		coeff;
+
+	ray_ang = (data->cam->h_cam * (float)WALL_H) / data->ray->dist_w_d;
+	max_ang = (data->cam->h_cam * (float)WALL_H) / data->cam->len_cam;
+	ang_inc = (max_ang - ray_ang) / (float)(WIN_HEIGHT - data->ray->wall_max);
+	coeff  = (float)data->b_and_g_tiles->size.y / (float)(WIN_HEIGHT - data->ray->wall_max);//data->ray->wall_size; // scaling texture
+	if (data->ray->dist_h < data->ray->dist_v || data->ray->dist_v < 0)
+		pt_tmp = data->ray->hori;
+	else
+		pt_tmp = data->ray->verti;
+	while (ray_ang < max_ang)
+	{
+	//	pt_tmp.x = pt_tmp.x + coeff.x; // un seul des  deux coeff est a augmenter
+		offset = pt_tmp.y % data->b_and_g_tiles->size.y;
+        pt_to_tex(pt_tmp, data->m_img, get_pixel((t_point){data->ray->offset, (int)(coeff * (float)(pt_tmp.y - data->ray->wall_max))}, data->b_and_g_tiles));// remplissage de la colonne avec la bonne texture
+		ray_ang = ray_ang + ang_inc;
+		pt_tmp.y = pt_tmp.y + 1;//§coeff.y;
+	}
 }
 
-static void                display_ceiling(t_data *data)
+static void		display_ceiling(t_data *data)
 {
     (void)data;
 }
