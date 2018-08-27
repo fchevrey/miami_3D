@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_funar_key_event.c                             :+:      :+:    :+:   */
+/*   fill_tabf_key_event.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 17:42:41 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/08/27 11:50:13 by gaetanollie      ###   ########.fr       */
+/*   Updated: 2018/08/21 15:58:39 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_funar_keyb			*fill_funar_key_event(int *size)
 
 	i = 0;
 	*size = 0;
-	nb_fct = 11;
+	nb_fct = 9;
 	if (!(tab = (t_funar_keyb*)malloc(sizeof(t_funar_keyb) * nb_fct)))
 		return (NULL);
 	*size = nb_fct;
@@ -43,7 +43,5 @@ t_funar_keyb			*fill_funar_key_event(int *size)
 	tab[i++] = add_one(SDLK_a, &move_left);
 	tab[i++] = add_one(SDLK_d, &move_right);
 	tab[i++] = add_one(SDLK_j, &sound);
-	tab[i++] = add_one(SDLK_LCTRL, &crouch);
-	tab[i++] = add_one(SDLK_SPACE, &jump);
 	return (tab);
 }

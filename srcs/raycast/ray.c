@@ -17,25 +17,32 @@ float       return_fish(float deg, float vision)
 
 void        loop(t_data *data)
 {
+	int		ray;
+	float	angle;
 	float	distance_wall;
+	float	size_wall;
+	int		offset;
+	t_point	crd;
 
-	data->ray->deg = data->cam->theta + FOV / 2;
-	if (data->ray->deg > 360)
-		data->ray->deg = data->ray->deg - 360;
-	data->ray->actual_ray = 0;
-	while (data->ray->actual_ray < WIN_WIDTH)
+	ft_ciel_sol(data);
+	angle = data->cam->theta + FOV / 2;
+	crd = pt_set(0,500);
+	if (angle > 360)
+		angle = angle - 360;
+	ray = 0;
+	while (ray < WIN_WIDTH)
 	{
-		distance_wall = cast_ray(data); // envoie un rayon pour connaitre distance
-		distance_wall = distance_wall * cos(fabs(deg_to_rad(data->ray->deg - data->cam->theta))); // ajuste distance pour fish eyes*/
-		data->ray->wall_size = data->cam->len_cam * (WALL_H / distance_wall);
-		display_column(data);
-		if (data->ray->deg - data->cam->min_theta < 0)
-			data->ray->deg = 360 + (data->ray->deg - data->cam->min_theta);
+		distance_wall = cast_ray(angle, data, &offset); // envoie un rayon pour connaitre distance
+		distance_wall = distance_wall * cos(fabs(deg_to_rad(angle - data->cam->theta))); // ajuste distance pour fish eyes*/
+		size_wall = data->cam->len_cam * (WALL_H / distance_wall);
+		display_line_wall(data, size_wall, ray, offset);
+		if (angle - data->cam->min_theta < 0)
+			angle = 360 + (angle - data->cam->min_theta);
 		else
-			data->ray->deg -= data->cam->min_theta;
-		data->ray->actual_ray++;
+			angle -= data->cam->min_theta;
+		ray++;
 	}
-	draw_mini_map2(data);
+//	mini_map(data);
 	put_tex_to_ren(data->m_img, data->win->ren, (t_point){0, 0}, 0);
-	put_tex_to_ren(data->hud, data->win->ren, pt_set(0, data->m_img->size.y), 1);
+	put_tex_to_ren(data->b_and_w_tiles, data->win->ren, crd, 1);
 }

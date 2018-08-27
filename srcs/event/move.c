@@ -39,7 +39,7 @@ void			move_foreward(t_data *data)
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	loop(data);
-	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
+	printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
 void	move_backward(t_data *data)
@@ -57,7 +57,7 @@ void	move_backward(t_data *data)
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	play_walk_song(data);
 	loop(data);
-	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
+	printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
 void	move_left(t_data *data)
@@ -83,7 +83,7 @@ void	move_left(t_data *data)
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	loop(data);
-	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
+	printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
 void	move_right(t_data *data)
@@ -109,6 +109,6 @@ void	move_right(t_data *data)
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	loop(data);
-	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
+	printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 

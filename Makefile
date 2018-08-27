@@ -13,30 +13,27 @@ ORANGE = [038;2;239;138;5
 SRCS_DIR = srcs
 
 SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
-		sound_init.c skybox.c\
+		sound_init.c\
 		\
 		parse/parse.c parse/parse2.c parse/free_parse.c \
 		\
 		event/ft_event.c event/ft_mouse.c event/ft_mouse_wheel.c \
 		event/ft_keyboard.c event/fill_funar_key_event.c event/move.c \
-		event/look.c event/check_collision.c event/sound.c \
-		event/acrobatic.c \
+		event/look.c event/check_collision.c\
 		\
 		raycast/calc_distance.c raycast/draw_wall.c raycast/ray.c \
 		raycast/calc_offset.c \
 		\
 		math/deg_rad.c \
 		\
-		mini_map/mini_map.c mini_map/mini_map2.c \
+		mini_map/mini_map.c \
 		\
-		assets/get_wall_tex.c \
-		\
-		tga/parse_tga.c
+		assets/get_wall_tex.c
 
 ## Objects ##
 OBJS = $(SRCS:.c=.o)
 OBJS_DIR = ./objs
-OBJS_SUB_DIRS = parse event math raycast mini_map assets tga
+OBJS_SUB_DIRS = parse event math raycast mini_map assets
 OBJS_PRE = $(addprefix $(OBJS_DIR)/, $(OBJS))
 
 ## Lib dirs ##
@@ -77,10 +74,10 @@ LFLAGS =	-L $(LIBFT_DIR) -lft \
 			-L $(LIBMYSDL_DIR) -lmysdl \
 			-lm \
 			$(SDL2_LFLAGS) \
-			-L $(SDL_MIXER_PATH)/lib -lSDL2_mixer
-			#-L $(SDL_MIXER_PATH)/lib -lSDL2_mixer
-#			-L $(SDL_TTF_PATH)/lib -lSDL2_ttf
-CFLAGS = -Wall -Wextra -Werror -g3
+			-L $(SDL_MIXER_PATH)/lib -lSDL2_mixer 
+			#-L $(SDL_MIXER_PATH)/lib -lSDL2_mixer 
+#			-L $(SDL_TTF_PATH)/lib -lSDL2_ttf 
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 MESSAGE = "make[1]: Nothing to be done for 'all'"
 DONE_MESSAGE = "\033$(GREEN)2m✓\t\033$(GREEN)mDONE !\033[0m\

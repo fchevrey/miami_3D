@@ -48,23 +48,11 @@ static int		lib_initialisation(void)
 		return (ft_error("SDL_init error :", SDL_GetError(), NULL));
 	//if ( Mix_Init( MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_FLAC | MIX_INIT_MOD) == -1)
 	//	return (ft_error("SDL_Mixer  error :", Mix_GetError(), NULL));
-	//	if ( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ))
+//	if ( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ))
 	if ( Mix_OpenAudio( 22050, AUDIO_S16SYS, 2, 4096) == -1)
 		return (ft_error("SDL_Mixer  error :", Mix_GetError(), NULL));
 	return (1);
 }
-/*
-void			test_tan(void)
-{
-	int		i;
-
-	i = -360;
-	while (i < 361)
-	{
-		printf("valeur de tan %d = %f\n", i, tanf(deg_to_rad(i)));
-		i++;
-	}
-}*/
 
 int				main(int ac, char **av)
 {
@@ -78,7 +66,7 @@ int				main(int ac, char **av)
 	{
 		if (!ft_parse(av[1], &map, &parse) || !map)
 		{
-			ft_putendl_fd("Le fichier est pas bon", 2);
+			ft_putendl_fd("Le fichier est pas bon (main)", 2);
 			return (1);
 		}
 		map2 = ft_fill_tab(parse, &map);
@@ -87,12 +75,11 @@ int				main(int ac, char **av)
 		if (!(data = data_init(map2, parse, av)))
 			return (0);
 		display_map(map2, data->cam->crd_map->x, data->cam->crd_map->y, data);
-		/* Fonction qui va load une texture, prend le chemin relatif et une structure image qu'on veut remplir*/
-		/* PAY ATTENTION PLEASE */
-		/* SI vous voulez importez vos texture il faut : */
-		/* Un fichier Targa ou .tga */
-		/* Il fera 32bits et sera sans compression RLE */
-		ft_load_texture("assets/textures/doom.tga", data->b_and_g_tiles);
+		printf("dimension de la map : x = 0 -> %d | y = 0 -> %d\n", parse.nb_elem_line, parse.nb_line);
+		printf("crd_map->x: %d | crd_map->y: %d\nangle de camera theta : %f\nlen_cam : %f| hauteur cam :%f| min_theta: %f\n",data->cam->crd_map->x, data->cam->crd_map->y, data->cam->theta, data->cam->len_cam, data->cam->h_cam, data->cam->min_theta);
+		printf("crd_real->x: %d, crd_real->y: %d\n",data->cam->crd_real->x, data->cam->crd_real->y);
+		fill_wall_tex_b_and_w_tiles(data);
+	printf("path = %s\n", data->path);
 		loop(data);
 		ft_event(data);
 	}

@@ -10,11 +10,6 @@
 #include "struct.h"
 #include "defines.h"
 #include "raycast.h"
-#include "parse.h"
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 #include <stdio.h>
@@ -25,7 +20,7 @@ t_data			*data_init(t_map ***map, t_parse parse, char **av);
 void            loop(t_data *data);
 void			display_map(t_map ***map2, int x, int y, t_data *data);//
 int			 	is_in_map(int x, int y, t_data *data);
-int				ft_error(const char *str1, const char *str2,
+int				ft_error(const char *str1, const char *str2, 
 		const char *str3);
 int				sound_init(t_data *data);
 
@@ -42,6 +37,5 @@ t_point			get_real_from_map(t_point *map);
 */
 
 void			mini_map(t_data *data);
-void			draw_mini_map2(t_data *data);
 
 #endif

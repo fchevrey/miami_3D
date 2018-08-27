@@ -1,0 +1,4 @@
+on ubuntu you may have difficulty to compile libttf
+you may have to use
+sudo apt-get install libgl1-mesa-dev
+

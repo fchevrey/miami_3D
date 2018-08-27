@@ -4,20 +4,6 @@
 # include "main.h"
 #include "SDL_mixer.h"
 
-typedef struct 				s_ray
-{
-	float					deg;
-	int						actual_ray;
-	t_ptfl					hori;
-	t_ptfl					verti;
-	float					dist_h;
-	float					dist_v;
-	int						offset;
-	float					wall_size;
-	int						wall_min;			
-	int						wall_max;			
-}							t_ray;
-
 typedef union			u_color
 {
 	uint32_t			c;
@@ -62,7 +48,6 @@ typedef struct			s_cam
 {
 	t_point				*crd_map;	// coordonnee sur le tableau
 	t_point				*crd_real;	// coordonnee sur la grille
-	t_point				act_inter; // point d'intersection entre le dernier rayon et le mur (utile pour le RayCasting des textures des murs)
 	float				theta;   	// position de la cam en degree par rapport a l'axe x
 	float				len_cam; 	// Distance camera / ecran
 	float				h_cam;   	// Hauteur camera
@@ -84,11 +69,8 @@ typedef struct			s_data
 	Mix_Music	**musics;
 	t_map		***map;
 	t_texture	*m_img;
-	t_texture	*hud;
 	t_texture	*b_and_w_tiles;
-	t_texture	*b_and_g_tiles;
 	t_cam		*cam;
-	t_ray 		*ray;
 	uint8_t		walking;
 }						t_data;
 
@@ -97,15 +79,5 @@ typedef struct			s_funar_keyb
 	int					key;
 	void				(*f)(t_data*);
 }						t_funar_keyb;
-
-/*
-** Structure t_point mais avec des floats pour plus de precision
-*/
-
-typedef	struct			s_fpoint
-{
-	float				x;
-	float				y;
-}						t_fpoint;
 
 #endif

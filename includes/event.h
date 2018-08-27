@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/08 16:07:31 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/08/27 11:48:52 by gaetanollie      ###   ########.fr       */
+/*   Updated: 2018/08/21 15:59:01 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,5 @@ void			look_left_from_key(t_data *data);
 void			look_right_from_key(t_data *data);
 t_point			check_collision(t_point old, t_point new, t_data *data);
 void			sound(t_data *data);//
-
-/*
-** Jump - stand - crouch
-*/
-
-void			jump(t_data *data);
-void			crouch(t_data *data);
-void			stand(t_data *data);
 
 #endif

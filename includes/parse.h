@@ -19,35 +19,6 @@ int						ft_parse(char *str, t_map **map, t_parse *parse);
 int				        ft_lin_is_good(char *str);
 
 /*
-** Pars TGA
-*/
-
-
-typedef struct          s_header
-{
-	unsigned char		id_length;
-	unsigned char		color_map_type;
-	unsigned char		image_type;
-	unsigned char		color_map_spec[5];
-	unsigned char		image_spec[15];
-	unsigned char		*image_data;
-	short				x;
-	short				y;
-}                       t_header;
-
-typedef union		u_fill
-{
-	short 			value;
-	struct			s_val
-	{
-		unsigned char a;
-		unsigned char b;
-	}				val;
-}					t_fill;
-
-void			ft_load_texture(char *str, t_texture *img);
-
-/*
 ** Free
 */
 
