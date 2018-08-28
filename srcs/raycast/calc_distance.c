@@ -10,7 +10,7 @@ void				return_pos_map(int x, int y, int *x_map, int *y_map)
 
 float		return_distance(t_point a, t_ptfl b)
 {
-	return (sqrt(pow((b.x - a.x),2) + pow((b.y - a.y), 2)));
+	return (sqrtf(powf((b.x - (float)a.x), 2.0) + powf((b.y - (float)a.y), 2.0)));
 }
 
 /* 

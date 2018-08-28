@@ -34,27 +34,35 @@ void			move_foreward(t_data *data)
 	rad = deg_to_rad(cam->theta);
 	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * 15);
 	play_walk_song(data);
-	if (cam->theta < 54 || cam->theta > 306)
-		new_pos.y = cam->crd_real->y + (int)(sinf(rad) * 15);
-	else
-		new_pos.y = cam->crd_real->y - (int)(sinf(rad) * 15);
-	    /* Check horizon */
+	new_pos.y = cam->crd_real->y - (int)(sinf(rad) * 15);
     if ((cam->theta > 0 && cam->theta < 90) || (cam->theta > 270))
         wall_h = horizon_right(data, cam->theta);
-    else if (cam->theta > 90 && cam->theta < 270)
+    else if (cam->theta >= 90 && cam->theta < 270)
         wall_h = horizon_left(data, cam->theta);
     /* Check vertical */
-    if (cam->theta > 0 && cam->theta < 180)
+    if (cam->theta >= 0 && cam->theta < 180)
         wall_v = vertical_up(data, cam->theta);
-    else if (cam->theta > 180)
+    else if (cam->theta >= 180)
         wall_v = vertical_down(data, cam->theta);
     dist.x = return_distance(*cam->crd_real, wall_h);
     dist.y = return_distance(*cam->crd_real, wall_v);
-    printf("wall_v.x = %f .y = %f wall_h.x = %f y = %f \n", wall_v.x, wall_v.y, wall_h.x, wall_h.y);
-    printf("dist horizontal %f vertical %f data->cam->h_cam = %f\n", dist.x, dist.y, data->cam->h_cam);
-	//new_pos = check_collision(*cam->crd_real, new_pos, data);
-	cam->crd_real->x = new_pos.x;
-	cam->crd_real->y = new_pos.y;
+    //printf("wall_v.x = %f .y = %f \nwall_h.x = %f y = %f \n", wall_v.x, wall_v.y, wall_h.x, wall_h.y);
+    //printf("dist horizontal %f vertical %f\n", dist.x, dist.y);
+	if (dist.x < 20.0 && dist.y > 20.0)
+		{
+			cam->crd_real->x = new_pos.x;
+			printf("--- only x --- \n");
+		}
+	else if (dist.x > 20.0 && dist.y < 20.0)
+	{
+		printf("--- only y --- \n");
+		cam->crd_real->y = new_pos.y;
+	}
+	else if (dist.y > 20.0 && dist.y > 20.0)
+	{
+		cam->crd_real->x = new_pos.x;
+		cam->crd_real->y = new_pos.y;
+	}
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	loop(data);
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
