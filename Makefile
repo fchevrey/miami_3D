@@ -71,15 +71,15 @@ INCS = $(INC) $(LIB_INCS)
 ## FLAGS ##
 CC = gcc
 SDL2_LFLAGS = $(shell sh ./lib/sdl2/bin/sdl2-config --libs)
-SDL_MIXER_LFLAGS = $(shell pkg-config --libs SDL2_mixer)
+#SDL_MIXER_LFLAGS = $(shell pkg-config --libs SDL2_mixer)
 
 LFLAGS =	-L $(LIBFT_DIR) -lft \
 			-L $(LIBPT_DIR) -lpt \
 			-L $(LIBMYSDL_DIR) -lmysdl \
 			-lm \
 			$(SDL2_LFLAGS) \
-			$(SDL_MIXER_LFLAGS) 
-			#-L $(SDL_MIXER_PATH)/lib/ -lSDL2_mixer
+			-L $(SDL_MIXER_PATH)/lib/ -lSDL2_mixer
+			#$(SDL_MIXER_LFLAGS) 
 			#-L $(SDL_MIXER_PATH)/lib -lSDL2_mixer
 #			-L $(SDL_TTF_PATH)/lib -lSDL2_ttf
 CFLAGS = -Wall -Wextra -Werror -g3
