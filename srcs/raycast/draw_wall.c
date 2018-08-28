@@ -35,12 +35,12 @@ static void				display_wall(t_data *data)
     }
 }
 
-static void                display_floor(t_data *data)
+static void                display_ceiling(t_data *data)
 {
     (void)data;
 }
 
-static void                display_ceiling(t_data *data)
+static void                display_floor(t_data *data)
 {
     (void)data;
 }

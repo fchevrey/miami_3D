@@ -13,7 +13,7 @@ ORANGE = [038;2;239;138;5
 SRCS_DIR = srcs
 
 SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
-		sound_init.c skybox.c\
+		sound_init.c\
 		\
 		parse/parse.c parse/parse2.c parse/free_parse.c \
 		\
@@ -23,7 +23,7 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		event/acrobatic.c \
 		\
 		raycast/calc_distance.c raycast/draw_wall.c raycast/ray.c \
-		raycast/calc_offset.c \
+		raycast/calc_offset.c raycast/skybox.c\
 		\
 		math/deg_rad.c \
 		\

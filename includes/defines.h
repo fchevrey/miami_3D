@@ -6,6 +6,7 @@
 # define FOV        66 // field of view
 # define WALL_H     100 // hauteur d'un mur
 # define SIZE_GRID  64 // uni
+# define SKYBOX		640 // distance skybox
 
 # define MOVE_NONE		0
 # define MOVE_UP		1
