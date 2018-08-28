@@ -1,4 +1,8 @@
 on ubuntu you may have difficulty to compile libttf
-you may have to use
-sudo apt-get install libgl1-mesa-dev
-
+	=>	sudo apt-get install libgl1-mesa-dev
+on a sdlttf installation error
+	=>	sudo apt-get install freetype2
+on a SDL_2 Mixer error
+	=>	sudo apt-get install libasound2-dev
+on a error of shared library try set 
+	=>	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH: + path to repo + lib/sdl2_mixer/lib
