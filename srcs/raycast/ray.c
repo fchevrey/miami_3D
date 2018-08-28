@@ -25,8 +25,8 @@ void        loop(t_data *data)
 	data->ray->actual_ray = 0;
 	while (data->ray->actual_ray < WIN_WIDTH)
 	{
-		distance_wall = cast_ray(data); // envoie un rayon pour connaitre distance
-		distance_wall = distance_wall * cos(fabs(deg_to_rad(data->ray->deg - data->cam->theta))); // ajuste distance pour fish eyes*/
+		data->ray->dist_w_d = cast_ray(data); // envoie un rayon pour connaitre distance
+		distance_wall = data->ray->dist_w_d * cos(fabs(deg_to_rad(data->ray->deg - data->cam->theta))); // ajuste distance pour fish eyes*/
 		data->ray->wall_size = data->cam->len_cam * (WALL_H / distance_wall);
 		display_column(data);
 		if (data->ray->deg - data->cam->min_theta < 0)

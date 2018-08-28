@@ -86,7 +86,7 @@ int				main(int ac, char **av)
 			return (0);
 		if (!(data = data_init(map2, parse, av)))
 			return (0);
-		display_map(map2, data->cam->crd_map->x, data->cam->crd_map->y, data);
+		//display_map(map2, data->cam->crd_map->x, data->cam->crd_map->y, data);
 		/* Fonction qui va load une texture, prend le chemin relatif et une structure image qu'on veut remplir*/
 		/* PAY ATTENTION PLEASE */
 		/* SI vous voulez importez vos texture il faut : */

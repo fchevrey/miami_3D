@@ -1,7 +1,7 @@
 #ifndef DEFINES_H
 # define DEFINES_H
-# define WIN_WIDTH  1000
-# define WIN_HEIGHT 800
+# define WIN_WIDTH  900
+# define WIN_HEIGHT 700
 # define HUD_HEIGHT 200
 # define FOV        66 // field of view
 # define WALL_H     100 // hauteur d'un mur
