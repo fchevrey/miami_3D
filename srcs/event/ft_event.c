@@ -12,7 +12,7 @@
 
 #include "event.h"
 
-static void		key_up(SDL_Event *event, t_data *data)
+/*static void		key_up(SDL_Event *event, t_data *data)
 {
 	int		key;
 
@@ -24,7 +24,7 @@ static void		key_up(SDL_Event *event, t_data *data)
 		data->walking = MOVE_NONE;
 		Mix_Pause(data->walk_channel);
 	}
-}
+}*/
 
 void	ft_event(t_data *data)
 {
@@ -36,21 +36,19 @@ void	ft_event(t_data *data)
 	printf("real x = %d y = %d, mapx = %d y = %d\n", data->cam->crd_real->x, data->cam->crd_real->y, data->cam->crd_map->x, data->cam->crd_map->y);
 	while (!quit)
 	{
-		if (SDL_WaitEventTimeout(&event, 20))
+		if (SDL_WaitEventTimeout(&event, 50))
 		{
 			if (event.type == SDL_QUIT)
 				quit = 1;
-			else if (event.type == SDL_KEYDOWN)
-				ft_keyboard(event.key.keysym.sym, event.key.repeat, data);
-			else if (event.type == SDL_KEYUP)
-				key_up(&event, data);
+			else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
+				ft_keyboard(event.key.keysym.sym, event.key.repeat, &event, data);
 			else if (event.type == SDL_MOUSEMOTION)
 				ft_mouse(event.motion.x, event.motion.y, data);
 			else if (event.type == SDL_MOUSEWHEEL)
 				ft_mouse_wheel(event.wheel.y, data);
 		}
 		if (data->walking != MOVE_NONE)
-			move(data, data->walking);
+			move(data);
 	}
 	ft_exit(&data);
 }

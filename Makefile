@@ -20,7 +20,7 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		event/ft_event.c event/ft_mouse.c event/ft_mouse_wheel.c \
 		event/ft_keyboard.c event/fill_funar_key_event.c event/move.c \
 		event/look.c event/check_collision.c event/sound.c \
-		event/acrobatic.c \
+		event/acrobatic.c event/move_stop.c event/stand.c\
 		\
 		raycast/calc_distance.c raycast/draw_wall.c raycast/ray.c \
 		raycast/calc_offset.c raycast/skybox.c\

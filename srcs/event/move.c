@@ -1,12 +1,17 @@
 #include "event.h"
 #include "raycast.h"
 
-void	move(t_data *data, int movement)
+void	move(t_data *data)
 {
-	if (movement == MOVE_UP)
+	check_move(data);
+	if (data->walking == MOVE_UP)
 		move_foreward(data);
-	else if (movement == MOVE_DOWN)
+	else if (data->walking == MOVE_DOWN)
 		move_backward(data);
+	else if (data->walking == MOVE_LEFT)
+		move_left(data);
+	else if (data->walking == MOVE_RIGHT)
+		move_right(data);
 	//else if (movement == MOVE_LEFT)
 	//else if (movement == MOVE_RIGHT)
 }
@@ -30,6 +35,7 @@ void			move_foreward(t_data *data)
 	t_ptfl		wall_v;
 	t_ptfl		dist;
 
+	data->walking = MOVE_UP;
 	cam = data->cam;
 	rad = deg_to_rad(cam->theta);
 	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * 15);
@@ -73,6 +79,7 @@ void	move_backward(t_data *data)
 	t_cam		*cam;
 	float		rad;
 
+	data->walking = MOVE_DOWN;
 	cam = data->cam;
 	rad = deg_to_rad(cam->theta);
 	cam->crd_real->x -= (cosf(rad) * 15);
@@ -93,6 +100,7 @@ void	move_left(t_data *data)
 	float		rad;
 	t_point		new_pos;
 
+	data->walking = MOVE_LEFT;
 	cam = data->cam;
 	theta = cam->theta + 90;
 	if (theta >= 360)
@@ -119,6 +127,7 @@ void	move_right(t_data *data)
 	float		rad;
 	t_point		new_pos;
 
+	data->walking = MOVE_RIGHT;
 	cam = data->cam;
 	theta = cam->theta - 90;
 	if (theta < 0)
