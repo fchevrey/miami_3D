@@ -22,5 +22,12 @@ float			cast_ray(t_data *data);
 
 int				set_offset(t_ptfl hori, t_ptfl verti, float dist_h, float dist_v);
 
+/*
+** skybox
+*/
+
+void display_sky(t_data *data);
+
+
 
 #endif

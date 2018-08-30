@@ -87,7 +87,7 @@ t_ptfl				vertical_up(t_data *data, float deg)
 	double		xa;
 
 	xa = (deg < 90) ? SIZE_GRID : -SIZE_GRID;
-	ya = (SIZE_GRID * tan(deg_to_rad(deg))) * -1;
+	ya = (SIZE_GRID * tan(deg_to_rad(deg)));
     if (ya > 0)
         ya = -ya;
 	if (deg > 90)

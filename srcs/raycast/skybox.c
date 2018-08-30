@@ -84,23 +84,39 @@ void                display_sky(t_data *data)
 {
     int ray;
 
+	if (data->ray->wall_min < 0)
+		return ;
     float angle_max = rad_to_deg(atan((WIN_HEIGHT * data->cam->h_cam) / data->ray->dist_w_d));
     float angle_min = rad_to_deg(atan((data->ray->wall_size * data->cam->h_cam) / data->ray->dist_w_d));
     float delta_angle = angle_max - angle_min;
-	float distance;
+	float distance_w_s;
     float theta_min = delta_angle / data->ray->wall_min;
     ray = 0;
     while (ray < data->ray->wall_min)
     {
-        // float distance = data->ray->dist_w_d * cos(deg_to_rad(angle_max));
-        // trouver le point de la Skybox et la distance
-		t_point sky = return_point_skybox(data, &distance);
-		(void)sky;
-		// trouver angle absolu du rayon
-        // rectifier la distance  (multiplie par cos angle)
-        // trouver le deuxieme point rectifié
-        // C'est ce point ou on va mettre texture
-        angle_max -= theta_min;
+		return_point_skybox(data, &distance_w_s);
+		float distance_cam_sky = (data->ray->dist_w_d + distance_w_s);
+		float high_ray = distance_cam_sky * cos(deg_to_rad(angle_min)) * cos(deg_to_rad(fabsf(data->ray->deg - data->cam->theta)));
+		float size_skybox = data->cam->len_cam * (SIZE_SKY / high_ray);
+		float coeff = (SIZE_SKY / size_skybox) / SIZE_TEXTURE_SKY;
+		// trouver le point 
+		(void)coeff;
+		/* nombre de pixel a l'ecran par pixel de la texture*/
+        angle_min += theta_min;
         ray++;
     }
 }
+
+		/*
+        // trouver le point de la Skybox et la distance
+		t_point sky = return_point_skybox(data, &distance_w_s);
+		(void)sky;
+        // rectifier la distance  (multiplie par cos angle)
+		float distance_cam_sky = (data->ray->dist_w_d + distance_w_s);
+		(void)distance_cam_sky;
+		float distance_c_s_haut = (data->ray->dist_w_d + distance_w_s) * cos(deg_to_rad(angle_max));
+		float distance_c_s_h_ajustee = distance_c_s_haut * cos(deg_to_rad(data->ray->deg));
+		(void)distance_c_s_h_ajustee;
+        // trouver le deuxieme point rectifié
+        // C'est ce point ou on va mettre texture
+		*/
