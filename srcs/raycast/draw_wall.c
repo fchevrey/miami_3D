@@ -80,24 +80,25 @@ void                display_floor(t_data *data)
 
 	if (data->ray->wall_min < 0)
 		return ;
-    float angle_max = rad_to_deg(atan((WIN_HEIGHT * data->cam->h_cam) / (data->ray->dist_w_d * cos(fabs(deg_to_rad(data->ray->deg - data->cam->theta))))));
-    float angle_min = rad_to_deg(atan((data->ray->wall_size * data->cam->h_cam) / (data->ray->dist_w_d * cos(fabs(deg_to_rad(data->ray->deg - data->cam->theta))))));
+    float angle_max = rad_to_deg(atan((WIN_HEIGHT * data->cam->h_cam) / (data->ray->dist_w_d))); //* cos(fabs(deg_to_rad(data->ray->deg - data->cam->theta))))));
+    float angle_min = rad_to_deg(atan((data->ray->wall_size * data->cam->h_cam) / (data->ray->dist_w_d))); //* cos(fabs(deg_to_rad(data->ray->deg - data->cam->theta))))));
     float delta_angle = angle_max - angle_min;
     float theta_min = delta_angle / data->ray->wall_min;
     t_ptfl point;
     ray = data->ray->wall_max;
     while (ray < WIN_HEIGHT) // changer la taille
     {
-        float dist_floor = tan(deg_to_rad(angle_max)) * (WALL_H * data->cam->h_cam);
+        float dist_floor = ((32) / tan(deg_to_rad(angle_max)));
+        //printf("%f %f\n", dist_floor, data->ray->dist_w_d);
         if (dist_floor > 0)
         {
             fill_coord(&point, data, dist_floor);
             // print le pixel
-            point.x = fmod(point.x, 64);
-            point.y = fmod(point.y, 64);
+            point.x = fmod(point.x * 4, 64);
+            point.y = fmod(point.y * 4, 64);
             pt_to_tex((t_point){data->ray->actual_ray, ray}, data->m_img, get_pixel((t_point){point.x, point.y}, data->b_and_g_tiles));
         }
-        angle_max -= theta_min;
+        angle_max += theta_min;
         ray++;
     }
 }
