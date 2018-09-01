@@ -15,10 +15,10 @@ void            display_column(t_data *data);
 */
 
 float				cast_ray(t_data *data);
-t_ptfl				vertical_down(t_data *data, float deg);
-t_ptfl				vertical_up(t_data *data, float deg);
-t_ptfl				horizon_right(t_data *data, float deg);
-t_ptfl				horizon_left(t_data *data, float deg);
+t_ptfl				vertical_down(t_data *data, float deg, int call);
+t_ptfl				vertical_up(t_data *data, float deg, int call);
+t_ptfl				horizon_right(t_data *data, float deg, int call);
+t_ptfl				horizon_left(t_data *data, float deg, int call);
 float			return_distance(t_point a, t_ptfl b);
 
 /*
