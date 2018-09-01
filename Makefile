@@ -107,7 +107,7 @@ $(OBJS_DIR):
 
 $(NAME): $(OBJS_DIR) $(OBJS_PRE)
 	@echo "\033$(GREEN)m➼\t\033$(GREEN)32mCreating $(DIR_NAME)'s executable\033[0m"
-	$(CC) -o $(NAME) $(CFLAGS) $(OBJS_PRE) $(LFLAGS)
+	@$(CC) -o $(NAME) $(CFLAGS) $(OBJS_PRE) $(LFLAGS)
 	@$(eval MESSAGE = $(DONE_MESSAGE))
 
 rm_obj:

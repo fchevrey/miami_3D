@@ -12,8 +12,6 @@ void	move(t_data *data)
 		move_left(data);
 	else if (data->walking == MOVE_RIGHT)
 		move_right(data);
-	//else if (movement == MOVE_LEFT)
-	//else if (movement == MOVE_RIGHT)
 }
 
 static void		play_walk_song(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/08 16:07:31 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/08/27 11:48:52 by gaetanollie      ###   ########.fr       */
+/*   Updated: 2018/09/01 19:21:32 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int				ft_mouse(int x, int y, t_data *data);
 int				ft_keyboard(int key, int repeat, SDL_Event *event, t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
-t_funar_keyb	*fill_funar_key_release(int *size);
-t_funar_keyb	*fill_funar_key_press(int *size);
+t_funar_keyb	*fill_funar_keyrelease(int *size);
+t_funar_keyb	*fill_funar_keypress(int *size);
 
 
 /*

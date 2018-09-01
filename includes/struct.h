@@ -96,6 +96,7 @@ typedef struct			s_data
 typedef struct			s_funar_keyb
 {
 	int					key;
+	int					repeat;
 	void				(*f)(t_data*);
 }						t_funar_keyb;
 

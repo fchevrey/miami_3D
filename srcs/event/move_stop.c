@@ -5,17 +5,26 @@ void		check_move(t_data *data)
 	const Uint8 	*keyboard;
 
 	keyboard = SDL_GetKeyboardState(NULL); 
-	
-	if (keyboard[SDL_SCANCODE_UP] && keyboard[SDL_SCANCODE_DOWN])
+	if ((keyboard[SDL_SCANCODE_UP] && keyboard[SDL_SCANCODE_DOWN]) || (keyboard[SDL_SCANCODE_W] && keyboard[SDL_SCANCODE_S]))
 	 	data->walking = MOVE_NONE;
-	else if (keyboard[SDL_SCANCODE_LEFT] && keyboard[SDL_SCANCODE_RIGHT]) 
+	else if ((keyboard[SDL_SCANCODE_UP] && keyboard[SDL_SCANCODE_S]) || (keyboard[SDL_SCANCODE_DOWN] && keyboard[SDL_SCANCODE_W]))
+	 	data->walking = MOVE_NONE;
+	else if (keyboard[SDL_SCANCODE_A] && keyboard[SDL_SCANCODE_D]) 
 		data->walking = MOVE_NONE;
-	else if (keyboard[SDL_SCANCODE_RIGHT]) 
-		data->walking = MOVE_RIGHT;
 	else if (keyboard[SDL_SCANCODE_DOWN]) 
 		data->walking = MOVE_DOWN;
 	else if (keyboard[SDL_SCANCODE_UP]) 
 		data->walking = MOVE_UP;
-	else if (keyboard[SDL_SCANCODE_LEFT]) 
+	else if (keyboard[SDL_SCANCODE_A]) 
 		data->walking = MOVE_LEFT;
+	else if (keyboard[SDL_SCANCODE_D]) 
+		data->walking = MOVE_RIGHT;
+	else if (keyboard[SDL_SCANCODE_W]) 
+		data->walking = MOVE_UP;
+	else if (keyboard[SDL_SCANCODE_S]) 
+		data->walking = MOVE_DOWN;
+	else 
+		data->walking = MOVE_NONE;
+	if (data->walking == MOVE_NONE)
+		Mix_Pause(data->walk_channel);
 }
