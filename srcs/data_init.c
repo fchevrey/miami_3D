@@ -34,7 +34,7 @@ t_cam		*cam_init(t_parse parse)
 	new->crd_real->y = new->crd_map->y * SIZE_GRID + SIZE_GRID * 0.5;
 	printf("real x : %d | real y : %d\n",new->crd_real->x, new->crd_real->y);
 	new->act_inter = pt_set(0, 0);
-	new->theta = 90;
+	new->theta = 180;
 	new->h_cam = 0.5;
 	new->len_cam = (WIN_WIDTH * new->h_cam) / tan(deg_to_rad(FOV * new->h_cam));
 	new->min_theta = FOV / (float)WIN_WIDTH;
@@ -69,6 +69,7 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 		return (NULL);
 	if (!(data->b_and_g_tiles = texture_new(tiles_size, data->win->ren)))
 		return (NULL);
+	ft_load_texture("assets/textures/doom.tga", data->b_and_w_tiles);
 	data->musics = NULL;
 	data->sounds = NULL;
 	data->musics = NULL;

@@ -22,6 +22,7 @@ void        loop(t_data *data)
 	data->ray->deg = data->cam->theta + FOV / 2;
 	if (data->ray->deg > 360)
 		data->ray->deg = data->ray->deg - 360;
+	printf("VALEUR PREMIER ANGLE = %f\n", data->ray->deg);
 	data->ray->actual_ray = 0;
 	while (data->ray->actual_ray < WIN_WIDTH)
 	{
@@ -37,5 +38,6 @@ void        loop(t_data *data)
 	}
 	draw_mini_map2(data);
 	put_tex_to_ren(data->m_img, data->win->ren, (t_point){0, 0}, 0);
+	put_tex_to_ren(data->b_and_w_tiles, data->win->ren, (t_point){0, 0}, 0);
 	put_tex_to_ren(data->hud, data->win->ren, pt_set(0, data->m_img->size.y), 1);
 }

@@ -8,7 +8,7 @@ void				return_pos_map(int x, int y, int *x_map, int *y_map)
 	*y_map = y / SIZE_GRID;
 }
 
-static float		return_distance(t_point a, t_ptfl b)
+float		return_distance(t_point a, t_ptfl b)
 {
 	return (sqrt(pow((b.x - a.x),2) + pow((b.y - a.y), 2)));
 }
