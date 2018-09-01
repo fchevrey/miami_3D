@@ -36,13 +36,16 @@ t_ptfl				look_for_collision(t_ptfl point, t_data *data, float xa, float ya)
 	return (point);
 }
 
-t_ptfl				horizon_right(t_data *data, float deg)
+t_ptfl				horizon_right(t_data *data, float deg, int call)
 {
 	t_ptfl		point;
 	float		ya;
 	float		xa;
 
-	ya = (deg > 0 && deg < 90) ? -SIZE_GRID : SIZE_GRID;
+	if (call == 1)
+		ya = -SIZE_GRID ;
+	else
+		ya = (deg > 0 && deg < 90) ? -SIZE_GRID : SIZE_GRID;
 	xa = SIZE_GRID / tan(deg_to_rad(deg));
     if (xa < 0)
         xa = -xa;
@@ -57,13 +60,16 @@ t_ptfl				horizon_right(t_data *data, float deg)
 /*
 ** deg > 90 && deg < 270
 */
-t_ptfl				horizon_left(t_data *data, float deg)
+t_ptfl				horizon_left(t_data *data, float deg, int call)
 {
 	t_ptfl		point;
 	float		ya;
 	float		xa;
 
-	ya = (deg > 90 && deg < 180) ? -SIZE_GRID : SIZE_GRID;
+	if (call == 1)
+		ya = SIZE_GRID ;
+	else
+		ya = (deg > 90 && deg < 180) ? -SIZE_GRID : SIZE_GRID;
 	xa = SIZE_GRID / tan(deg_to_rad(deg));
     if (xa > 0)
         xa = -xa;
@@ -79,13 +85,16 @@ t_ptfl				horizon_left(t_data *data, float deg)
 ** deg > 0 && deg < 180
 */
 
-t_ptfl				vertical_up(t_data *data, float deg)
+t_ptfl				vertical_up(t_data *data, float deg, int call)
 {
 	t_ptfl     point;
 	double		ya;
 	double		xa;
 
-	xa = (deg < 90) ? SIZE_GRID : -SIZE_GRID;
+	if (call == 1)
+		xa = -SIZE_GRID ;
+	else
+		xa = (deg < 90) ? SIZE_GRID : -SIZE_GRID;
 	ya = (SIZE_GRID * tan(deg_to_rad(deg))) * -1;
     if (ya > 0)
         ya = -ya;
@@ -102,13 +111,16 @@ t_ptfl				vertical_up(t_data *data, float deg)
 ** deg > 180 && deg < 360
 */
 
-t_ptfl				vertical_down(t_data *data, float deg)
+t_ptfl				vertical_down(t_data *data, float deg, int call)
 {
 	t_ptfl     point;
 	double		ya;
 	double		xa;
 
-	xa = (deg > 270) ? SIZE_GRID : -SIZE_GRID;
+	if (call == 1)
+		xa = SIZE_GRID ;
+	else
+		xa = (deg > 270) ? SIZE_GRID : -SIZE_GRID;
 	ya = SIZE_GRID * tan(deg_to_rad(deg));
     if (ya < 0)
         ya = -ya;
@@ -129,14 +141,14 @@ float			cast_ray(t_data *data)
     data->ray->dist_v = -1; // le y correspond a la distance verticale
     /* Check horizon */
     if ((data->ray->deg > 0 && data->ray->deg < 90) || (data->ray->deg > 270))
-        data->ray->hori = horizon_right(data, data->ray->deg);
+        data->ray->hori = horizon_right(data, data->ray->deg, 0);
     else if (data->ray->deg > 90 && data->ray->deg < 270)
-        data->ray->hori = horizon_left(data, data->ray->deg);
+        data->ray->hori = horizon_left(data, data->ray->deg, 0);
     /* Check vertical */
     if (data->ray->deg > 0 && data->ray->deg < 180)
-        data->ray->verti = vertical_up(data, data->ray->deg);
+        data->ray->verti = vertical_up(data, data->ray->deg, 0);
     else if (data->ray->deg > 180)
-        data->ray->verti = vertical_down(data, data->ray->deg);
+        data->ray->verti = vertical_down(data, data->ray->deg, 0);
 	/* calc distance */
 	data->ray->dist_h = return_distance(*data->cam->crd_real, data->ray->hori);
 	data->ray->dist_v = return_distance(*data->cam->crd_real, data->ray->verti);
