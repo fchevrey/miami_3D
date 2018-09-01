@@ -21,6 +21,7 @@ demo/
 sdl2/
 sdl2_mixer/
 sdl2_ttf/
+vorbis/
 
 #during the developpement
 assets/sounds

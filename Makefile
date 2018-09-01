@@ -50,11 +50,11 @@ MAIN_DIR_PATH = $(shell pwd)
 SDL_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/sdl2)
 SDL_MIXER_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/sdl2_mixer)
 SDL_TTF_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/sdl2_ttf)
-FMOD_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/fmod)
-FMOD_TAR_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/fmod_tar)
+VORBIS_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/vorbis)
 SDL_VER = 2.0.8
 SDL_MIXER_VER = 2.0.2
 SDL_TTF_VER = 2.0.14
+VORBIS_VER = 1.3.6
 
 ## Includes ##
 INC = -I ./includes/
@@ -97,6 +97,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(addprefix $(SDL_PATH), /lib/pkgconfig) &&\
 	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(addprefix $(SDL_MIXER_PATH), /lib/pkgconfig) &&\
 	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(SDL_MIXER_PATH), /lib) &&\
+	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(VORBIS_MIXER_PATH), /lib) &&\
 	gcc $(CFLAGS) $(INCS) -c $^ -o $@
 
 $(OBJS_DIR):
@@ -130,9 +131,13 @@ re: fclean all
 
 exe: rm_obj all
 
+rm_vorbis:
+	@rm -rf $(VORBIS_PATH)
+	@echo "\033$(PINK)36m✗	libvorbis-$(VORBIS_VER) removed\033[0m"
+
 rm_SDL2:
 	@rm -rf $(SDL2_PATH) $(SDL_MIXER_PATH) $(SDL_TTF_PATH)
-	@echo "❌\t\033[031mSDL2-$(SDL_VER) removed\033[0m"
+	@echo "\033$(PINK)36m✗	SDL2-$(SDL_VER) removed\033[0m"
 
 re_SDL2: fclean rm_SDL2 all
 
@@ -143,7 +148,29 @@ re_MODE_DEBUG: rm_obj MODE_DEBUG
 change_cflag:
 	@$(eval CFLAGS = -fsanitize=address)
 
-SDL2 :
+VORBIS :
+	@if [ ! -d "./lib/vorbis" ]; then \
+		echo "\033$(PINK)m⚠\tlibvorbis is not installed ! ...\033[0m"; \
+		echo "\033$(CYAN)m➼\tCompiling libvorbis-$(VORBIS_VER) ...\033[0m"; \
+		printf "\r\033$(YELLOW)m\tIn 3 ...\033[0m"; sleep 1; \
+		printf "\r\033$(YELLOW)m\tIn 2 ...\033[0m"; sleep 1; \
+		printf "\r\033$(YELLOW)3m\tIn 1 ...\033[0m"; sleep 1; printf "\n"; \
+		curl -OL https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-$(VORBIS_VER).tar.gz && \
+		tar -zxvf libvorbis-$(VORBIS_VER).tar.gz && \
+		rm libvorbis-$(VORBIS_VER).tar.gz && \
+		mkdir -p $(VORBIS_PATH) && \
+		cd libvorbis-$(VORBIS_VER) && \
+			sh configure --prefix=$(VORBIS_PATH) && \
+			make && \
+			make install && \
+		cd .. && \
+		rm -rf SDL2-$(VORBIS_VER);\
+		echo "\033$(GREEN)m✓\tlibvorbis-$(VORBIS_VER) installed !\033[0m"; \
+	else \
+		echo "\033$(GREEN)m✓\tlibvorbis-$(VORBIS_VER) already installed\033[0m"; \
+	fi
+
+SDL2 : VORBIS
 	@if [ ! -d "./lib/sdl2" ]; then \
 		echo "\033$(PINK)m⚠\tSDL2 is not installed ! ...\033[0m"; \
 		echo "\033$(CYAN)m➼\tCompiling SDL2-$(SDL_VER) ...\033[0m"; \
@@ -166,6 +193,7 @@ SDL2 :
 	fi
 	@if [ ! -d "./lib/sdl2_mixer" ]; then \
 		export SDL2_CONFIG=$(addprefix $(SDL_PATH), /bin/sdl2-config); \
+	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(VORBIS_MIXER_PATH), /lib) &&\
 		echo "\033$(CYAN)m➼\tCompiling SDL2_MIXER-$(SDL_MIXER_VER) ...\033[0m"; \
 		curl -OL http://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-$(SDL_MIXER_VER).tar.gz && \
 		tar -zxvf SDL2_mixer-$(SDL_MIXER_VER).tar.gz && \
@@ -214,5 +242,5 @@ print_name:
 print_end:
 	@echo $(MESSAGE)
 
-.PHONY: all clean fclean re rm_obj exe SDL2 LIBFT LIBPT MYSDL rm_SDL2 re_SDL2 \
+.PHONY: all clean fclean re rm_obj exe SDL2 VORBIS LIBFT LIBPT MYSDL rm_SDL2 re_SDL2 \
 		MODE_DEBUG re_MODE_DEBUG change_cflag print_name print_end FMOD

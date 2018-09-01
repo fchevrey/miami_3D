@@ -66,6 +66,14 @@ t_ptfl				horizon_left(t_data *data, float deg, int call)
 	float		ya;
 	float		xa;
 
+	if (deg == 90)
+	{
+		xa = 0;
+		ya = -SIZE_GRID;
+		point.x = data->cam->crd_real->x;
+		point.y = (data->cam->crd_map->y + 1) * 64;
+		return (look_for_collision(point, data, xa, ya));
+	}
 	if (call == 1)
 		ya = SIZE_GRID ;
 	else
@@ -91,6 +99,14 @@ t_ptfl				vertical_up(t_data *data, float deg, int call)
 	double		ya;
 	double		xa;
 
+	if (deg == 90)
+	{
+		xa = 0;
+		ya = -SIZE_GRID;
+		point.x = data->cam->crd_real->x;
+		point.y = (data->cam->crd_map->y - 1) * 64;
+		return (look_for_collision(point, data, xa, ya));
+	}
 	if (call == 1)
 		xa = -SIZE_GRID ;
 	else
@@ -103,6 +119,8 @@ t_ptfl				vertical_up(t_data *data, float deg, int call)
 	else
 		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID;
 	point.y = data->cam->crd_real->y + (data->cam->crd_real->x - point.x) * tan(deg_to_rad(deg));
+	if (call == 1)
+		printf("tan = %f\n", tanf(deg_to_rad(deg)));
 	return (look_for_collision(point, data, xa, ya));
 }
 

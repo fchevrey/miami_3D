@@ -45,10 +45,7 @@ static int		keypress_do_event(int key, int repeat, t_data *data)
 		if (tab_fct[i].key == key)
 		{
 			if (tab_fct[i].f && (!repeat || tab_fct[i].repeat == repeat))
-			{
-				printf("meuh\n");
 				tab_fct[i].f(data);
-			}
 			return (1);
 		}
 		i++;

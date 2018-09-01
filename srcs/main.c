@@ -46,8 +46,9 @@ static int		lib_initialisation(void)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO))
 		return (ft_error("SDL_init error :", SDL_GetError(), NULL));
-	//if ( Mix_Init( MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_FLAC | MIX_INIT_MOD) == -1)
-	//	return (ft_error("SDL_Mixer  error :", Mix_GetError(), NULL));
+	if ( Mix_Init(MIX_INIT_OGG) == -1)
+		return (ft_error("SDL_Mixer  error :", Mix_GetError(), NULL));
+	printf("%s\n", Mix_GetError());
 	//if ( Mix_OpenAudio( 44100, AUDIO_S16SYS, 1, 2048) == -1)
 	if ( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 2048 ))
 		return (ft_error("SDL_Mixer  error :", Mix_GetError(), NULL));

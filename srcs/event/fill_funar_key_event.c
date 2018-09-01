@@ -6,7 +6,7 @@
 /*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 17:42:41 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/09/01 19:21:05 by fchevrey         ###   ########.fr       */
+/*   Updated: 2018/09/01 21:03:00 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ t_funar_keyb			*fill_funar_keypress(int *size)
 	tab[i++] = add_one(SDLK_s, &move_backward);
 	tab[i++] = add_one(SDLK_a, &move_left);
 	tab[i++] = add_one(SDLK_d, &move_right);*/
-	tab[i++] = add_one(SDLK_UP, 0, &move);
-	tab[i++] = add_one(SDLK_DOWN, 0, &move);
+	tab[i++] = add_one(SDLK_UP, 0, &check_move);
+	tab[i++] = add_one(SDLK_DOWN, 0, &check_move);
 	tab[i++] = add_one(SDLK_LEFT, 1, &look_left_from_key);
 	tab[i++] = add_one(SDLK_RIGHT, 1, &look_right_from_key);
-	tab[i++] = add_one(SDLK_w, 0, &move);
-	tab[i++] = add_one(SDLK_s, 0, &move);
-	tab[i++] = add_one(SDLK_a, 0, &move);
-	tab[i++] = add_one(SDLK_d, 0, &move);
+	tab[i++] = add_one(SDLK_w, 0, &check_move);
+	tab[i++] = add_one(SDLK_s, 0, &check_move);
+	tab[i++] = add_one(SDLK_a, 0, &check_move);
+	tab[i++] = add_one(SDLK_d, 0, &check_move);
 	tab[i++] = add_one(SDLK_j, 0, &sound);
 	tab[i++] = add_one(SDLK_LCTRL, 0, &crouch);
 	tab[i++] = add_one(SDLK_SPACE, 0, &jump);

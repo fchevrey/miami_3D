@@ -6,7 +6,7 @@ void	sound(t_data *data)
 
 	if (!data || !data->sounds || !data->musics)
 		return ;
-	if (i > 1)
+	if (i > 4)
 	{
 		i = 0;
 		Mix_PauseMusic();

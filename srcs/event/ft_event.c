@@ -6,7 +6,7 @@
 /*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 18:27:24 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/09/01 19:19:28 by fchevrey         ###   ########.fr       */
+/*   Updated: 2018/09/01 21:03:06 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ft_event(t_data *data)
 
 	quit = 0;
 	data->walking = 0;
-	printf("real x = %d y = %d, mapx = %d y = %d\n", data->cam->crd_real->x, data->cam->crd_real->y, data->cam->crd_map->x, data->cam->crd_map->y);
 	while (!quit)
 	{
 		if (SDL_WaitEventTimeout(&event, 50))

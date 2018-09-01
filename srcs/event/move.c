@@ -39,21 +39,19 @@ void			move_foreward(t_data *data)
 	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * 15);
 	play_walk_song(data);
 	new_pos.y = cam->crd_real->y - (int)(sinf(rad) * 15);
-	wall_h = ptfl_set(0.0, 0.0);
-	wall_v = ptfl_set(0.0, 0.0);
     if ((cam->theta > 0 && cam->theta < 90) || (cam->theta > 270))
         wall_h = horizon_right(data, cam->theta, 1);
-    else if (cam->theta >= 90 && cam->theta < 270)
+    else //(cam->theta >= 90 && cam->theta < 270)
         wall_h = horizon_left(data, cam->theta, 1);
     /* Check vertical */
     if (cam->theta >= 0 && cam->theta < 180)
         wall_v = vertical_up(data, cam->theta, 1);
-    else if (cam->theta >= 180)
+    else //(cam->theta >= 180)
         wall_v = vertical_down(data, cam->theta, 1);
     dist.x = return_distance(*cam->crd_real, wall_h);
     dist.y = return_distance(*cam->crd_real, wall_v);
-    //printf("wall_v.x = %f .y = %f \nwall_h.x = %f y = %f \n", wall_v.x, wall_v.y, wall_h.x, wall_h.y);
-    //printf("dist horizontal %f vertical %f\n", dist.x, dist.y);
+    printf("wall_v.x = %f .y = %f \nwall_h.x = %f y = %f \n", wall_v.x, wall_v.y, wall_h.x, wall_h.y);
+    printf("dist horizontal %f vertical %f\n", dist.x, dist.y);
 	if (dist.x < 20.0 && dist.y > 20.0)
 		{
 			cam->crd_real->x = new_pos.x;
