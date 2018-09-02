@@ -22,6 +22,7 @@ sdl2/
 sdl2_mixer/
 sdl2_ttf/
 vorbis/
+ogg/
 
 #during the developpement
 assets/sounds

@@ -51,9 +51,11 @@ SDL_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/sdl2)
 SDL_MIXER_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/sdl2_mixer)
 SDL_TTF_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/sdl2_ttf)
 VORBIS_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/vorbis)
+LIBOGG_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/ogg)
 SDL_VER = 2.0.8
 SDL_MIXER_VER = 2.0.2
 SDL_TTF_VER = 2.0.14
+LIBOGG_VER = 1.3.3
 VORBIS_VER = 1.3.6
 
 ## Includes ##
@@ -64,7 +66,9 @@ LIB_INCS =	-I $(LIBFT_DIR)/includes/ \
 			-I $(LIBPT_DIR)/includes/ \
 			-I $(SDL_MIXER_PATH)/include/SDL2 \
 			-I $(SDL_TTF_PATH)/include/SDL2 \
-			$(SDL2_INC)
+			$(SDL2_INC) \
+			- I $(VORBIS_PATH)/include \
+			- I $(LIBOGG_PATH)/include 
 
 INCS = $(INC) $(LIB_INCS)
 
@@ -107,7 +111,7 @@ $(OBJS_DIR):
 	@mkdir -p $(addprefix $(OBJS_DIR)/, $(OBJS_SUB_DIRS))
 
 $(NAME): $(OBJS_DIR) $(OBJS_PRE)
-	@echo "\033$(GREEN)m➼\t\033$(GREEN)32mCreating $(DIR_NAME)'s executable\033[0m"
+	@echo "\033$(GREEN)m➼\t\033$(GREEN)32m Creating $(DIR_NAME)'s executable\033[0m"
 	@$(CC) -o $(NAME) $(CFLAGS) $(OBJS_PRE) $(LFLAGS)
 	@$(eval MESSAGE = $(DONE_MESSAGE))
 
@@ -147,8 +151,28 @@ re_MODE_DEBUG: rm_obj MODE_DEBUG
 
 change_cflag:
 	@$(eval CFLAGS = -fsanitize=address)
-
+https://ftp.osuosl.org/pub/xiph/releases/ogg/
 VORBIS :
+		@if [ ! -d "./lib/ogg" ]; then \
+		echo "\033$(PINK)m⚠\tlibogg is not installed ! ...\033[0m"; \
+		echo "\033$(CYAN)m➼\tCompiling libogg-$(LIBOGG_VER) ...\033[0m"; \
+		printf "\r\033$(YELLOW)m\tIn 3 ...\033[0m"; sleep 1; \
+		printf "\r\033$(YELLOW)m\tIn 2 ...\033[0m"; sleep 1; \
+		printf "\r\033$(YELLOW)3m\tIn 1 ...\033[0m"; sleep 1; printf "\n"; \
+		curl -OL https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-$(LIBOGG_VER).tar.gz && \
+		tar -zxvf libogg-$(LIBOGG_VER).tar.gz && \
+		rm libogg-$(LIBOGG_VER).tar.gz && \
+		mkdir -p $(LIBOGG_PATH) && \
+		cd libogg-$(LIBOGG_VER) && \
+			sh configure --prefix=$(LIBOGG_PATH) && \
+			make && \
+			make install && \
+		cd .. && \
+		rm -rf libogg-$(LIBOGG_VER);\
+		echo "\033$(GREEN)m✓\tlibogg-$(VORBIS_VER) installed !\033[0m"; \
+	else \
+		echo "\033$(GREEN)m✓\tlibogg-$(VORBIS_VER) already installed\033[0m"; \
+	fi
 	@if [ ! -d "./lib/vorbis" ]; then \
 		echo "\033$(PINK)m⚠\tlibvorbis is not installed ! ...\033[0m"; \
 		echo "\033$(CYAN)m➼\tCompiling libvorbis-$(VORBIS_VER) ...\033[0m"; \
