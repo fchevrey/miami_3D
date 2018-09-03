@@ -29,8 +29,6 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		\
 		mini_map/mini_map.c mini_map/mini_map2.c \
 		\
-		assets/get_wall_tex.c \
-		\
 		tga/parse_tga.c
 
 ## Objects ##

@@ -92,7 +92,7 @@ int				main(int ac, char **av)
 		/* SI vous voulez importez vos texture il faut : */
 		/* Un fichier Targa ou .tga */
 		/* Il fera 32bits et sera sans compression RLE */
-		ft_load_texture("assets/textures/doom.tga", data->b_and_g_tiles);
+//		ft_load_texture("assets/textures/doom.tga", data->b_and_g_tiles);
 		loop(data);
 		ft_event(data);
 	}

@@ -202,7 +202,6 @@ float			cast_ray(t_data *data)
 	data->ray->dist_h = return_distance(*data->cam->crd_real, data->ray->hori);
 	data->ray->dist_v = return_distance(*data->cam->crd_real, data->ray->verti);
     /* Choisi la distance la plus petite */
-	data->ray->offset = set_offset(data->ray->hori, data->ray->verti, data->ray->dist_h, data->ray->dist_v);
     if (data->ray->dist_h < 0 || data->ray->dist_v < data->ray->dist_h)
         return (data->ray->dist_v);
 	else if (data->ray->dist_v < 0 || data->ray->dist_h < data->ray->dist_v)

@@ -1,8 +1,63 @@
 #include "main.h"
 
-t_ray		*init_ray()
+void			init_and_load_wall_textures(t_data *data)
 {
-	t_ray *new;
+	int			i;
+	t_point		tiles_size;
+
+	printf("DEBUT DE INIT WALL\n");
+	i = 0;
+	tiles_size = pt_set(64, 64);
+	if (!(data->wall_texts = (t_texture**)malloc(sizeof(t_texture*) * WALL_TEXTS + 1)))
+		malloc_failed("init wall_texts\n"); //malloc error
+	data->wall_texts[WALL_TEXTS] = NULL;
+	while (i < WALL_TEXTS)
+	{
+		if (!(data->wall_texts[i] = texture_new(tiles_size, data->win->ren)))
+		{
+			malloc_failed("init one wall_texture\n"); //malloc error
+			return ;
+		}
+		if (i == 0)
+			ft_load_texture("assets/textures/doom.tga", data->wall_texts[i]);
+		else if (i == 1)
+			ft_load_texture("assets/textures/lol.tga", data->wall_texts[i]);
+		else if (i == 2)
+			ft_load_texture("assets/textures/rainbow.tga", data->wall_texts[i]);
+		else if (i == 3)
+			ft_load_texture("assets/textures/space_invader.tga", data->wall_texts[i]);
+		i++;
+	}
+	printf("FIN DE INIT WALL\n");
+}
+void			init_and_load_floor_textures(t_data *data)
+{
+	int			i;
+	t_point		tiles_size;
+
+	i = 0;
+	printf("DEBUT DE INIT FLOOR\n");
+	tiles_size = pt_set(64, 64);
+	if (!(data->floor_texts = (t_texture**)malloc(sizeof(t_texture*) * FLOOR_TEXTS + 1)))
+		malloc_failed("init floor_texts\n"); //malloc error
+	data->floor_texts[FLOOR_TEXTS] = NULL;
+	while (i < FLOOR_TEXTS)
+	{
+		if (!(data->floor_texts[i] = texture_new(tiles_size, data->win->ren)))
+		{
+			malloc_failed("init one floor_texture\n"); //malloc error
+			return ;
+		}
+		ft_load_texture("assets/textures/2.tga", data->floor_texts[i]);
+		i++;
+	}
+	printf("FIN DE INIT FLOOR\n");
+}
+
+t_ray			*init_ray()
+
+{
+	t_ray		*new;
 	if (!(new = (t_ray*)malloc(sizeof(t_ray))))
 		malloc_failed("init ray\n"); //malloc error
 	new->deg = 0;
@@ -18,9 +73,9 @@ t_ray		*init_ray()
 	return (new);
 }
 
-t_cam		*cam_init(t_parse parse)
+t_cam			*cam_init(t_parse parse)
 {
-	t_cam *new;
+	t_cam		*new;
 
 	if (!(new = (t_cam*)malloc(sizeof(t_cam))))
 		return (NULL);
@@ -65,11 +120,8 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	size.y -= HUD_HEIGHT;
 	if (!(data->m_img = texture_new(size, data->win->ren)))
 		return (NULL);
-	if (!(data->b_and_w_tiles = texture_new(tiles_size, data->win->ren)))
-		return (NULL);
-	if (!(data->b_and_g_tiles = texture_new(tiles_size, data->win->ren)))
-		return (NULL);
-	ft_load_texture("assets/textures/doom.tga", data->b_and_w_tiles);
+	init_and_load_floor_textures(data);
+	init_and_load_wall_textures(data);
 	data->musics = NULL;
 	data->sounds = NULL;
 	data->musics = NULL;

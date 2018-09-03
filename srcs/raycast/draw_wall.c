@@ -1,6 +1,6 @@
 
 #include "main.h"
-
+/*
 static t_ptfl		set_coeff_x_y_hori(float deg)
 {
 	t_ptfl			a;
@@ -43,7 +43,7 @@ static t_ptfl		set_coeff_x_y_verti(float deg)
 	}
 	return (a);
 }
-
+*/
 void				ft_ciel_sol(t_data *data)
 {
     int				y;
@@ -66,18 +66,32 @@ static void			display_wall(t_data *data)
 {
 	t_point			px_to_color;
 	float			coeff;
-    
-	px_to_color.x = data->ray->actual_ray;
-	px_to_color.y = data->ray->wall_min;
-	coeff  = (float)data->b_and_w_tiles->size.y / data->ray->wall_size; // scaling texture
-    ft_ciel_sol(data);
+    t_texture		*actual_texture;
+
+	px_to_color = pt_set(data->ray->actual_ray, data->ray->wall_min);
+	if ((data->ray->deg >= 0 && data->ray->deg < 180)
+	&& data->ray->dist_h < data->ray->dist_v)
+		actual_texture = data->wall_texts[0];
+	else if ((data->ray->deg >= 180 && data->ray->deg < 360)
+	&& data->ray->dist_h < data->ray->dist_v)
+		actual_texture = data->wall_texts[1];
+	if (((data->ray->deg >= 0 && data->ray->deg < 90)
+	|| (data->ray->deg >= 270 && data->ray->deg < 360))
+	&& data->ray->dist_v < data->ray->dist_h)
+		actual_texture = data->wall_texts[2];
+	if ((data->ray->deg >= 90 && data->ray->deg < 270)
+	&& data->ray->dist_v < data->ray->dist_h)
+		actual_texture = data->wall_texts[3];
+	coeff  = (float)actual_texture->size.y / data->ray->wall_size;
+	set_offset(data, actual_texture);
     while (px_to_color.y < data->ray->wall_max)
     {
-        pt_to_tex(px_to_color, data->m_img, get_pixel((t_point){data->ray->offset, (int)(coeff * (float)(px_to_color.y - data->ray->wall_min))}, data->b_and_g_tiles));
+        pt_to_tex(px_to_color, data->m_img, get_pixel((t_point){data->ray->offset, (int)(coeff * (float)(px_to_color.y - data->ray->wall_min))}, actual_texture));
         px_to_color.y++;
     }
 }
-static void		display_floor(t_data *data)
+
+/*static void		display_floor(t_data *data)
 {
 	int			ray;
 	t_ptfl		point;
@@ -120,14 +134,14 @@ static void		display_floor(t_data *data)
 	printf("a.x = %f, a.y = %f\n", a.x, a.y);
 	while (ray < WIN_HEIGHT)
 	{
-		pt_to_tex((t_point){data->ray->actual_ray, ray}, data->m_img, get_pixel((t_point){(int)(point.x * 64) % 64, (int)(point.y * 64) % 64}, data->b_and_w_tiles));
+		pt_to_tex((t_point){data->ray->actual_ray, ray}, data->m_img, get_pixel((t_point){(int)(point.x * 64) % 64, (int)(point.y * 64) % 64}, data->floor_texts[0]));
 		point.x = point.x + a.x;
 		point.y = point.y + a.y;
 		printf("point.x = %f, point.y = %f\n", point.x, point.y);
 		ray_ang = ray_ang + ang_inc;
 		ray++;
 	}
-}
+}*/
 /*
 static void		display_floor(t_data *data)
 {
@@ -218,7 +232,8 @@ void            display_column(t_data *data)
 {
     data->ray->wall_min = WIN_HEIGHT / 2 - (int)data->ray->wall_size / 2;
 	data->ray->wall_max = data->ray->wall_min + (int)data->ray->wall_size;
+	ft_ciel_sol(data);
     display_ceiling(data);
     display_wall(data);
-    display_floor(data);
+   // display_floor(data);
 }

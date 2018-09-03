@@ -86,8 +86,10 @@ typedef struct			s_data
 	t_map		***map;
 	t_texture	*m_img;
 	t_texture	*hud;
-	t_texture	*b_and_w_tiles;
-	t_texture	*b_and_g_tiles;
+	t_texture	**floor_texts;
+	t_texture	**wall_texts;
+//	t_texture	*b_and_w_tiles;
+//	t_texture	*b_and_g_tiles;
 	t_cam		*cam;
 	t_ray 		*ray;
 	uint8_t		walking;
