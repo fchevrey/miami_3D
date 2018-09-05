@@ -39,7 +39,7 @@ unsigned char			*ft_decode_tga(t_header *header, unsigned char *image)
 
 	begin = image;
 	end = image + (header->x * header->y * 4);
-	while (image < end)
+	/*while (image < end)
 	{
 		argb[0] = (unsigned char)(*(image + 0));
 		argb[1] = (unsigned char)(*(image + 1));
@@ -50,10 +50,48 @@ unsigned char			*ft_decode_tga(t_header *header, unsigned char *image)
 		image[2] = argb[2];
 		image[0] = argb[3];
 		image += 4;
+	}*/
+	while (image < end)
+	{
+		argb[0] = (unsigned char)(*(image + 0));
+		argb[1] = (unsigned char)(*(image + 1));
+		argb[2] = (unsigned char)(*(image + 2));
+		argb[3] = (unsigned char)(*(image + 3));
+		image[3] = argb[0];
+		image[2] = argb[1];
+		image[1] = argb[2];
+		image[0] = argb[3];
+		image += 4;
 	}
 	return (begin);
 }
 
+void			ft_fill_image(t_texture *img, unsigned char *image, t_header *header)
+{
+	int			x;
+	int			y;
+	int			i;
+	int			z;
+
+	y = 0; // * 4;
+	i = 0;
+	x = 0;
+	z = ((header->y -1) * (header->x -1)) * 4;
+	while (i < ((header->x * header->y)))
+	{
+		if (x > header->x -1)
+		{
+			x = 0;
+			y++;
+			z = (header->y - y) * header->x * 4;
+		}
+		pt_to_tex((t_point){x, y}, img, get_color(image[z + (x * 4) + 3], image[z + (x * 4)], image[z + (x * 4) + 1], image[z + (x * 4) + 2]));
+		x++;
+		i++;
+		//i += 4;
+	}
+}
+/*
 void			ft_fill_image(t_texture *img, unsigned char *image, t_header *header)
 {
 	int x;
@@ -74,7 +112,7 @@ void			ft_fill_image(t_texture *img, unsigned char *image, t_header *header)
 		x++;
 		i += 4;
 	}
-}
+}*/
 
 void			fill_real_size(t_header *header)
 {
