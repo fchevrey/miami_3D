@@ -58,8 +58,8 @@ int		sound_init(t_data *data)
 {
 	char		**songs;
 
-	//if (!(songs = ft_strsplit("music01.wav\fmusic02.wav", '\f')))
-	if (!(songs = ft_strsplit("music01.ogg\fmusic02.ogg\fmusic03.ogg\fmusic04.ogg\fmusic05.ogg", '\f')))
+	//if (!(songs = ft_strsplit("music01.ogg\fmusic02.ogg\fmusic03.ogg\fmusic04.ogg\fmusic05.ogg", '\f')))
+	if (!(songs = ft_strsplit("music01.wav\fmusic02.wav\fmusic03.wav\fmusic04.wav\fmusic05.wav", '\f')))
 		return (-1);
 	load_music(data, songs);
 	ft_tabdel(&songs);

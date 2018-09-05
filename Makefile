@@ -66,9 +66,9 @@ LIB_INCS =	-I $(LIBFT_DIR)/includes/ \
 			-I $(LIBPT_DIR)/includes/ \
 			-I $(SDL_MIXER_PATH)/include/SDL2 \
 			-I $(SDL_TTF_PATH)/include/SDL2 \
-			$(SDL2_INC) \
-			- I $(VORBIS_PATH)/include \
-			- I $(LIBOGG_PATH)/include 
+			$(SDL2_INC) 
+			#- I $(VORBIS_PATH)/include 
+			#- I $(LIBOGG_PATH)/include 
 
 INCS = $(INC) $(LIB_INCS)
 
@@ -101,8 +101,8 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(addprefix $(SDL_PATH), /lib/pkgconfig) &&\
 	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(addprefix $(SDL_MIXER_PATH), /lib/pkgconfig) &&\
 	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(SDL_MIXER_PATH), /lib) &&\
-	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(VORBIS_MIXER_PATH), /lib) &&\
 	gcc $(CFLAGS) $(INCS) -c $^ -o $@
+	@#export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(VORBIS_MIXER_PATH), /lib) &&\
 
 $(OBJS_DIR):
 	@echo "\033$(CYAN)m➼	\033$(CYAN)mCreating $(DIR_NAME)'s objects \
