@@ -34,11 +34,11 @@ void			ft_init_sky(t_sky *sky, t_data *data)
 		malloc_failed("init sky\n"); //malloc error
 	if (!(sky->ouest = texture_new(size, data->win->ren)))
 		malloc_failed("init sky\n"); //malloc error
-	ft_load_texture("assets/textures/skybox/haut.tga", sky->ciel);
-	ft_load_texture("assets/textures/skybox/bas.tga", sky->sol);
-	ft_load_texture("assets/textures/skybox/nord.tga", sky->nord);
-	ft_load_texture("assets/textures/skybox/sud.tga", sky->sud);
-	ft_load_texture("assets/textures/skybox/est.tga", sky->est);
-	ft_load_texture("assets/textures/skybox/ouest.tga", sky->ouest);
+	ft_load_texture(&data->endian, "assets/textures/skybox/haut.tga", sky->ciel);
+	ft_load_texture(&data->endian, "assets/textures/skybox/bas.tga", sky->sol);
+	ft_load_texture(&data->endian, "assets/textures/skybox/nord.tga", sky->nord);
+	ft_load_texture(&data->endian, "assets/textures/skybox/sud.tga", sky->sud);
+	ft_load_texture(&data->endian, "assets/textures/skybox/est.tga", sky->est);
+	ft_load_texture(&data->endian, "assets/textures/skybox/ouest.tga", sky->ouest);
 }
 

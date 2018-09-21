@@ -19,13 +19,13 @@ void			init_and_load_wall_textures(t_data *data)
 			return ;
 		}
 		if (i == 0)
-			ft_load_texture("assets/textures/doom.tga", data->wall_texts[i]);
+			ft_load_texture(&data->endian, "assets/textures/doom.tga", data->wall_texts[i]);
 		else if (i == 1)
-			ft_load_texture("assets/textures/lol.tga", data->wall_texts[i]);
+			ft_load_texture(&data->endian, "assets/textures/lol.tga", data->wall_texts[i]);
 		else if (i == 2)
-			ft_load_texture("assets/textures/rainbow.tga", data->wall_texts[i]);
+			ft_load_texture(&data->endian, "assets/textures/rainbow.tga", data->wall_texts[i]);
 		else if (i == 3)
-			ft_load_texture("assets/textures/space_invader.tga", data->wall_texts[i]);
+			ft_load_texture(&data->endian, "assets/textures/space_invader.tga", data->wall_texts[i]);
 		i++;
 	}
 	printf("FIN DE INIT WALL\n");
@@ -48,7 +48,7 @@ void			init_and_load_floor_textures(t_data *data)
 			malloc_failed("init one floor_texture\n"); //malloc error
 			return ;
 		}
-		ft_load_texture("assets/textures/2.tga", data->floor_texts[i]);
+		ft_load_texture(&data->endian, "assets/textures/2.tga", data->floor_texts[i]);
 		i++;
 	}
 	printf("FIN DE INIT FLOOR\n");
@@ -108,6 +108,8 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	if (!(data = (t_data*)malloc(sizeof(t_data))))
 		return (NULL);
 	data->map = map;
+	data->endian = -1;
+	printf("DATA->ENDIAN = %d\n", data->endian);
 	chr = ft_strstr(av[0], "/wolf3d");
 	//printf("\n  == chr = %s\n  ==", chr);
 	data->path = ft_strsub(av[0], 2, ft_strlen(av[0]) - (ft_strlen(chr) + 1));

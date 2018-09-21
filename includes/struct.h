@@ -98,6 +98,7 @@ typedef struct			s_data
 	t_texture			**wall_texts;
 	t_cam				*cam;
 	t_ray				*ray;
+	int					endian; //little = 0 and big = 1
 	uint8_t				walking;
 }						t_data;
 

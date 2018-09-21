@@ -29,7 +29,7 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		\
 		mini_map/mini_map.c mini_map/mini_map2.c \
 		\
-		tga/parse_tga.c
+		tga/parse_tga.c tga/decode_tga.c
 
 ## Objects ##
 OBJS = $(SRCS:.c=.o)
