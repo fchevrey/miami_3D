@@ -22,7 +22,7 @@ static unsigned char	*ft_decode_tga_little_endian(t_header *header, unsigned cha
 	unsigned char	argb[4];
 
 	begin = image;
-	end = image + (header->x * header->y * 4);
+	end = image + (header->x * (header->y) * 4);
 	while (image < end)
 	{
 		argb[0] = (unsigned char)(*(image + 0));
@@ -46,7 +46,7 @@ static unsigned char	*ft_decode_tga_big_endian(t_header *header, unsigned char *
 	unsigned char	argb[4];
 
 	begin = image;
-	end = image + (header->x * header->y * 4);
+	end = image + (header->x * (header->y) * 4);
 	while (image < end)
 	{
 		argb[0] = (unsigned char)(*(image + 0));

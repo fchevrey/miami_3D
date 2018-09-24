@@ -9,12 +9,15 @@ void			init_obj_array(t_data *dt)
 	i = 0;
 	while (i < OBJ_NB)
 	{
-		dt->obj_test[i].obj_pt = ptfl_set(-1.0, -1.0);
-		dt->obj_test[i].content = -1;
-		dt->obj_test[i].index = i;
+		dt->obj_ar[i].obj_pt = ptfl_set(-1.0, -1.0);
+		dt->obj_ar[i].content = -1;
+		dt->obj_ar[i].index = i;
+		dt->obj_ar[i].obj_dist = -1;
+		dt->obj_ar[i].wall_dist = -1;
 		i++;
 	}
 	printf("FIN DE INIT OBJ\n");
+	ft_putstr("FIN DE OBJ ARRAY\n");
 }
 
 void			init_and_load_obj_textures(t_data *dt)
@@ -43,6 +46,7 @@ void			init_and_load_obj_textures(t_data *dt)
 		i++;
 	}
 	printf("FIN DE INIT OBJ TEXT\n");
+	ft_putstr("FIN DE OBJ TEXTURES\n");
 }
 
 void			init_and_load_wall_textures(t_data *dt)
@@ -64,7 +68,7 @@ void			init_and_load_wall_textures(t_data *dt)
 			return ;
 		}
 		if (i == 0)
-			ft_load_texture(&dt->endian, "assets/textures/doom.tga", dt->wall_texts[i]);
+			ft_load_texture(&dt->endian, "assets/textures/candle.tga", dt->wall_texts[i]);
 		else if (i == 1)
 			ft_load_texture(&dt->endian, "assets/textures/lol.tga", dt->wall_texts[i]);
 		else if (i == 2)
@@ -168,24 +172,30 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	size.y -= HUD_HEIGHT;
 	if (!(data->m_img = texture_new(size, data->win->ren)))
 		return (NULL);
+	ft_putstr("DATA INIT 1.0\n");
 	init_and_load_floor_textures(data);
 	init_and_load_wall_textures(data);
 	init_obj_array(data);
 	init_and_load_obj_textures(data);
+	ft_putstr("DATA INIT 2.0\n");
 	data->musics = NULL;
 	data->sounds = NULL;
 	data->musics = NULL;
 	data->map = map;
 	data->ray = init_ray();
 	size.y = HUD_HEIGHT;
+	ft_putstr("DATA INIT 3.0\n");
 	if (!(data->hud = texture_new(size, data->win->ren)))
 		return (NULL);
 	for (int i = 0; i < size.x * size.y; i++)
 		data->hud->tab_pxl[i] = 0xA600A6;
+	ft_putstr("DATA INIT 4.0\n");
 	data->xmax = parse.nb_elem_line;
 	data->ymax = parse.nb_line;
 	data->walk_channel = -12;
 	if (sound_init(data) < 0)
 		ft_exit(&data);
+	ft_putstr("DATA INIT 5.0\n");
+	ft_putstr("FIN DE DATA INIT\n");
 	return (data);
 }

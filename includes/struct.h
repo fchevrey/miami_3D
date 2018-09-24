@@ -10,7 +10,9 @@ typedef struct			s_obj
 	t_ptfl				obj_pt;
 	int					content;
 	int					index;
-	float				wall_dist;
+	int					obj_dist;
+	int					wall_dist;
+	int					obj_height;
 //	struct s_obj		*next;
 //	struct s_obj		*prev;
 }						t_obj;

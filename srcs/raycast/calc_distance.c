@@ -31,10 +31,10 @@ t_ptfl				look_for_collision(t_ptfl point, t_data *data, float xa, float ya)
 		i = 0;
 		if (data->map[(int)y_map][(int)x_map]->content == 2)
 		{
-			while (data->obj_test[i].obj_pt.x == -1.0)
+			while (data->obj_ar[i].obj_pt.x != -1.0)
 				i++;
-			data->obj_test[i].obj_pt = point;
-			data->obj_test[i].content = data->map[(int)y_map][(int)x_map]->content;
+			data->obj_ar[i].obj_pt = point;
+			data->obj_ar[i].content = data->map[(int)y_map][(int)x_map]->content;
 		}
 		point.y += ya;
 		point.x += xa;
