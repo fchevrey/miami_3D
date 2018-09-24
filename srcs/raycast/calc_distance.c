@@ -19,14 +19,23 @@ float		return_distance(t_point a, t_ptfl b)
 
 t_ptfl				look_for_collision(t_ptfl point, t_data *data, float xa, float ya)
 {
-	float x_map;
-	float y_map;
+	float			x_map;
+	float			y_map;
+	int				i;
 
 	return_pos_map(point.x, point.y, &x_map, &y_map);
 	if (!is_in_map(x_map, y_map, data))
 		return (point);
 	while (data->map[(int)y_map][(int)x_map]->content == 0)
 	{
+		i = 0;
+		if (data->map[(int)y_map][(int)x_map]->content == 2)
+		{
+			while (data->obj_test[i].obj_pt.x == -1.0)
+				i++;
+			data->obj_test[i].obj_pt = point;
+			data->obj_test[i].content = data->map[(int)y_map][(int)x_map]->content;
+		}
 		point.y += ya;
 		point.x += xa;
 		return_pos_map(point.x, point.y, &x_map, &y_map);

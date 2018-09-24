@@ -9,7 +9,7 @@ void	look_left_from_key(t_data *data)
 	//	printf("look left - theta = %f real x = %d y = %d, mapx = %d y = %d\n", 
 	//	data->cam->theta, data->cam->crd_real->x, data->cam->crd_real->y, data->cam->crd_map->x, data->cam->crd_map->y);
 	//printf("theta = %f\n", data->cam->theta);
-	loop(data);
+	display(data);
 }
 
 void	look_right_from_key(t_data *data)
@@ -20,5 +20,5 @@ void	look_right_from_key(t_data *data)
 	//printf("theta = %f\n", data->cam->theta);
 	//printf("look right - theta = %f real x = %d y = %d, mapx = %d y = %d\n", 
 	//data->cam->theta, data->cam->crd_real->x, data->cam->crd_real->y, data->cam->crd_map->x, data->cam->crd_map->y);
-	loop(data);
+	display(data);
 }

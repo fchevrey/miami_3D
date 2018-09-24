@@ -2,14 +2,17 @@
 # define STRUCT_H
 # include <stdint.h>
 # include "main.h"
+# include "defines.h"
 #include "SDL_mixer.h"
 
 typedef struct			s_obj
 {
-	t_ptfl				obj;
+	t_ptfl				obj_pt;
 	int					content;
-	struct s_obj		*next;
-	struct s_obj		*prev;
+	int					index;
+	float				wall_dist;
+//	struct s_obj		*next;
+//	struct s_obj		*prev;
 }						t_obj;
 
 typedef struct 			s_ray
@@ -96,8 +99,10 @@ typedef struct			s_data
 	t_texture			*hud;
 	t_texture			**floor_texts;
 	t_texture			**wall_texts;
+	t_texture			**obj_texts;
 	t_cam				*cam;
 	t_ray				*ray;
+	t_obj				obj_ar[OBJ_NB];
 	int					endian; //little = 0 and big = 1
 	uint8_t				walking;
 }						t_data;

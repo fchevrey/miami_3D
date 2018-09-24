@@ -34,6 +34,11 @@ void        loop(t_data *data)
 			data->ray->deg = 360 + (data->ray->deg - data->cam->min_theta);
 		else
 			data->ray->deg -= data->cam->min_theta;
+		if (tmp != dt->obj_ar[i].content)
+		{
+			dt->obj_ar[i].wall_dist = wall_dist;
+			i++;
+		}
 		data->ray->actual_ray++;
 	}
 	draw_mini_map2(data);

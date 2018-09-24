@@ -22,7 +22,7 @@
 void			malloc_failed(char *str);
 void			ft_exit(t_data **data);
 t_data			*data_init(t_map ***map, t_parse parse, char **av);
-void            loop(t_data *data);
+void            display(t_data *data);
 void			display_map(t_map ***map2, int x, int y, t_data *data);//
 int			 	is_in_map(float x, float y, t_data *data);
 int				ft_error(const char *str1, const char *str2,

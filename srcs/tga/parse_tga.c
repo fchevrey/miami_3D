@@ -41,7 +41,7 @@ void			ft_fill_image(t_texture *img, unsigned char *image, t_header *header)
 	y = 0; // * 4;
 	i = 0;
 	x = 0;
-	z = ((header->y) * (header->x -1)) * 4;
+	z = ((header->y) * (header->x )) * 4;
 	while (i < ((header->x * header->y + 2)))
 	{
 		if (x > header->x -1)

@@ -1,6 +1,51 @@
 #include "main.h"
 
-void			init_and_load_wall_textures(t_data *data)
+void			init_obj_array(t_data *dt)
+{
+	int			i;
+
+	ft_putstr("JE SUIS DANS OBJ ARRAY\n");
+	printf("DEBUT DE INIT OBJ\n");
+	i = 0;
+	while (i < OBJ_NB)
+	{
+		dt->obj_test[i].obj_pt = ptfl_set(-1.0, -1.0);
+		dt->obj_test[i].content = -1;
+		dt->obj_test[i].index = i;
+		i++;
+	}
+	printf("FIN DE INIT OBJ\n");
+}
+
+void			init_and_load_obj_textures(t_data *dt)
+{
+	int			i;
+	t_point		text_size;
+
+	ft_putstr("JE SUIS DANS OBJ TEXTURES\n");
+	printf("DEBUT DE INIT OBJ TEXTURES\n");
+	i = 0;
+	text_size = pt_set(64, 64);
+	if (!(dt->obj_texts = (t_texture**)malloc(sizeof(t_texture*) * OBJ_TEXTS + 1)))
+		malloc_failed("init obj_texts\n");
+	dt->obj_texts[OBJ_TEXTS] = NULL;
+	while (i < OBJ_TEXTS)
+	{
+		if (!(dt->obj_texts[i] = texture_new(text_size, dt->win->ren)))
+		{
+			malloc_failed("init obj_texture\n");
+			return ;
+		}
+		if (i == 0)
+			ft_load_texture(&dt->endian, "assets/textures/candle.tga", dt->obj_texts[i]);
+		else
+			ft_load_texture(&dt->endian, "assets/textures/candle.tga", dt->obj_texts[i]);
+		i++;
+	}
+	printf("FIN DE INIT OBJ TEXT\n");
+}
+
+void			init_and_load_wall_textures(t_data *dt)
 {
 	int			i;
 	t_point		tiles_size;
@@ -8,28 +53,29 @@ void			init_and_load_wall_textures(t_data *data)
 	printf("DEBUT DE INIT WALL\n");
 	i = 0;
 	tiles_size = pt_set(64, 64);
-	if (!(data->wall_texts = (t_texture**)malloc(sizeof(t_texture*) * WALL_TEXTS + 1)))
-		malloc_failed("init wall_texts\n"); //malloc error
-	data->wall_texts[WALL_TEXTS] = NULL;
+	if (!(dt->wall_texts = (t_texture**)malloc(sizeof(t_texture*) * WALL_TEXTS + 1)))
+		malloc_failed("init wall_texts\n");
+	dt->wall_texts[WALL_TEXTS] = NULL;
 	while (i < WALL_TEXTS)
 	{
-		if (!(data->wall_texts[i] = texture_new(tiles_size, data->win->ren)))
+		if (!(dt->wall_texts[i] = texture_new(tiles_size, dt->win->ren)))
 		{
-			malloc_failed("init one wall_texture\n"); //malloc error
+			malloc_failed("init one wall_texture\n");
 			return ;
 		}
 		if (i == 0)
-			ft_load_texture(&data->endian, "assets/textures/doom.tga", data->wall_texts[i]);
+			ft_load_texture(&dt->endian, "assets/textures/doom.tga", dt->wall_texts[i]);
 		else if (i == 1)
-			ft_load_texture(&data->endian, "assets/textures/lol.tga", data->wall_texts[i]);
+			ft_load_texture(&dt->endian, "assets/textures/lol.tga", dt->wall_texts[i]);
 		else if (i == 2)
-			ft_load_texture(&data->endian, "assets/textures/rainbow.tga", data->wall_texts[i]);
+			ft_load_texture(&dt->endian, "assets/textures/rainbow.tga", dt->wall_texts[i]);
 		else if (i == 3)
-			ft_load_texture(&data->endian, "assets/textures/space_invader.tga", data->wall_texts[i]);
+			ft_load_texture(&dt->endian, "assets/textures/space_invader.tga", dt->wall_texts[i]);
 		i++;
 	}
 	printf("FIN DE INIT WALL\n");
 }
+
 void			init_and_load_floor_textures(t_data *data)
 {
 	int			i;
@@ -55,9 +101,9 @@ void			init_and_load_floor_textures(t_data *data)
 }
 
 t_ray			*init_ray()
-
 {
 	t_ray		*new;
+
 	if (!(new = (t_ray*)malloc(sizeof(t_ray))))
 		malloc_failed("init ray\n"); //malloc error
 	new->deg = 0;
@@ -124,6 +170,8 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 		return (NULL);
 	init_and_load_floor_textures(data);
 	init_and_load_wall_textures(data);
+	init_obj_array(data);
+	init_and_load_obj_textures(data);
 	data->musics = NULL;
 	data->sounds = NULL;
 	data->musics = NULL;
