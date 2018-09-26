@@ -13,39 +13,50 @@ void				ft_ciel_sol(t_data *data)
 	y = data->ray->wall_max;
     while (y < WIN_HEIGHT)
     {
-        pt_to_tex((t_point){data->ray->actual_ray, y}, data->m_img, 0x00EED5B7);
+        pt_to_tex((t_point){data->ray->actual_ray, y}, data->m_img, 0x00DC143C);//0x00EED5B7);
         y++;
     }
+}
+
+static t_texture	*wall_text_cardinal_position(t_data *dt)
+{
+	t_texture		*act_text;
+
+	if ((dt->ray->deg >= 0 && dt->ray->deg < 180)
+			&& dt->ray->dist_h < dt->ray->dist_v)
+		act_text = dt->wall_texts[0];
+	else if ((dt->ray->deg >= 180 && dt->ray->deg < 360)
+			&& dt->ray->dist_h < dt->ray->dist_v)
+		act_text = dt->wall_texts[1];
+	if (((dt->ray->deg >= 0 && dt->ray->deg < 90)
+			|| (dt->ray->deg >= 270 && dt->ray->deg < 360))
+			&& dt->ray->dist_v < dt->ray->dist_h)
+		act_text = dt->wall_texts[2];
+	if ((dt->ray->deg >= 90 && dt->ray->deg < 270)
+			&& dt->ray->dist_v < dt->ray->dist_h)
+		act_text = dt->wall_texts[3];
+	return (act_text);
 }
 
 static void			display_wall(t_data *dt)
 {
 	t_point			px_to_color;
 	float			coeff;
-    t_texture		*act_text;
+	t_texture		*act_text;
+	t_color			color;
 
 	px_to_color = pt_set(dt->ray->actual_ray, dt->ray->wall_min);
-	if ((dt->ray->deg >= 0 && dt->ray->deg < 180)
-	&& dt->ray->dist_h < dt->ray->dist_v)
-		act_text = dt->wall_texts[0];
-	else if ((dt->ray->deg >= 180 && dt->ray->deg < 360)
-	&& dt->ray->dist_h < dt->ray->dist_v)
-		act_text = dt->wall_texts[1];
-	if (((dt->ray->deg >= 0 && dt->ray->deg < 90)
-	|| (dt->ray->deg >= 270 && dt->ray->deg < 360))
-	&& dt->ray->dist_v < dt->ray->dist_h)
-		act_text = dt->wall_texts[2];
-	if ((dt->ray->deg >= 90 && dt->ray->deg < 270)
-	&& dt->ray->dist_v < dt->ray->dist_h)
-		act_text = dt->wall_texts[3];
-	coeff  = (float)act_text->size.y / dt->ray->wall_size;
+	act_text = wall_text_cardinal_position(dt);
+	coeff = (float)act_text->size.y / dt->ray->wall_size;
 	set_offset(dt, act_text);
-    while (px_to_color.y < dt->ray->wall_max)
-    {
-        pt_to_tex(px_to_color, dt->m_img, get_pixel((t_point){dt->ray->offset,
-		(int)(coeff * (float)(px_to_color.y - dt->ray->wall_min))}, act_text));
-        px_to_color.y++;
-    }
+	 while (px_to_color.y < dt->ray->wall_max)
+	{
+		color.c = get_pixel((t_point){dt->ray->offset, (int)(coeff * (float)(px_to_color.y - dt->ray->wall_min))}, act_text);
+		if (color.argb.a == 0)
+			color.c = get_pixel(px_to_color, dt->m_img);
+		pt_to_tex(px_to_color, dt->m_img, color.c);
+		px_to_color.y++;
+	}
 }
 
 

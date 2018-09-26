@@ -10,7 +10,7 @@
 # define FLOOR_TEXTS 1 //nb texture sol
 # define WALL_TEXTS  4 // nb texture mur
 # define OBJ_TEXTS  1 // nb texture objets
-# define OBJ_NB		15 // nb d'objet
+# define OBJ_NB		30 // nb d'objet
 
 # define MOVE_NONE		0
 # define MOVE_UP		1

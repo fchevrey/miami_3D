@@ -8,11 +8,14 @@
 typedef struct			s_obj
 {
 	t_ptfl				obj_pt;
+	t_point				obj_pt_map;
 	int					content;
 	int					index;
+	int					x;
 	int					obj_dist;
 	int					wall_dist;
 	int					obj_height;
+	int					obj_depth;
 //	struct s_obj		*next;
 //	struct s_obj		*prev;
 }						t_obj;
@@ -21,6 +24,7 @@ typedef struct 			s_ray
 {
 	float				deg;
 	int					actual_ray;
+	t_ptfl				coeff;
 	t_ptfl				hori;
 	t_ptfl				verti;
 	float				dist_h;

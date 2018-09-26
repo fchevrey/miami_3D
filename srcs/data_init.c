@@ -10,10 +10,14 @@ void			init_obj_array(t_data *dt)
 	while (i < OBJ_NB)
 	{
 		dt->obj_ar[i].obj_pt = ptfl_set(-1.0, -1.0);
+		dt->obj_ar[i].obj_pt_map = pt_set(-1.0, -1.0);
 		dt->obj_ar[i].content = -1;
 		dt->obj_ar[i].index = i;
+		dt->obj_ar[i].x = -1;
 		dt->obj_ar[i].obj_dist = -1;
 		dt->obj_ar[i].wall_dist = -1;
+		dt->obj_ar[i].obj_height = -1;
+		dt->obj_ar[i].obj_depth = -1;
 		i++;
 	}
 	printf("FIN DE INIT OBJ\n");
@@ -110,14 +114,16 @@ t_ray			*init_ray()
 
 	if (!(new = (t_ray*)malloc(sizeof(t_ray))))
 		malloc_failed("init ray\n"); //malloc error
-	new->deg = 0;
+	new->deg = 0.0;
 	new->actual_ray = 0;
-	new->hori = (t_ptfl){0,0};
-	new->verti = (t_ptfl){0,0};
-	new->dist_h = 0;
-	new->dist_v = 0;
+	new->coeff = ptfl_set(-1.0, -1.0);
+	new->hori = (t_ptfl){0.0, 0.0};
+	new->verti = (t_ptfl){0.0, 0.0};
+	new->dist_h = 0.0;
+	new->dist_v = 0.0;
+	new->dist_w_d = 0.0;
 	new->offset = 0;
-	new->wall_size = 0;
+	new->wall_size = 0.0;
 	new->wall_min = 0;
 	new->wall_max = 0;
 	return (new);

@@ -53,7 +53,7 @@ void        display(t_data *dt)
 	draw_mini_map2(dt);
 //	display_obj(dt);
 	put_tex_to_ren(dt->m_img, dt->win->ren, (t_point){0, 0}, 0);
-	put_tex_to_ren(dt->obj_texts[0], dt->win->ren, (t_point){0, 300}, 0);
+	put_tex_to_ren(dt->obj_texts[0], dt->win->ren, (t_point){300, 300}, 0);
 	put_tex_to_ren(dt->wall_texts[1], dt->win->ren, (t_point){0, 0}, 0);
 	put_tex_to_ren(dt->wall_texts[2], dt->win->ren, (t_point){64, 0}, 0);
 	put_tex_to_ren(dt->wall_texts[3], dt->win->ren, (t_point){128, 0}, 0);

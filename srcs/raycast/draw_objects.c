@@ -44,22 +44,40 @@ static void		calc_obj_height(t_data *dt)
 	}
 }
 
+static void		calc_obj_depth(t_data *dt)
+{
+	int			i;
+	float		scale;
+
+	i = 0;
+	while (dt->obj_ar[i].content != -1)
+	{
+		scale = dt->obj_ar[i].obj_dist / dt->obj_ar[i].wall_dist;
+		min = dt->ray->wall_max + (dt->ray->wall_min * scale);
+		dt->obj_ar[i].obj_depth = dt->ray->wall_max + (dt->ray->wall_min * scale);
+		i++;
+	}
+}
+
 void			display_objects(t_data *dt)
 {
-	float		obj_dist;
-	float		correct_dist;
-	float		obj_height;
 	t_point		px_to_color;
+	int			i;
 
+	i = 0;
 	calc_obj_distance(dt);
 	sort_obj_by_distance(dt);
 	calc_obj_height(dt);
-	// rechercher ou afficher l'objet, cela correspond a sa distance entre la cam et le mur
-	px_to_color = pt_set(data->ray->actual_ray, data->ray->wall_max + 1); // VALEUR PIXEL Y ????????
-	while (px_to_color < obj_height)
+	calc_obj_depth(dt);// recherche ou afficher l'objet, cela correspond a sa distance entre la cam et le mur, c'est a dire sa profondeur
+	px_to_color = pt_set(, data->ray->wall_max + 1); // VALEUR PIXEL Y ????????
+	while (dt->obj_ar[i].content != -1)
 	{
-		pt_to_tex(px_to_color, data->m_img, get_pixel);
-		px_to_color.y++;
+		while(px_to_color < obj_height)
+		{
+			pt_to_tex(px_to_color, data->m_img, get_pixel);
+			px_to_color.y++;
+		}
+		i++;
 	}
 }
 /*

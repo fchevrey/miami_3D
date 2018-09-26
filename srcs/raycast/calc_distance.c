@@ -13,33 +13,60 @@ float		return_distance(t_point a, t_ptfl b)
 	return (sqrt(pow((b.x - a.x),2) + pow((b.y - a.y), 2)));
 }
 
+static void			check_for_objects(t_data *dt, t_ptfl point, t_ptfl map)
+{
+	int				i;
+
+	i = 0;
+	if (dt->ray->actual_ray == 0)
+	{
+		while (dt->obj_ar[i].content != -1.0)
+		{
+			dt->obj_ar[i].content = -1.0;
+			i++;
+		}
+		i = 0;
+	}
+	if (dt->map[(int)map.y][(int)map.x]->content == 2)
+	{
+		while (dt->obj_ar[i].content != -1.0)
+			i++;
+		if (i == 0)
+		{
+			dt->obj_ar[i].obj_pt = point;
+			dt->obj_ar[i].obj_pt_map = pt_set((int)map.x, (int)map.y);
+			dt->obj_ar[i].content = dt->map[(int)map.y][(int)map.x]->content;
+		}
+		else if ((i > 0) && (((int)map.x != (int)dt->obj_ar[i - 1].obj_pt_map.x) || (int)map.y != (int)dt->obj_ar[i - 1].obj_pt_map.y))
+		{
+			dt->obj_ar[i].obj_pt = point;
+			dt->obj_ar[i].obj_pt_map = pt_set((int)map.x, (int)map.y);
+			dt->obj_ar[i].content = dt->map[(int)map.y][(int)map.x]->content;
+		}
+		else
+			return ;
+	}
+}
+
 /* 
 ** deg > 0 && deg < 90 || deg > 270
 */
 
 t_ptfl				look_for_collision(t_ptfl point, t_data *data, float xa, float ya)
 {
-	float			x_map;
-	float			y_map;
-	int				i;
+	t_ptfl			map;
 
-	return_pos_map(point.x, point.y, &x_map, &y_map);
-	if (!is_in_map(x_map, y_map, data))
+	map = ptfl_set(-1.0, -1.0);
+	return_pos_map(point.x, point.y, &map.x, &map.y);
+	if (!is_in_map(map.x, map.y, data))
 		return (point);
-	while (data->map[(int)y_map][(int)x_map]->content == 0)
+	while (data->map[(int)map.y][(int)map.x]->content == 0 ||data->map[(int)map.y][(int)map.x]->content == 2)
 	{
-		i = 0;
-		if (data->map[(int)y_map][(int)x_map]->content == 2)
-		{
-			while (data->obj_ar[i].obj_pt.x != -1.0)
-				i++;
-			data->obj_ar[i].obj_pt = point;
-			data->obj_ar[i].content = data->map[(int)y_map][(int)x_map]->content;
-		}
+		check_for_objects(data, point, map);
 		point.y += ya;
 		point.x += xa;
-		return_pos_map(point.x, point.y, &x_map, &y_map);
-		if (!is_in_map(x_map, y_map, data))
+		return_pos_map(point.x, point.y, &map.x, &map.y);
+		if (!is_in_map(map.x, map.y, data))
 			return (point);
 	}
 	return (point);
