@@ -108,25 +108,31 @@ void			init_and_load_floor_textures(t_data *data)
 	printf("FIN DE INIT FLOOR\n");
 }
 
-t_ray			*init_ray()
+void			init_ray_ar(t_data *dt)
 {
-	t_ray		*new;
+	int			i;
 
-	if (!(new = (t_ray*)malloc(sizeof(t_ray))))
-		malloc_failed("init ray\n"); //malloc error
-	new->deg = 0.0;
-	new->actual_ray = 0;
-	new->coeff = ptfl_set(-1.0, -1.0);
-	new->hori = (t_ptfl){0.0, 0.0};
-	new->verti = (t_ptfl){0.0, 0.0};
-	new->dist_h = 0.0;
-	new->dist_v = 0.0;
-	new->dist_w_d = 0.0;
-	new->offset = 0;
-	new->wall_size = 0.0;
-	new->wall_min = 0;
-	new->wall_max = 0;
-	return (new);
+	i = 0;
+	while (i < WIN_WIDTH)
+	{
+		if (!(dt->ray_ar[i] = (t_ray*)malloc(sizeof(t_ray))))
+			malloc_failed("init ray\n"); //malloc error
+		dt->ray_ar[i]->deg = 0.0;
+		dt->ray_ar[i]->act_ray = 0;
+		dt->ray_ar[i]->coeff_h = ptfl_set(-1.0, -1.0);
+		dt->ray_ar[i]->coeff_v = ptfl_set(-1.0, -1.0);
+		dt->ray_ar[i]->hori = (t_ptfl){0.0, 0.0};
+		dt->ray_ar[i]->verti = (t_ptfl){0.0, 0.0};
+		dt->ray_ar[i]->dist_h = 0.0;
+		dt->ray_ar[i]->dist_v = 0.0;
+		dt->ray_ar[i]->dist_w_d = 0.0;
+		dt->ray_ar[i]->wall_dist = 0.0;
+		dt->ray_ar[i]->offset = 0;
+		dt->ray_ar[i]->wall_size = 0.0;
+		dt->ray_ar[i]->wall_min = 0;
+		dt->ray_ar[i]->wall_max = 0;
+		i++;
+	}
 }
 
 t_cam			*cam_init(t_parse parse)
@@ -156,11 +162,9 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 {
 	t_data		*data;
 	t_point		size;
-	t_point		tiles_size;
 	char		*chr;
 
 	size = pt_set(WIN_WIDTH, WIN_HEIGHT);
-	tiles_size = pt_set(64, 64);
 	if (!(data = (t_data*)malloc(sizeof(t_data))))
 		return (NULL);
 	data->map = map;
@@ -178,30 +182,31 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	size.y -= HUD_HEIGHT;
 	if (!(data->m_img = texture_new(size, data->win->ren)))
 		return (NULL);
-	ft_putstr("DATA INIT 1.0\n");
+//	ft_putstr("DATA INIT 1.0\n");
 	init_and_load_floor_textures(data);
 	init_and_load_wall_textures(data);
 	init_obj_array(data);
 	init_and_load_obj_textures(data);
-	ft_putstr("DATA INIT 2.0\n");
+	init_ray_ar(data);
+//	ft_putstr("DATA INIT 2.0\n");
 	data->musics = NULL;
 	data->sounds = NULL;
 	data->musics = NULL;
 	data->map = map;
-	data->ray = init_ray();
 	size.y = HUD_HEIGHT;
-	ft_putstr("DATA INIT 3.0\n");
+//	ft_putstr("DATA INIT 3.0\n");
 	if (!(data->hud = texture_new(size, data->win->ren)))
 		return (NULL);
 	for (int i = 0; i < size.x * size.y; i++)
 		data->hud->tab_pxl[i] = 0xA600A6;
-	ft_putstr("DATA INIT 4.0\n");
+//	ft_putstr("DATA INIT 4.0\n");
 	data->xmax = parse.nb_elem_line;
 	data->ymax = parse.nb_line;
+	data->act_ray = 0;
 	data->walk_channel = -12;
 	if (sound_init(data) < 0)
 		ft_exit(&data);
-	ft_putstr("DATA INIT 5.0\n");
+//	ft_putstr("DATA INIT 5.0\n");
 	ft_putstr("FIN DE DATA INIT\n");
 	return (data);
 }

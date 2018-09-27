@@ -23,13 +23,15 @@ typedef struct			s_obj
 typedef struct 			s_ray
 {
 	float				deg;
-	int					actual_ray;
-	t_ptfl				coeff;
+	int					act_ray;
+	t_ptfl				coeff_h;
+	t_ptfl				coeff_v;
 	t_ptfl				hori;
 	t_ptfl				verti;
 	float				dist_h;
 	float				dist_v;
 	float				dist_w_d;
+	float				wall_dist;
 	int					offset;
 	float				wall_size;
 	int					wall_min;
@@ -94,11 +96,11 @@ typedef struct			s_cam
 typedef struct			s_data
 {
 	t_win				*win;
-	char				*path;
-	int					xmax;
-	int					ymax;
+	t_cam				*cam;
+	t_ray				*ray;
+	t_ray				*ray_ar[WIN_WIDTH];
+	t_obj				obj_ar[OBJ_NB];
 	Mix_Chunk			**sounds;
-	int					walk_channel;
 	Mix_Music			**musics;
 	t_map				***map;
 	t_texture			*m_img;
@@ -106,10 +108,12 @@ typedef struct			s_data
 	t_texture			**floor_texts;
 	t_texture			**wall_texts;
 	t_texture			**obj_texts;
-	t_cam				*cam;
-	t_ray				*ray;
-	t_obj				obj_ar[OBJ_NB];
+	char				*path;
+	int					xmax;
+	int					ymax;
 	int					endian; //little = 0 and big = 1
+	int					walk_channel;
+	int					act_ray;// index du ray en cours
 	uint8_t				walking;
 }						t_data;
 

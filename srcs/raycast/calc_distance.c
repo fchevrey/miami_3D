@@ -8,9 +8,28 @@ void				return_pos_map(float x, float y, float *x_map, float *y_map)
 	*y_map = (y / SIZE_GRID);
 }
 
-float		return_distance(t_point a, t_ptfl b)
+float				return_distance(t_point a, t_ptfl b)
 {
 	return (sqrt(pow((b.x - a.x),2) + pow((b.y - a.y), 2)));
+}
+
+static void			reinitialize_obj_ar_values(t_data *dt)
+{
+	int i;
+
+	i = 0;
+	while (dt->obj_ar[i].content != -1.0)
+	{
+		dt->obj_ar[i].obj_pt = ptfl_set(-1.0, -1.0);
+		dt->obj_ar[i].obj_pt_map = pt_set(-1, -1);
+		dt->obj_ar[i].content = -1.0;
+		dt->obj_ar[i].x = -1.0;
+		dt->obj_ar[i].obj_dist = -1.0;
+		dt->obj_ar[i].wall_dist = -1.0;
+		dt->obj_ar[i].obj_height = -1.0;
+		dt->obj_ar[i].obj_depth = -1.0;
+		i++;
+	}
 }
 
 static void			check_for_objects(t_data *dt, t_ptfl point, t_ptfl map)
@@ -18,15 +37,8 @@ static void			check_for_objects(t_data *dt, t_ptfl point, t_ptfl map)
 	int				i;
 
 	i = 0;
-	if (dt->ray->actual_ray == 0)
-	{
-		while (dt->obj_ar[i].content != -1.0)
-		{
-			dt->obj_ar[i].content = -1.0;
-			i++;
-		}
-		i = 0;
-	}
+	if (dt->act_ray == 0)
+		reinitialize_obj_ar_values(dt);
 	if (dt->map[(int)map.y][(int)map.x]->content == 2)
 	{
 		while (dt->obj_ar[i].content != -1.0)
@@ -52,87 +64,102 @@ static void			check_for_objects(t_data *dt, t_ptfl point, t_ptfl map)
 ** deg > 0 && deg < 90 || deg > 270
 */
 
-t_ptfl				look_for_collision(t_ptfl point, t_data *data, float xa, float ya)
+t_ptfl				look_for_collision(t_ptfl point, t_data *dt, t_ptfl coeff)
 {
 	t_ptfl			map;
 
 	map = ptfl_set(-1.0, -1.0);
 	return_pos_map(point.x, point.y, &map.x, &map.y);
-	if (!is_in_map(map.x, map.y, data))
+	if (!is_in_map(map.x, map.y, dt))
 		return (point);
-	while (data->map[(int)map.y][(int)map.x]->content == 0 ||data->map[(int)map.y][(int)map.x]->content == 2)
+	while (dt->map[(int)map.y][(int)map.x]->content == 0
+			|| dt->map[(int)map.y][(int)map.x]->content == 2)
 	{
-		check_for_objects(data, point, map);
-		point.y += ya;
-		point.x += xa;
+		check_for_objects(dt, point, map);
+		point.y += coeff.y;
+		point.x += coeff.x;
 		return_pos_map(point.x, point.y, &map.x, &map.y);
-		if (!is_in_map(map.x, map.y, data))
+		if (!is_in_map(map.x, map.y, dt))
 			return (point);
 	}
 	return (point);
 }
 
-t_ptfl				horizon_right(t_data *data, float deg)
+void				horizon_right(t_data *dt, float deg)
 {
 	t_ptfl		point;
-	float		ya;
-	float		xa;
+	t_ptfl		coeff;
 
-	ya = (deg > 0 && deg < 90) ? -SIZE_GRID : SIZE_GRID;
-	xa = SIZE_GRID / tan(deg_to_rad(deg));
-    if (xa < 0)
-        xa = -xa;
+	coeff.y = (deg > 0 && deg < 90) ? -SIZE_GRID : SIZE_GRID;
+	coeff.x = SIZE_GRID / tan(deg_to_rad(deg));
+    if (coeff.x < 0)
+        coeff.x = -coeff.x;
 	if (deg > 0 && deg < 90)
-		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.001;
+		point.y = dt->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.001;
 	else
-		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID + 0.001;
-	point.x = data->cam->crd_real->x + (data->cam->crd_real->y - point.y)
-	/ tan(deg_to_rad(deg));
-	return (look_for_collision(point, data, xa, ya));
+	{
+		point.y = (dt->cam->crd_real->y / SIZE_GRID) * SIZE_GRID
+			+ SIZE_GRID + 0.001;
+	}
+	point.x = dt->cam->crd_real->x + (dt->cam->crd_real->y - point.y) 
+		/ tan(deg_to_rad(deg));
+	dt->ray_ar[dt->act_ray]->coeff_h = coeff;
+	dt->ray_ar[dt->act_ray]->hori = look_for_collision(point, dt, coeff);
 }
 
 /*
 ** deg > 90 && deg < 270
 */
 
-t_ptfl				horizon_left(t_data *data, float deg)
+void				horizon_left(t_data *dt, float deg)
 {
 	t_ptfl		point;
-	float		ya;
-	float		xa;
+	t_ptfl		coeff;
 
-	ya = (deg > 90 && deg < 180) ? -SIZE_GRID : SIZE_GRID;
-	xa = SIZE_GRID / tan(deg_to_rad(deg));
-    if (xa > 0)
-        xa = -xa;
+	coeff.y = (deg > 90 && deg < 180) ? -SIZE_GRID : SIZE_GRID;
+	coeff.x = SIZE_GRID / tan(deg_to_rad(deg));
+    if (coeff.x > 0)
+        coeff.x = -coeff.x;
 	if (deg > 90 && deg < 180)
-		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.001;
+		point.y = dt->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.001;
 	else
-		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID + 0.001;
-	point.x = data->cam->crd_real->x + (data->cam->crd_real->y - point.y) / tan(deg_to_rad(deg));
-	return (look_for_collision(point, data, xa, ya));
+	{
+		point.y = (dt->cam->crd_real->y / SIZE_GRID) * SIZE_GRID
+			+ SIZE_GRID + 0.001;
+	}
+	point.x = dt->cam->crd_real->x + (dt->cam->crd_real->y - point.y)
+		/ tan(deg_to_rad(deg));
+	dt->ray_ar[dt->act_ray]->coeff_h = coeff;
+	dt->ray_ar[dt->act_ray]->hori = look_for_collision(point, dt, coeff);
 }
 
 /*
 ** deg > 0 && deg < 180
 */
 
-t_ptfl				vertical_up(t_data *data, float deg)
+void				vertical_up(t_data *dt, float deg)
 {
+	ft_putstr("VERTICAL UP DEBUT\n");
 	t_ptfl     point;
-	double		ya;
-	double		xa;
+	t_ptfl     coeff;
 
-	xa = (deg < 90) ? SIZE_GRID : -SIZE_GRID;
-	ya = (SIZE_GRID * tan(deg_to_rad(deg))) * -1;
-    if (ya > 0)
-        ya = -ya;
+	ft_putstr("VERTICAL UP 1\n");
+	coeff.x = (deg < 90) ? SIZE_GRID : -SIZE_GRID;
+	coeff.y = (SIZE_GRID * tan(deg_to_rad(deg))) * -1;
+    if (coeff.y > 0)
+        coeff.y = -coeff.y;
 	if (deg > 90)
-		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.001;
+		point.x = dt->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.001;
 	else
-		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID + 0.001;
-	point.y = data->cam->crd_real->y + (data->cam->crd_real->x - point.x) * tan(deg_to_rad(deg));
-	return (look_for_collision(point, data, xa, ya));
+		point.x = dt->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID + 0.001;
+	ft_putstr("VERTICAL UP 2\n");
+	point.y = dt->cam->crd_real->y + (dt->cam->crd_real->x - point.x)
+		* tan(deg_to_rad(deg));
+	ft_putstr("VERTICAL UP 3\n");
+	dt->ray_ar[dt->act_ray]->coeff_v = coeff;
+	ft_putstr("VERTICAL UP 4\n");
+	dt->ray_ar[dt->act_ray]->verti = look_for_collision(point, dt, coeff);
+	ft_putstr("VERTICAL UP FIN\n");
 }
 
 
@@ -140,22 +167,29 @@ t_ptfl				vertical_up(t_data *data, float deg)
 ** deg > 180 && deg < 360
 */
 
-t_ptfl				vertical_down(t_data *data, float deg)
+void				vertical_down(t_data *dt, float deg)
 {
+	ft_putstr("VERTICAL DOWN DEBUT\n");
 	t_ptfl     point;
-	double		ya;
-	double		xa;
+	t_ptfl     coeff;
 
-	xa = (deg > 270) ? SIZE_GRID : -SIZE_GRID;
-	ya = SIZE_GRID * tan(deg_to_rad(deg));
-    if (ya < 0)
-        ya = -ya;
+	ft_putstr("VERTICAL DOWN 1\n");
+	coeff.x = (deg > 270) ? SIZE_GRID : -SIZE_GRID;
+	coeff.y = SIZE_GRID * tan(deg_to_rad(deg));
+    if (coeff.y < 0)
+        coeff.y = -coeff.y;
 	if (deg < 270)
-		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.001;
+		point.x = dt->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.001;
 	else
-		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID;
-	point.y = data->cam->crd_real->y + (data->cam->crd_real->x - point.x) * tan(deg_to_rad(deg));
-	return (look_for_collision(point, data, xa, ya));
+		point.x = dt->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID;
+	ft_putstr("VERTICAL DOWN 2\n");
+	point.y = dt->cam->crd_real->y + (dt->cam->crd_real->x - point.x)
+		* tan(deg_to_rad(deg));
+	ft_putstr("VERTICAL DOWN 3\n");
+	dt->ray_ar[dt->act_ray]->coeff_v = coeff;
+	ft_putstr("VERTICAL DOWN 4\n");
+	dt->ray_ar[dt->act_ray]->verti = look_for_collision(point, dt, coeff);
+	ft_putstr("VERTICAL DOWN FIN\n");
 }
 
 int				set_FLOAToffset(t_ptfl hori, t_ptfl verti, float dist_h, float dist_v)
@@ -208,13 +242,13 @@ static t_ptfl				special_cases(t_data *data, float deg)
 	return (look_for_collision(point, data, xa, ya));
 }*/
 
-float			cast_ray(t_data *dt)
+void			cast_ray(t_data *dt, t_ray *act_ray)
 {
-	dt->ray->hori = (t_ptfl){0,0};
-	dt->ray->verti = dt->ray->hori;
+	act_ray->hori = ptfl_set(0.0, 0.0);
+	act_ray->verti = ptfl_set(0.0, 0.0);
     /* init a -1 si jamais je passe que sur les  4 premier if */
-    dt->ray->dist_h = -1;
-    dt->ray->dist_v = -1;
+	act_ray->dist_h = -1;
+	act_ray->dist_v = -1;
 /*    if ((dt->ray->deg >= 89.99 && dt->ray->deg < 90.5) || (dt->ray->deg >= 269.99 && dt->ray->deg < 270.5))
 	{
 		dt->ray->verti = special_cases(dt, dt->ray->deg);
@@ -225,22 +259,39 @@ float			cast_ray(t_data *dt)
 		dt->ray->hori = special_cases(dt, dt->ray->deg);
 		return (dt->ray->dist_h = return_distance(*dt->cam->crd_real, dt->ray->hori));
 	}*/
+	ft_putstr("CAST RAY 1\n");
+	ft_putnbr(act_ray->deg);
     /* Check horizon */
-    if ((dt->ray->deg > 0 && dt->ray->deg < 90) || (dt->ray->deg > 270))
-        dt->ray->hori = horizon_right(dt, dt->ray->deg);
-    else if (dt->ray->deg > 90 && dt->ray->deg < 270)
-        dt->ray->hori = horizon_left(dt, dt->ray->deg);
+    if ((act_ray->deg > 0 && act_ray->deg < 90) || (act_ray->deg > 270))
+        horizon_right(dt, act_ray->deg);
+//	ft_putstr("CAST RAY 2\n");
+    else if (act_ray->deg > 90 && act_ray->deg < 270)
+        horizon_left(dt, act_ray->deg);
+	ft_putstr("CAST RAY 2\n");
     /* Check vertical */
-    if (dt->ray->deg > 0 && dt->ray->deg < 180)
-        dt->ray->verti = vertical_up(dt, dt->ray->deg);
-    else if (dt->ray->deg > 180)
-        dt->ray->verti = vertical_down(dt, dt->ray->deg);
-	dt->ray->dist_h = return_distance(*dt->cam->crd_real, dt->ray->hori);
-	dt->ray->dist_v = return_distance(*dt->cam->crd_real, dt->ray->verti);
+	ft_putstr("CAST RAY EN PLUS\n");
+//	if (act_ray->deg > 0 && act_ray->deg < 180)
+//	{
+		ft_putstr("CAST RAY 3\n");
+ //       vertical_up(dt, act_ray->deg);
+//	}
+  //  /*else */if (dt->ray->deg > 180)
+//	{
+//		ft_putstr("CAST RAY 4\n");
+//		vertical_down(dt, act_ray->deg);
+//	}
+	act_ray->dist_h = return_distance(*dt->cam->crd_real, act_ray->hori);
+	ft_putstr("CAST RAY 4\n");
+	act_ray->dist_v = return_distance(*dt->cam->crd_real, act_ray->verti);
+	ft_putstr("CAST RAY 5\n");
     /* Choisi la distance la plus petite */
-    if (dt->ray->dist_h < 0 || dt->ray->dist_v < dt->ray->dist_h)
-        return (dt->ray->dist_v);
-	else if (dt->ray->dist_v < 0 || dt->ray->dist_h < dt->ray->dist_v)
-        return (dt->ray->dist_h);
-	return (dt->ray->dist_h);
+    if (act_ray->dist_h < 0 || act_ray->dist_v < act_ray->dist_h)
+        act_ray->dist_w_d = act_ray->dist_v;
+//	ft_putstr("CAST RAY 8\n");
+	else if (act_ray->dist_v < 0 || act_ray->dist_h < act_ray->dist_v)
+        act_ray->dist_w_d = act_ray->dist_h;
+//	ft_putstr("CAST RAY 9\n");
+	else
+        act_ray->dist_w_d = act_ray->dist_h;
+	ft_putstr("CAST RAY 6\n");
 }

@@ -58,6 +58,8 @@ int		sound_init(t_data *data)
 {
 	char		**songs;
 
+	data->musics = NULL;
+	data->sounds = NULL;
 	if (!(songs = ft_strsplit("music01.wav\fmusic02.wav", '\f')))
 		return (-1);
 	load_music(data, songs);
