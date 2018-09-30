@@ -35,15 +35,15 @@ void	next_song2()
 void	sound(t_data *data)
 {
 	static int	i = 0;
-
-	if (!data || !data->sounds || !data->musics)
+ 
+	if (Mix_PlayingMusic() == 1 ||!data || !data->sounds || !data->musics)
 		return ;
-	if (i > 4)
+	if (i > 3)
 	{
 		i = 0;
-		Mix_PauseMusic();
+		/*Mix_PauseMusic();
 		printf("Music stopped\n");
-		return ;
+		return ;*/
 	}
 	if (data->musics)
 	{
@@ -53,7 +53,7 @@ void	sound(t_data *data)
 			printf("error : %s\n", Mix_GetError());
 		}
 		//Mix_HookMusic(&next_song, data);
-		Mix_HookMusicFinished(&next_song2);
+		//Mix_HookMusicFinished(&next_song2);
 	}
 	i++;
 }

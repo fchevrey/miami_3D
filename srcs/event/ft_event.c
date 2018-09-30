@@ -54,6 +54,7 @@ void	ft_event(t_data *data)
 		}
 		if (data->walking != MOVE_NONE)
 			move(data);
+		sound(data);
 	}
 	ft_exit(&data);
 }
