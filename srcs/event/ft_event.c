@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "event.h"
+#include <time.h>
 
 /*static void		key_up(SDL_Event *event, t_data *data)
 {
@@ -28,14 +29,18 @@
 
 void	ft_event(t_data *data)
 {
-	SDL_Event	event;
-	int			quit;
+	SDL_Event		event;
+	int				quit;
+	double 			delta;
+	const double	fixdelta = 0.02;	
+	time_t			last_time;
 
 	quit = 0;
 	data->walking = 0;
+	time(&last_time);
 	while (!quit)
 	{
-		if (SDL_WaitEventTimeout(&event, 50))
+		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
 				quit = 1;
@@ -52,9 +57,19 @@ void	ft_event(t_data *data)
 				ft_keyboard(event.key.keysym.sym, event.key.repeat, &event, data);
 			}
 		}
-		if (data->walking != MOVE_NONE)
-			move(data);
-		sound(data);
+		//tim _ deltaTime
+		delta += difftime(last_time, time(NULL));
+		//physics checks
+		printf("dela = %f\n", delta);
+		if (delta >= fixdelta)
+		{
+			if (data->walking != MOVE_NONE)
+				move(data, (float)delta);
+			sound(data); 
+			delta = 0.0;
+		}
+		time(&last_time);
+		//render
 	}
 	ft_exit(&data);
 }

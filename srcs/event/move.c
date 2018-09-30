@@ -1,17 +1,20 @@
 #include "event.h"
 #include "raycast.h"
 
-void	move(t_data *data)
+void	move(t_data *data, float deltatime)
 {
+	const int speed = 150;
+
+	printf(" deltatime = %f\n", deltatime);
 	check_move(data);
 	if (data->walking == MOVE_UP)
-		move_foreward(data);
+		move_foreward(data, deltatime, speed);
 	else if (data->walking == MOVE_DOWN)
-		move_backward(data);
+		move_backward(data, deltatime, speed);
 	else if (data->walking == MOVE_LEFT)
-		move_left(data);
+		move_left(data, deltatime, speed);
 	else if (data->walking == MOVE_RIGHT)
-		move_right(data);
+		move_right(data, deltatime, speed);
 }
 
 static void		play_walk_song(t_data *data)
@@ -24,7 +27,7 @@ static void		play_walk_song(t_data *data)
 			Mix_Resume(data->walk_channel);
 }
 
-void			move_foreward(t_data *data)
+void			move_foreward(t_data *data, float deltatime, const int speed)
 {
 	t_cam		*cam;
 	float		rad;
@@ -36,9 +39,9 @@ void			move_foreward(t_data *data)
 	data->walking = MOVE_UP;
 	cam = data->cam;
 	rad = deg_to_rad(cam->theta);
-	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * 15);
+	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * speed * deltatime);
 	play_walk_song(data);
-	new_pos.y = cam->crd_real->y - (int)(sinf(rad) * 15);
+	new_pos.y = cam->crd_real->y - (int)(sinf(rad) * speed * deltatime);
     if ((cam->theta > 0 && cam->theta < 90) || (cam->theta > 270))
         wall_h = horizon_right(data, cam->theta, 1);
     else //(cam->theta >= 90 && cam->theta < 270)
@@ -72,7 +75,7 @@ void			move_foreward(t_data *data)
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
-void	move_backward(t_data *data)
+void	move_backward(t_data *data, float deltatime, const int speed)
 {
 	t_cam		*cam;
 	float		rad;
@@ -80,18 +83,18 @@ void	move_backward(t_data *data)
 	data->walking = MOVE_DOWN;
 	cam = data->cam;
 	rad = deg_to_rad(cam->theta);
-	cam->crd_real->x -= (cosf(rad) * 15);
+	cam->crd_real->x -= (cosf(rad) * speed * deltatime);
 	//if (cam->theta < 90 || cam->theta > 270)
 	//	cam->crd_real->y -= (int)(sinf(rad) * 10);
 	//else
-		cam->crd_real->y += (sinf(rad) * 15);
+		cam->crd_real->y += (sinf(rad) * speed * deltatime);
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	play_walk_song(data);
 	loop(data);
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
-void	move_left(t_data *data)
+void	move_left(t_data *data, float deltatime, const int speed)
 {
 	t_cam		*cam;
 	float		theta;
@@ -104,12 +107,12 @@ void	move_left(t_data *data)
 	if (theta >= 360)
 		theta -= 360;
 	rad = deg_to_rad(theta);
-	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * 15);
+	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * speed * deltatime);
 	play_walk_song(data);
 	if (theta < 54 || theta > 306)
-		new_pos.y = cam->crd_real->y + (int)(sinf(rad) * 15);
+		new_pos.y = cam->crd_real->y + (int)(sinf(rad) * speed * deltatime);
 	else
-		new_pos.y = cam->crd_real->y - (int)(sinf(rad) * 15);
+		new_pos.y = cam->crd_real->y - (int)(sinf(rad) * speed * deltatime);
 	new_pos = check_collision(*cam->crd_real, new_pos, data);
 	cam->crd_real->x = new_pos.x;
 	cam->crd_real->y = new_pos.y;
@@ -118,7 +121,7 @@ void	move_left(t_data *data)
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
-void	move_right(t_data *data)
+void	move_right(t_data *data, float deltatime, const int speed)
 {
 	t_cam		*cam;
 	float		theta;
@@ -131,12 +134,12 @@ void	move_right(t_data *data)
 	if (theta < 0)
 		theta += 360;
 	rad = deg_to_rad(theta);
-	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * 15);
+	new_pos.x = cam->crd_real->x + (int)(cosf(rad) * speed * deltatime);
 	play_walk_song(data);
 	if (theta < 54 || theta > 306)
-		new_pos.y = cam->crd_real->y + (int)(sinf(rad) * 15);
+		new_pos.y = cam->crd_real->y + (int)(sinf(rad) * speed * deltatime);
 	else
-		new_pos.y = cam->crd_real->y - (int)(sinf(rad) * 15);
+		new_pos.y = cam->crd_real->y - (int)(sinf(rad) * speed);
 	new_pos = check_collision(*cam->crd_real, new_pos, data);
 	cam->crd_real->x = new_pos.x;
 	cam->crd_real->y = new_pos.y;

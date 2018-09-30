@@ -27,11 +27,11 @@ t_funar_keyb	*fill_funar_keypress(int *size);
 /*
 ** functions that modify data
 */
-void			move(t_data *data);
-void			move_foreward(t_data *data);
-void			move_backward(t_data *data);
-void			move_left(t_data *data);
-void			move_right(t_data *data);
+void			move(t_data *data, float deltatime);
+void			move_foreward(t_data *data, float deltatime, const int speed);
+void			move_backward(t_data *data, float deltatime, const int speed);
+void			move_left(t_data *data, float deltatime, const int speed);
+void			move_right(t_data *data, float deltatime, const int speed);
 void			check_move(t_data *data);
 void			look_left_from_key(t_data *data);
 void			look_right_from_key(t_data *data);
