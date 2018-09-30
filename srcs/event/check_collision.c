@@ -28,14 +28,14 @@ static t_point		huge_gradient(t_point pt1, t_point pt2, float gradient,
 		crd.x = pt1.x + (int)((crd.y - pt1.y) / gradient);
 		if ((ret = check_map(crd, data)) > 0)
 		{
-			printf("wall at x = %d, y = %d\n", crd.x, crd.y);
+			//printf("wall at x = %d, y = %d\n", crd.x, crd.y);
 			crd.x = pt1.x - (int)((crd.y - pt1.y) / gradient);
 			crd.y -= incr;
 			return (crd);
 		}
 		else if (ret == -1)
 		{
-			printf("! exit map !crd.x = %d y = %d  content = %d\n", crd.x, crd.y, ret);
+			//printf("! exit map !crd.x = %d y = %d  content = %d\n", crd.x, crd.y, ret);
 			crd.y -= incr;
 			crd.x = pt1.x - (int)((crd.y - pt1.y) / gradient);
 			return (crd);
@@ -65,7 +65,7 @@ static t_point		low_gradient(t_point pt1, t_point pt2, float gradient,
 		crd.y = pt1.y + (int)(gradient * (crd.x - pt1.x));
 		if ((ret = check_map(crd, data)) > 0)
 		{
-			printf("low_grad wall at x = %d, y = %d\n", crd.x, crd.y);
+			//printf("low_grad wall at x = %d, y = %d\n", crd.x, crd.y);
 			crd.y = pt1.y - (int)(gradient * (crd.x - pt1.x));
 			crd.x -= incr;
 			return (crd);

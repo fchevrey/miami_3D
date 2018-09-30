@@ -3,9 +3,9 @@
 
 void	move(t_data *data, float deltatime)
 {
-	const int speed = 150;
+	const int speed = 50;
 
-	printf(" deltatime = %f\n", deltatime);
+
 	check_move(data);
 	if (data->walking == MOVE_UP)
 		move_foreward(data, deltatime, speed);
@@ -53,8 +53,8 @@ void			move_foreward(t_data *data, float deltatime, const int speed)
         wall_v = vertical_down(data, cam->theta, 1);
     dist.x = return_distance(*cam->crd_real, wall_h);
     dist.y = return_distance(*cam->crd_real, wall_v);
-    printf("wall_v.x = %f .y = %f \nwall_h.x = %f y = %f \n", wall_v.x, wall_v.y, wall_h.x, wall_h.y);
-    printf("dist horizontal %f vertical %f\n", dist.x, dist.y);
+    //printf("wall_v.x = %f .y = %f \nwall_h.x = %f y = %f \n", wall_v.x, wall_v.y, wall_h.x, wall_h.y);
+    //printf("dist horizontal %f vertical %f\n", dist.x, dist.y);
 	if (dist.x < 20.0 && dist.y > 20.0)
 		{
 			cam->crd_real->x = new_pos.x;
@@ -71,7 +71,6 @@ void			move_foreward(t_data *data, float deltatime, const int speed)
 		cam->crd_real->y = new_pos.y;
 	}
 	set_real_to_map(cam->crd_real, cam->crd_map);
-	loop(data);
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
@@ -90,7 +89,6 @@ void	move_backward(t_data *data, float deltatime, const int speed)
 		cam->crd_real->y += (sinf(rad) * speed * deltatime);
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	play_walk_song(data);
-	loop(data);
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
@@ -117,7 +115,6 @@ void	move_left(t_data *data, float deltatime, const int speed)
 	cam->crd_real->x = new_pos.x;
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
-	loop(data);
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
@@ -139,12 +136,11 @@ void	move_right(t_data *data, float deltatime, const int speed)
 	if (theta < 54 || theta > 306)
 		new_pos.y = cam->crd_real->y + (int)(sinf(rad) * speed * deltatime);
 	else
-		new_pos.y = cam->crd_real->y - (int)(sinf(rad) * speed);
+		new_pos.y = cam->crd_real->y - (int)(sinf(rad) * speed * deltatime);
 	new_pos = check_collision(*cam->crd_real, new_pos, data);
 	cam->crd_real->x = new_pos.x;
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
-	loop(data);
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 

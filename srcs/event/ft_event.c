@@ -11,65 +11,53 @@
 /* ************************************************************************** */
 
 #include "event.h"
-#include <time.h>
 
-/*static void		key_up(SDL_Event *event, t_data *data)
+static int 	ft_event(SDL_Event *event, t_data *data)
 {
-	int		key;
-
-	key = event->key.keysym.sym;
-	if (!data)
-		return ;
-	if (key == SDLK_UP || key == SDLK_DOWN)
+	while (SDL_PollEvent(event))
 	{
-		data->walking = MOVE_NONE;
-		Mix_Pause(data->walk_channel);
+		if (event->type == SDL_QUIT)
+			return (1);
+		else if (event->type == SDL_KEYDOWN || event->type == SDL_KEYUP)
+			ft_keyboard(event->key.keysym.sym, event->key.repeat, event, data);
+		else if (event->type == SDL_MOUSEMOTION)
+			ft_mouse(event->motion.x, event->motion.y, data);
+		else if (event->type == SDL_MOUSEWHEEL)
+			ft_mouse_wheel(event->wheel.y, data);
+		else if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_CLOSE)
+		{
+			event->type = SDL_KEYDOWN;
+			event->key.keysym.sym = SDLK_ESCAPE;
+			ft_keyboard(event->key.keysym.sym, event->key.repeat, event, data);
+		}
 	}
-}*/
+	return (0);
+}
 
-void	ft_event(t_data *data)
+void			game_loop(t_data *data)
 {
-	SDL_Event		event;
-	int				quit;
-	double 			delta;
-	const double	fixdelta = 0.02;	
-	time_t			last_time;
+	SDL_Event 			event;
+	int					quit;
+	const unsigned int	fixdelta = 20;	
+	unsigned int 		last_time;
+	unsigned int 		delta;
 
 	quit = 0;
 	data->walking = 0;
-	time(&last_time);
+	last_time = SDL_GetTicks();
 	while (!quit)
 	{
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT)
-				quit = 1;
-			else if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
-				ft_keyboard(event.key.keysym.sym, event.key.repeat, &event, data);
-			else if (event.type == SDL_MOUSEMOTION)
-				ft_mouse(event.motion.x, event.motion.y, data);
-			else if (event.type == SDL_MOUSEWHEEL)
-				ft_mouse_wheel(event.wheel.y, data);
-			else if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)
-			{
-				event.type = SDL_KEYDOWN;
-				event.key.keysym.sym = SDLK_ESCAPE;
-				ft_keyboard(event.key.keysym.sym, event.key.repeat, &event, data);
-			}
-		}
-		//tim _ deltaTime
-		delta += difftime(last_time, time(NULL));
-		//physics checks
-		printf("dela = %f\n", delta);
+		quit = ft_event(&event, data);
+		delta += SDL_GetTicks() - last_time;
 		if (delta >= fixdelta)
 		{
 			if (data->walking != MOVE_NONE)
-				move(data, (float)delta);
+				move(data, ((float)delta /100));
 			sound(data); 
 			delta = 0.0;
 		}
-		time(&last_time);
-		//render
+		last_time = SDL_GetTicks();
+		loop(data);
 	}
 	ft_exit(&data);
 }

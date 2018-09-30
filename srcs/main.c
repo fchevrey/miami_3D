@@ -95,7 +95,7 @@ int				main(int ac, char **av)
 		/* Il fera 32bits et sera sans compression RLE */
 		ft_load_texture("assets/textures/doom.tga", data->b_and_g_tiles);
 		loop(data);
-		ft_event(data);
+		game_loop(data);
 	}
 	else
 		ft_putendl("usage : ./wolf3d 'filename'");

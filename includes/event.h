@@ -15,7 +15,7 @@
 
 #include "main.h"
 
-void			ft_event(t_data *data);
+void			game_loop(t_data *data);
 int				ft_mouse(int x, int y, t_data *data);
 int				ft_keyboard(int key, int repeat, SDL_Event *event, t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
