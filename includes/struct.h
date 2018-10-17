@@ -97,7 +97,6 @@ typedef struct			s_data
 {
 	t_win				*win;
 	t_cam				*cam;
-	t_ray				*ray;
 	t_ray				*ray_ar[WIN_WIDTH];
 	t_obj				obj_ar[OBJ_NB];
 	Mix_Chunk			**sounds;
