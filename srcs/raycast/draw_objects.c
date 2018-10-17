@@ -39,7 +39,8 @@ static void		calc_obj_height(t_data *dt)
 	i = 0;
 	while (dt->obj_ar[i].content != -1)
 	{
-		dt->obj_ar[i].obj_height = data->cam->len_cam * (OBJ_H / dt->obj_ar[i].obj_dist);
+		dt->obj_ar[i].obj_height = data->cam->len_cam * (OBJ_H
+				/ dt->obj_ar[i].obj_dist);
 		i++;
 	}
 }

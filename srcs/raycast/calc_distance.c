@@ -256,28 +256,20 @@ void			cast_ray(t_data *dt, t_ray *act_ray)
     /* Check horizon */
     if ((act_ray->deg > 0 && act_ray->deg < 90) || (act_ray->deg > 270))
         horizon_right(dt, act_ray->deg);
-//	ft_putstr("CAST RAY 2\n");
     else if (act_ray->deg > 90 && act_ray->deg < 270)
         horizon_left(dt, act_ray->deg);
     /* Check vertical */
 	if (act_ray->deg > 0 && act_ray->deg < 180)
-	{
         vertical_up(dt, act_ray->deg);
-	}
     else if (act_ray->deg > 180)
-	{
-		ft_putstr("CAST RAY 4\n");
 		vertical_down(dt, act_ray->deg);
-	}
 	act_ray->dist_h = return_distance(*dt->cam->crd_real, act_ray->hori);
 	act_ray->dist_v = return_distance(*dt->cam->crd_real, act_ray->verti);
     /* Choisi la distance la plus petite */
     if (act_ray->dist_h < 0 || act_ray->dist_v < act_ray->dist_h)
         act_ray->dist_w_d = act_ray->dist_v;
-//	ft_putstr("CAST RAY 8\n");
 	else if (act_ray->dist_v < 0 || act_ray->dist_h < act_ray->dist_v)
         act_ray->dist_w_d = act_ray->dist_h;
-//	ft_putstr("CAST RAY 9\n");
 	else
         act_ray->dist_w_d = act_ray->dist_h;
 }

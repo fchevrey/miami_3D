@@ -170,31 +170,26 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	size.y -= HUD_HEIGHT;
 	if (!(data->m_img = texture_new(size, data->win->ren)))
 		return (NULL);
-//	ft_putstr("DATA INIT 1.0\n");
 	init_and_load_floor_textures(data);
 	init_and_load_wall_textures(data);
 	init_obj_array(data);
 	init_and_load_obj_textures(data);
 	init_ray_ar(data);
-//	ft_putstr("DATA INIT 2.0\n");
 	data->musics = NULL;
 	data->sounds = NULL;
 	data->musics = NULL;
 	data->map = map;
 	size.y = HUD_HEIGHT;
-//	ft_putstr("DATA INIT 3.0\n");
 	if (!(data->hud = texture_new(size, data->win->ren)))
 		return (NULL);
 	for (int i = 0; i < size.x * size.y; i++)
 		data->hud->tab_pxl[i] = 0xA600A6;
-//	ft_putstr("DATA INIT 4.0\n");
 	data->xmax = parse.nb_elem_line;
 	data->ymax = parse.nb_line;
 	data->act_ray = 0;
 	data->walk_channel = -12;
 	if (sound_init(data) < 0)
 		ft_exit(&data);
-//	ft_putstr("DATA INIT 5.0\n");
 	ft_putstr("FIN DE DATA INIT\n");
 	return (data);
 }

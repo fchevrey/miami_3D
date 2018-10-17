@@ -17,7 +17,7 @@ void				ft_ciel_sol(t_data *dt, t_ray *act_ray)
         y++;
     }
 }
-/*
+
 static t_texture	*wall_text_cardinal_position(t_data *dt)
 {
 	t_texture		*act_text;
@@ -35,26 +35,26 @@ static t_texture	*wall_text_cardinal_position(t_data *dt)
 			&& dt->ray_ar[dt->act_ray]->dist_v < dt->ray_ar[dt->act_ray]->dist_h)
 		act_text = dt->wall_texts[3];
 	return (act_text);
-}*/
+}
 
 static void			display_wall(t_data *dt, t_ray *act_ray)
 {
 	t_point			px_to_color;
-//	float			coeff;
-//	t_texture		*act_text;
-//	t_color			color;
+	float			coeff;
+	t_texture		*act_text;
+	t_color			color;
 
 	px_to_color = pt_set(dt->act_ray, act_ray->wall_min);
-//	act_text = wall_text_cardinal_position(dt);
-//	coeff = (float)act_text->size.y / act_ray->wall_size;
-//	set_offset(act_ray, act_text);
+	act_text = wall_text_cardinal_position(dt);
+	coeff = (float)act_text->size.y / act_ray->wall_size;
+	set_offset(act_ray, act_text);
 	 while (px_to_color.y < act_ray->wall_max)
 	{
-/*		color.c = get_pixel((t_point){act_ray->offset, (int)(coeff * (float)(px_to_color.y - act_ray->wall_min))}, act_text);
+		color.c = get_pixel((t_point){act_ray->offset,
+		(int)(coeff * (float)(px_to_color.y - act_ray->wall_min))}, act_text);
 		if (color.argb.a == 0)
-			color.c = get_pixel(px_to_color, dt->m_img);*/
-        pt_to_tex(px_to_color, dt->m_img, 0x00009900);
-//		pt_to_tex(px_to_color, dt->m_img, color.c);
+			color.c = get_pixel(px_to_color, dt->m_img);
+		pt_to_tex(px_to_color, dt->m_img, color.c);
 		px_to_color.y++;
 	}
 }
