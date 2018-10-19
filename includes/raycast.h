@@ -9,7 +9,7 @@
 
 //void		ft_ciel_sol(t_data *data);
 void            display_column(t_data *dt, t_ray *act_ray);
-void            display_obj(t_data *data);
+void            display_objects(t_data *data);
 
 /*
 ** Detect wall, return distance

@@ -16,6 +16,8 @@ void			init_obj_array(t_data *dt)
 		dt->obj_ar[i].wall_dist = -1;
 		dt->obj_ar[i].obj_height = -1;
 		dt->obj_ar[i].obj_depth = -1;
+		dt->obj_ar[i].obj_width = -1;
+		dt->obj_ar[i].ray_nb = -1;
 		i++;
 	}
 }

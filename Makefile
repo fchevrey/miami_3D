@@ -23,7 +23,7 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		event/acrobatic.c \
 		\
 		raycast/calc_distance.c raycast/draw_wall.c raycast/ray.c \
-		raycast/calc_offset.c \
+		raycast/calc_offset.c raycast/draw_objects.c \
 		\
 		math/deg_rad.c \
 		\

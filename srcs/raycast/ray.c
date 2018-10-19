@@ -21,11 +21,6 @@ static void		set_act_ray_wall_values(t_data *dt, t_ray *act_ray)
 		* cos(fabs(deg_to_rad(act_ray->deg - dt->cam->theta)));
 	act_ray->wall_size = dt->cam->len_cam
 		* (WALL_H / act_ray->wall_dist);
-	ft_putstr("actual ray wall size :");
-	ft_putnbr(act_ray->wall_size); ft_putstr(" ; ");
-	ft_putstr("actual ray wall dist :");
-	ft_putnbr(act_ray->wall_dist);
-	ft_putstr("\n");
 }
 
 void			raycasting(t_data *dt)
@@ -34,7 +29,6 @@ void			raycasting(t_data *dt)
 	int			tmp;
 	int			i;
 
-	ft_putstr("RAYCASTING\n");
 	i = 0;
 	dt->act_ray = 0;
 	dt->ray_ar[dt->act_ray]->deg = dt->cam->theta + FOV / 2;
@@ -46,8 +40,6 @@ void			raycasting(t_data *dt)
 		tmp = dt->obj_ar[i].content;
 		cast_ray(dt, dt->ray_ar[dt->act_ray]);
 		set_act_ray_wall_values(dt, dt->ray_ar[dt->act_ray]);
-	ft_putstr("actual ray number :");
-	ft_putnbr(dt->act_ray); ft_putstr("\n");
 		dt->ray_ar[dt->act_ray]->wall_dist = dt->ray_ar[dt->act_ray]->dist_w_d
 			* cos(fabs(deg_to_rad(dt->ray_ar[dt->act_ray]->deg - dt->cam->theta)));
 		dt->ray_ar[dt->act_ray]->wall_size = dt->cam->len_cam
@@ -61,24 +53,21 @@ void			raycasting(t_data *dt)
 		if (((dt->act_ray + 1) < WIN_WIDTH) && ((dt->ray_ar[dt->act_ray]->deg - dt->cam->min_theta) < 0))
 		{
 			dt->ray_ar[dt->act_ray + 1]->deg = 360 + (dt->ray_ar[dt->act_ray]->deg - dt->cam->min_theta);
-			ft_putstr("Deg < 0\n");
 		}
 		else if ((dt->act_ray + 1) < WIN_WIDTH)
 		{
 			dt->ray_ar[dt->act_ray + 1]->deg = (dt->ray_ar[dt->act_ray]->deg - dt->cam->min_theta);
-			ft_putstr("Deg > 0\n");
 		}
-		printf("dist_H = %f; dist_V = %f; deg = %f ; WIN_WIDTH = %d; min_theta = %f\n", dt->ray_ar[dt->act_ray]->dist_h, dt->ray_ar[dt->act_ray]->dist_v, dt->ray_ar[dt->act_ray]->deg, WIN_WIDTH, dt->cam->min_theta);
+//		printf("dist_H = %f; dist_V = %f; deg = %f ; WIN_WIDTH = %d; min_theta = %f\n", dt->ray_ar[dt->act_ray]->dist_h, dt->ray_ar[dt->act_ray]->dist_v, dt->ray_ar[dt->act_ray]->deg, WIN_WIDTH, dt->cam->min_theta);
 		dt->act_ray++;
 	}
-	ft_putstr("RAYCASTING FIN\n");
 }
 
 void        display(t_data *dt)
 {
 	raycasting(dt);
 	draw_mini_map2(dt);
-//	display_obj(dt);
+	display_objects(dt);
 	put_tex_to_ren(dt->m_img, dt->win->ren, (t_point){0, 0}, 0);
 	put_tex_to_ren(dt->wall_texts[0], dt->win->ren, (t_point){192, 0}, 0);
 	put_tex_to_ren(dt->wall_texts[1], dt->win->ren, (t_point){0, 0}, 0);

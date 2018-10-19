@@ -28,6 +28,8 @@ static void			reinitialize_obj_ar_values(t_data *dt)
 		dt->obj_ar[i].wall_dist = -1.0;
 		dt->obj_ar[i].obj_height = -1.0;
 		dt->obj_ar[i].obj_depth = -1.0;
+		dt->obj_ar[i].obj_width = -1.0;
+		dt->obj_ar[i].ray_nb = -1.0;
 		i++;
 	}
 }
@@ -48,15 +50,19 @@ static void			check_for_objects(t_data *dt, t_ptfl point, t_ptfl map)
 			dt->obj_ar[i].obj_pt = point;
 			dt->obj_ar[i].obj_pt_map = pt_set((int)map.x, (int)map.y);
 			dt->obj_ar[i].content = dt->map[(int)map.y][(int)map.x]->content;
+			dt->obj_ar[i].ray_nb = dt->act_ray;
+			dt->obj_ar[i].obj_width += 1;
 		}
 		else if ((i > 0) && (((int)map.x != (int)dt->obj_ar[i - 1].obj_pt_map.x) || (int)map.y != (int)dt->obj_ar[i - 1].obj_pt_map.y))
 		{
 			dt->obj_ar[i].obj_pt = point;
 			dt->obj_ar[i].obj_pt_map = pt_set((int)map.x, (int)map.y);
 			dt->obj_ar[i].content = dt->map[(int)map.y][(int)map.x]->content;
+			dt->obj_ar[i].ray_nb = dt->act_ray;
+			dt->obj_ar[i].obj_width += 1;
 		}
 		else
-			return ;
+			dt->obj_ar[i].obj_width += 1;
 	}
 }
 
@@ -87,7 +93,7 @@ t_ptfl				look_for_collision(t_ptfl point, t_data *dt, t_ptfl coeff)
 
 void				horizon_right(t_data *dt, float deg)
 {
-	ft_putstr("HORIZON RIGHT DEBUT\n");
+//	ft_putstr("HORIZON RIGHT DEBUT\n");
 	t_ptfl		point;
 	t_ptfl		coeff;
 
@@ -114,7 +120,7 @@ void				horizon_right(t_data *dt, float deg)
 
 void				horizon_left(t_data *dt, float deg)
 {
-	ft_putstr("HORIZON LEFT DEBUT\n");
+//	ft_putstr("HORIZON LEFT DEBUT\n");
 	t_ptfl		point;
 	t_ptfl		coeff;
 
@@ -141,7 +147,7 @@ void				horizon_left(t_data *dt, float deg)
 
 void				vertical_up(t_data *dt, float deg)
 {
-	ft_putstr("VERTICAL UP DEBUT\n");
+//	ft_putstr("VERTICAL UP DEBUT\n");
 	t_ptfl     point;
 	t_ptfl     coeff;
 
@@ -166,7 +172,7 @@ void				vertical_up(t_data *dt, float deg)
 
 void				vertical_down(t_data *dt, float deg)
 {
-	ft_putstr("VERTICAL DOWN DEBUT\n");
+//	ft_putstr("VERTICAL DOWN DEBUT\n");
 	t_ptfl     point;
 	t_ptfl     coeff;
 
@@ -251,8 +257,8 @@ void			cast_ray(t_data *dt, t_ray *act_ray)
 		dt->ray->hori = special_cases(dt, dt->ray->deg);
 		return (dt->ray->dist_h = return_distance(*dt->cam->crd_real, dt->ray->hori));
 	}*/
-	ft_putstr("CAST RAY\n");
-	ft_putnbr(act_ray->deg);
+//	ft_putstr("CAST RAY\n");
+//	ft_putnbr(act_ray->deg);
     /* Check horizon */
     if ((act_ray->deg > 0 && act_ray->deg < 90) || (act_ray->deg > 270))
         horizon_right(dt, act_ray->deg);

@@ -12,10 +12,12 @@ typedef struct			s_obj
 	int					content;
 	int					index;
 	int					x;
-	int					obj_dist;
-	int					wall_dist;
-	int					obj_height;
-	int					obj_depth;
+	float				obj_dist;
+	float				wall_dist;
+	float				obj_height;
+	float				obj_width;
+	float				obj_depth;
+	int					ray_nb;
 //	struct s_obj		*next;
 //	struct s_obj		*prev;
 }						t_obj;
