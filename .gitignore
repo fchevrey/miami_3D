@@ -16,6 +16,11 @@ demo/
 **/**.o
 **/**/**.o
 **/**/**/**.o
+*.lib
+
+#IDE files
+*.sln
+*.vcxproj*
 
 #directories
 sdl2/
@@ -23,6 +28,7 @@ sdl2_mixer/
 sdl2_ttf/
 vorbis/
 ogg/
+SDL2/
 
 #during the developpement
 assets/sounds
