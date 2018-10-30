@@ -23,6 +23,28 @@ static void		set_act_ray_wall_values(t_data *dt, t_ray *act_ray)
 		* (WALL_H / act_ray->wall_dist);
 }
 
+static void			reinitialize_obj_ar_values(t_data *dt)
+{
+	int i;
+
+	i = 0;
+	dt->last_obj = pt_set(0, 0);
+	while (dt->obj_ar[i].content != -1.0)
+	{
+		dt->obj_ar[i].obj_pt = ptfl_set(-1.0, -1.0);
+		dt->obj_ar[i].obj_pt_map = pt_set(-1, -1);
+		dt->obj_ar[i].content = -1.0;
+		dt->obj_ar[i].x = -1.0;
+		dt->obj_ar[i].obj_dist = -1.0;
+		dt->obj_ar[i].wall_dist = -1.0;
+		dt->obj_ar[i].obj_height = -1.0;
+		dt->obj_ar[i].obj_depth = -1.0;
+		dt->obj_ar[i].obj_width = -1.0;
+		dt->obj_ar[i].ray_nb = -1.0;
+		i++;
+	}
+}
+
 void			raycasting(t_data *dt)
 {
 //	float		wall_dist;
@@ -35,6 +57,8 @@ void			raycasting(t_data *dt)
 	if (dt->ray_ar[dt->act_ray]->deg > 360)
 		dt->ray_ar[dt->act_ray]->deg = dt->ray_ar[dt->act_ray]->deg - 360;
 	dt->ray_ar[dt->act_ray]->act_ray = 0;
+	reinitialize_obj_ar_values(dt);
+	printf("NEW RAY----------------\n");
 	while (dt->act_ray < WIN_WIDTH)
 	{
 		tmp = dt->obj_ar[i].content;

@@ -5,6 +5,7 @@ void			init_obj_array(t_data *dt)
 	int			i;
 
 	i = 0;
+	dt->last_obj = pt_set(-1, -1);
 	while (i < OBJ_NB)
 	{
 		dt->obj_ar[i].obj_pt = ptfl_set(-1.0, -1.0);

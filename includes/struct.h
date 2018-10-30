@@ -5,19 +5,34 @@
 # include "defines.h"
 #include "SDL_mixer.h"
 
-typedef struct			s_obj
+
+/*
+** Contient toutes les donnees relatives a un objet pour une seule colonne
+** de l'ecran (hauteur, profondeur)
+*/
+typedef struct			s_coord
 {
+	int					ray_nb;
 	t_ptfl				obj_pt;
 	t_point				obj_pt_map;
-	int					content;
-	int					index;
 	int					x;
 	float				obj_dist;
 	float				wall_dist;
 	float				obj_height;
-	float				obj_width;
 	float				obj_depth;
-	int					ray_nb;
+}						t_coord;
+
+
+/*
+** Contient toutes les donnees relatives a un objet pour toute sa largeur
+*/
+typedef struct			s_obj
+{
+	int					content;
+	int					index;
+	int					x;
+	t_coord				coord[WIN_WIDTH];
+	float				width;
 //	struct s_obj		*next;
 //	struct s_obj		*prev;
 }						t_obj;
@@ -109,6 +124,7 @@ typedef struct			s_data
 	t_texture			**floor_texts;
 	t_texture			**wall_texts;
 	t_texture			**obj_texts;
+	t_point				last_obj;
 	char				*path;
 	int					xmax;
 	int					ymax;
@@ -123,15 +139,5 @@ typedef struct			s_funar_keyb
 	int					key;
 	void				(*f)(t_data*);
 }						t_funar_keyb;
-
-/*
-** Structure t_point mais avec des floats pour plus de precision
-*/
-
-typedef	struct			s_fpoint
-{
-	float				x;
-	float				y;
-}						t_fpoint;
 
 #endif

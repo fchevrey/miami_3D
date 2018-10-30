@@ -12,7 +12,7 @@ float				return_distance(t_point a, t_ptfl b)
 {
 	return (sqrt(pow((b.x - a.x),2) + pow((b.y - a.y), 2)));
 }
-
+/*
 static void			reinitialize_obj_ar_values(t_data *dt)
 {
 	int i;
@@ -32,37 +32,40 @@ static void			reinitialize_obj_ar_values(t_data *dt)
 		dt->obj_ar[i].ray_nb = -1.0;
 		i++;
 	}
-}
+}*/
 
-static void			check_for_objects(t_data *dt, t_ptfl point, t_ptfl map)
+
+static void			check_for_new_objects(t_data *dt, t_ptfl point, t_ptfl map)
 {
-	int				i;
+	static int		i = 0;
+	static int		j = 0;
 
-	i = 0;
-	if (dt->ray_ar[dt->act_ray] == 0)
-		reinitialize_obj_ar_values(dt);
-	if (dt->map[(int)map.y][(int)map.x]->content == 2)
+	if (dt->act_ray == 0)
 	{
-		while (dt->obj_ar[i].content != -1.0)
+		i = 0;
+		j = 0;
+	}
+	if (((int)map.y != dt->last_obj.y || (int)map.x != dt->last_obj.x) && dt->map[(int)map.y][(int)map.x]->content >= 2)
+	{
+		if (j != 0)
 			i++;
-		if (i == 0)
-		{
-			dt->obj_ar[i].obj_pt = point;
-			dt->obj_ar[i].obj_pt_map = pt_set((int)map.x, (int)map.y);
-			dt->obj_ar[i].content = dt->map[(int)map.y][(int)map.x]->content;
-			dt->obj_ar[i].ray_nb = dt->act_ray;
-			dt->obj_ar[i].obj_width += 1;
-		}
-		else if ((i > 0) && (((int)map.x != (int)dt->obj_ar[i - 1].obj_pt_map.x) || (int)map.y != (int)dt->obj_ar[i - 1].obj_pt_map.y))
-		{
-			dt->obj_ar[i].obj_pt = point;
-			dt->obj_ar[i].obj_pt_map = pt_set((int)map.x, (int)map.y);
-			dt->obj_ar[i].content = dt->map[(int)map.y][(int)map.x]->content;
-			dt->obj_ar[i].ray_nb = dt->act_ray;
-			dt->obj_ar[i].obj_width += 1;
-		}
-		else
-			dt->obj_ar[i].obj_width += 1;
+	//	printf("objet nb = %d\n", i);
+		dt->obj_ar[i].coord[width].ray_nb = dt->act_ray;
+		dt->obj_ar[i].coord[width].obj_pt = point;
+		dt->obj_ar[i].coord[width].obj_pt_map = pt_set((int)map.x, (int)map.y);
+		dt->obj_ar[i].content = dt->map[(int)map.y][(int)map.x]->content;
+		dt->obj_ar[i].width = 1;
+		dt->last_obj = pt_set((int)map.x, (int)map.y);
+	//	printf("objet nb = %d\n", i);
+		j++;
+	}
+	else if (((int)map.y == dt->last_obj.y && (int)map.x == dt->last_obj.x) && dt->map[(int)map.y][(int)map.x]->content >= 2)
+	{
+		dt->obj_ar[i].obj_width += 1;
+		dt->obj_ar[i].coord[width].ray_nb = dt->act_ray;
+		dt->obj_ar[i].coord[width].obj_pt = point;
+		dt->obj_ar[i].coord[width].obj_pt_map = pt_set((int)map.x, (int)map.y);
+	//	printf("objet-width = %f; obj nb = %d\n", dt->obj_ar[i].obj_width, i);
 	}
 }
 
@@ -81,7 +84,7 @@ t_ptfl				look_for_collision(t_ptfl point, t_data *dt, t_ptfl coeff)
 	while (dt->map[(int)map.y][(int)map.x]->content == 0
 			|| dt->map[(int)map.y][(int)map.x]->content == 2)
 	{
-		check_for_objects(dt, point, map);
+		check_for_new_objects(dt, point, map);
 		point.y += coeff.y;
 		point.x += coeff.x;
 		return_pos_map(point.x, point.y, &map.x, &map.y);
@@ -257,8 +260,6 @@ void			cast_ray(t_data *dt, t_ray *act_ray)
 		dt->ray->hori = special_cases(dt, dt->ray->deg);
 		return (dt->ray->dist_h = return_distance(*dt->cam->crd_real, dt->ray->hori));
 	}*/
-//	ft_putstr("CAST RAY\n");
-//	ft_putnbr(act_ray->deg);
     /* Check horizon */
     if ((act_ray->deg > 0 && act_ray->deg < 90) || (act_ray->deg > 270))
         horizon_right(dt, act_ray->deg);
