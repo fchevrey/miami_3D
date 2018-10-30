@@ -26,21 +26,27 @@ static void		set_act_ray_wall_values(t_data *dt, t_ray *act_ray)
 static void			reinitialize_obj_ar_values(t_data *dt)
 {
 	int i;
+	int j;
 
 	i = 0;
 	dt->last_obj = pt_set(0, 0);
 	while (dt->obj_ar[i].content != -1.0)
 	{
-		dt->obj_ar[i].obj_pt = ptfl_set(-1.0, -1.0);
-		dt->obj_ar[i].obj_pt_map = pt_set(-1, -1);
+		j = 0;
 		dt->obj_ar[i].content = -1.0;
 		dt->obj_ar[i].x = -1.0;
-		dt->obj_ar[i].obj_dist = -1.0;
-		dt->obj_ar[i].wall_dist = -1.0;
-		dt->obj_ar[i].obj_height = -1.0;
-		dt->obj_ar[i].obj_depth = -1.0;
-		dt->obj_ar[i].obj_width = -1.0;
-		dt->obj_ar[i].ray_nb = -1.0;
+		dt->obj_ar[i].width = -1.0;
+		while (dt->obj_ar[i].coord[j].ray_nb != -1)
+		{
+			dt->obj_ar[i].coord[j].ray_nb = -1;
+			dt->obj_ar[i].coord[j].pt = ptfl_set(-1.0, -1.0);
+			dt->obj_ar[i].coord[j].pt_map = pt_set(-1, -1);
+			dt->obj_ar[i].coord[j].obj_dist = -1;
+			dt->obj_ar[i].coord[j].obj_height = -1;
+			dt->obj_ar[i].coord[j].obj_depth = -1;
+			dt->obj_ar[i].coord[j].wall_dist = -1;
+			j++;
+		}
 		i++;
 	}
 }
@@ -71,7 +77,7 @@ void			raycasting(t_data *dt)
 		display_column(dt, dt->ray_ar[dt->act_ray]);
 		if (tmp != dt->obj_ar[i].content)
 		{
-			dt->obj_ar[i].wall_dist = dt->ray_ar[dt->act_ray]->wall_dist;
+//			dt->obj_ar[i].coord[]wall_dist = dt->ray_ar[dt->act_ray]->wall_dist;
 			i++;
 		}
 		if (((dt->act_ray + 1) < WIN_WIDTH) && ((dt->ray_ar[dt->act_ray]->deg - dt->cam->min_theta) < 0))

@@ -39,6 +39,7 @@ static void			check_for_new_objects(t_data *dt, t_ptfl point, t_ptfl map)
 {
 	static int		i = 0;
 	static int		j = 0;
+	int				width;
 
 	if (dt->act_ray == 0)
 	{
@@ -50,9 +51,9 @@ static void			check_for_new_objects(t_data *dt, t_ptfl point, t_ptfl map)
 		if (j != 0)
 			i++;
 	//	printf("objet nb = %d\n", i);
-		dt->obj_ar[i].coord[width].ray_nb = dt->act_ray;
-		dt->obj_ar[i].coord[width].obj_pt = point;
-		dt->obj_ar[i].coord[width].obj_pt_map = pt_set((int)map.x, (int)map.y);
+		dt->obj_ar[i].coord[0].ray_nb = dt->act_ray;
+		dt->obj_ar[i].coord[0].pt = point;
+		dt->obj_ar[i].coord[0].pt_map = pt_set((int)map.x, (int)map.y);
 		dt->obj_ar[i].content = dt->map[(int)map.y][(int)map.x]->content;
 		dt->obj_ar[i].width = 1;
 		dt->last_obj = pt_set((int)map.x, (int)map.y);
@@ -61,10 +62,11 @@ static void			check_for_new_objects(t_data *dt, t_ptfl point, t_ptfl map)
 	}
 	else if (((int)map.y == dt->last_obj.y && (int)map.x == dt->last_obj.x) && dt->map[(int)map.y][(int)map.x]->content >= 2)
 	{
-		dt->obj_ar[i].obj_width += 1;
+		dt->obj_ar[i].width += 1;
+		width = dt->obj_ar[i].width -1;
 		dt->obj_ar[i].coord[width].ray_nb = dt->act_ray;
-		dt->obj_ar[i].coord[width].obj_pt = point;
-		dt->obj_ar[i].coord[width].obj_pt_map = pt_set((int)map.x, (int)map.y);
+		dt->obj_ar[i].coord[width].pt = point;
+		dt->obj_ar[i].coord[width].pt_map = pt_set((int)map.x, (int)map.y);
 	//	printf("objet-width = %f; obj nb = %d\n", dt->obj_ar[i].obj_width, i);
 	}
 }

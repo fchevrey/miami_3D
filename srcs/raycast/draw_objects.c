@@ -27,7 +27,7 @@ static void		calc_obj_distance(t_data *dt)
 	i = 0;
 	while (dt->obj_ar[i].content != -1)
 	{
-		dt->obj_ar[i].obj_dist = sqrt(pow((dt->obj_ar[i].obj_pt.x - dt->cam->crd_real->x),2) + pow((dt->obj_ar[i].obj_pt.y - dt->cam->crd_real->y), 2));
+		dt->obj_ar[i].coord[RAY_TO_DRAW].obj_dist = sqrt(pow((dt->obj_ar[i].obj_pt.x - dt->cam->crd_real->x),2) + pow((dt->obj_ar[i].obj_pt.y - dt->cam->crd_real->y), 2));
 		i++;
 	printf("obj_dist INSIDER %f, obj_pt.x = %f, obj_pt.y = %f\n", dt->obj_ar[i].obj_dist, dt->obj_ar[i].obj_pt.x, dt->obj_ar[i].obj_pt.y);
 	}
@@ -58,6 +58,7 @@ static void		calc_obj_depth(t_data *dt)
 	while (dt->obj_ar[i].content != -1)
 	{
 		scale = dt->obj_ar[i].obj_dist / dt->obj_ar[i].wall_dist;
+	printf("obj_wall_dist : %f\n",dt->obj_ar[i].wall_dist);
 //		min = dt->ray->wall_max + (dt->ray->wall_min * scale);
 		dt->obj_ar[i].obj_depth = dt->ray_ar[dt->obj_ar[i].ray_nb]->wall_max + (dt->ray_ar[dt->obj_ar[i].ray_nb]->wall_min * scale);
 		i++;

@@ -3,22 +3,28 @@
 void			init_obj_array(t_data *dt)
 {
 	int			i;
+	int			j;
 
 	i = 0;
 	dt->last_obj = pt_set(-1, -1);
 	while (i < OBJ_NB)
 	{
-		dt->obj_ar[i].obj_pt = ptfl_set(-1.0, -1.0);
-		dt->obj_ar[i].obj_pt_map = pt_set(-1.0, -1.0);
+		j = 0;
 		dt->obj_ar[i].content = -1;
 		dt->obj_ar[i].index = i;
 		dt->obj_ar[i].x = -1;
-		dt->obj_ar[i].obj_dist = -1;
-		dt->obj_ar[i].wall_dist = -1;
-		dt->obj_ar[i].obj_height = -1;
-		dt->obj_ar[i].obj_depth = -1;
-		dt->obj_ar[i].obj_width = -1;
-		dt->obj_ar[i].ray_nb = -1;
+		dt->obj_ar[i].width = -1;
+		while (j < WIN_WIDTH)
+		{
+			dt->obj_ar[i].coord[j].ray_nb = -1;
+			dt->obj_ar[i].coord[j].pt = ptfl_set(-1.0, -1.0);
+			dt->obj_ar[i].coord[j].pt_map = pt_set(-1, -1);
+			dt->obj_ar[i].coord[j].obj_dist = -1;
+			dt->obj_ar[i].coord[j].obj_height = -1;
+			dt->obj_ar[i].coord[j].obj_depth = -1;
+			dt->obj_ar[i].coord[j].wall_dist = -1;
+			j++;
+		}
 		i++;
 	}
 }

@@ -13,13 +13,12 @@
 typedef struct			s_coord
 {
 	int					ray_nb;
-	t_ptfl				obj_pt;
-	t_point				obj_pt_map;
-	int					x;
+	t_ptfl				pt;
+	t_point				pt_map;
 	float				obj_dist;
-	float				wall_dist;
 	float				obj_height;
 	float				obj_depth;
+	float				wall_dist;
 }						t_coord;
 
 
