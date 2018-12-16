@@ -30,9 +30,6 @@ vorbis/
 ogg/
 SDL2/
 
-#during the developpement
-assets/sounds
-
 #executable
 wolf3d
 doom-nukem
