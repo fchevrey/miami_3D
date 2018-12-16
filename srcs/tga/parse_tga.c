@@ -9,7 +9,7 @@ void            ft_fill_header(t_header *header, char *buff, int i)
 		header->color_map_type = (unsigned char)*buff;
 	if (i == 2)
 		header->image_type = (unsigned char)*buff;
-	if (i < 8 && i > 2)
+	if (i > 2 && i < 8)
 		header->color_map_spec[i - 3] = (unsigned char)*buff;
 	if (i >= 8 && i < 18)
 		header->image_spec[i - 8] = (unsigned char)*buff;
@@ -25,7 +25,7 @@ unsigned char		*ft_init_image(int fd, t_header *header)
 	size = header->x * header->y * 4;
 	if (!(image = (unsigned char *)malloc(sizeof(unsigned char) * size)))
 		malloc_failed("tga image\n"); //malloc error
-; // malloc failled
+; // malloc failed
 	rd = read(fd, image, size);
 	image[rd] = '\0';
 	return (image);
@@ -38,11 +38,11 @@ void			ft_fill_image(t_texture *img, unsigned char *image, t_header *header)
 	int			i;
 	int			z;
 
-	y = 0; // * 4;
-	i = 0;
 	x = 0;
+	y = 0; // * 4;
 	z = ((header->y) * (header->x -1)) * 4;
-	while (i < ((header->x * header->y + 2)))
+	i = 0;
+	while (i < ((header->x * header->y + 1)))
 	{
 		if (x > header->x -1)
 		{
@@ -90,6 +90,7 @@ void			fill_real_size(t_header *header)
 	y.val.b = header->image_spec[7];
 	header->x = x.value;
 	header->y = y.value;
+	printf("largeur image en pixel = %d, hauteur image en pixels = %d\n",header->x, header->y);
 }
 
 void			ft_load_texture(int *endian, char *str, t_texture *img)

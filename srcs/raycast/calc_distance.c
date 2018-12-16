@@ -47,9 +47,9 @@ t_ptfl				horizon_right(t_data *data, float deg)
     if (xa < 0)
         xa = -xa;
 	if (deg > 0 && deg < 90)
-		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.001;
+		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.0001;
 	else
-		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID + 0.001;
+		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID + 0.0001;
 	point.x = data->cam->crd_real->x + (data->cam->crd_real->y - point.y)
 	/ tan(deg_to_rad(deg));
 	return (look_for_collision(point, data, xa, ya));
@@ -70,9 +70,9 @@ t_ptfl				horizon_left(t_data *data, float deg)
     if (xa > 0)
         xa = -xa;
 	if (deg > 90 && deg < 180)
-		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.001;
+		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.0001;
 	else
-		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID + 0.001;
+		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID + 0.0001;
 	point.x = data->cam->crd_real->x + (data->cam->crd_real->y - point.y) / tan(deg_to_rad(deg));
 	return (look_for_collision(point, data, xa, ya));
 }
@@ -92,9 +92,9 @@ t_ptfl				vertical_up(t_data *data, float deg)
     if (ya > 0)
         ya = -ya;
 	if (deg > 90)
-		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.001;
+		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.0001;
 	else
-		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID + 0.001;
+		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID + 0.0001;
 	point.y = data->cam->crd_real->y + (data->cam->crd_real->x - point.x) * tan(deg_to_rad(deg));
 	return (look_for_collision(point, data, xa, ya));
 }
@@ -115,7 +115,7 @@ t_ptfl				vertical_down(t_data *data, float deg)
     if (ya < 0)
         ya = -ya;
 	if (deg < 270)
-		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.001;
+		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.0001;
 	else
 		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID;
 	point.y = data->cam->crd_real->y + (data->cam->crd_real->x - point.x) * tan(deg_to_rad(deg));
