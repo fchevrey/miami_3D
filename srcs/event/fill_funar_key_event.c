@@ -6,7 +6,7 @@
 /*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 17:42:41 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/09/01 21:03:00 by fchevrey         ###   ########.fr       */
+/*   Updated: 2018/12/16 17:20:32 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_funar_keyb			*fill_funar_keypress(int *size)
 
 	i = 0;
 	*size = 0;
-	nb_fct = 11;
+	nb_fct = 12;
 	if (!(tab = (t_funar_keyb*)malloc(sizeof(t_funar_keyb) * nb_fct)))
 		return (NULL);
 	*size = nb_fct;
@@ -52,6 +52,7 @@ t_funar_keyb			*fill_funar_keypress(int *size)
 	tab[i++] = add_one(SDLK_a, 0, &check_move);
 	tab[i++] = add_one(SDLK_d, 0, &check_move);
 	tab[i++] = add_one(SDLK_j, 0, &sound);
+	tab[i++] = add_one(SDLK_k, 0, &next_song);
 	tab[i++] = add_one(SDLK_LCTRL, 0, &crouch);
 	tab[i++] = add_one(SDLK_SPACE, 0, &jump);
 	return (tab);

@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/16 16:00:00 by fchevrey          #+#    #+#             */
+/*   Updated: 2018/12/16 16:00:40 by fchevrey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "event.h"
 #include "raycast.h"
 
 void	move(t_data *data, float deltatime)
 {
 	const int speed = 50;
-
 
 	check_move(data);
 	if (data->walking == MOVE_UP)
@@ -19,7 +30,6 @@ void	move(t_data *data, float deltatime)
 
 static void		play_walk_song(t_data *data)
 {
-	//printf("walk channel = %d\n", data->walk_channel);
 	if (data->walk_channel == -12)
 		data->walk_channel = Mix_PlayChannel(-1, data->sounds[0], -1);
 	else
@@ -115,7 +125,6 @@ void	move_left(t_data *data, float deltatime, const int speed)
 	cam->crd_real->x = new_pos.x;
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
-	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
 void	move_right(t_data *data, float deltatime, const int speed)
@@ -141,6 +150,4 @@ void	move_right(t_data *data, float deltatime, const int speed)
 	cam->crd_real->x = new_pos.x;
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
-	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
-

@@ -6,7 +6,7 @@
 /*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 18:27:24 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/09/01 21:03:06 by fchevrey         ###   ########.fr       */
+/*   Updated: 2018/12/16 16:04:17 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			game_loop(t_data *data)
 {
 	SDL_Event 			event;
 	int					quit;
-	const unsigned int	fixdelta = 20;	
+	const unsigned int	fixdelta = 20;
 	unsigned int 		last_time;
 	unsigned int 		delta;
 

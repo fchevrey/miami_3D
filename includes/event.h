@@ -6,7 +6,7 @@
 /*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/08 16:07:31 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/09/01 19:21:32 by fchevrey         ###   ########.fr       */
+/*   Updated: 2018/12/16 17:20:42 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void			check_move(t_data *data);
 void			look_left_from_key(t_data *data);
 void			look_right_from_key(t_data *data);
 t_point			check_collision(t_point old, t_point new, t_data *data);
-void			sound(t_data *data);//
+void			sound(t_data *data);
+void			next_song(t_data *data);
 
 /*
 ** Jump - stand - crouch

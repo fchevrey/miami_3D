@@ -1,5 +1,13 @@
 #include "main.h"
 
+static int		on_error(char **name, int *nb)
+{
+	ft_error("error lading : ", *name, Mix_GetError());
+	*nb = *nb -1;
+	ft_strdel(name);
+	return (1);
+}
+
 static int		load_sound(t_data *data, char **songs)
 {
 	int			nb;
@@ -18,9 +26,9 @@ static int		load_sound(t_data *data, char **songs)
 	while (i < nb)
 	{
 		name = ft_strjoin(music_path, songs[i]);
-		if (!(data->sounds[i] = Mix_LoadWAV(name)))
-			return (ft_error("error lading : ", name, Mix_GetError()));
-				ft_strdel(&name);
+		if (!(data->sounds[i] = Mix_LoadWAV(name)) && on_error(&name, &nb) == 1)
+			continue ;
+		ft_strdel(&name);
 		i++;
 	}
 	ft_strdel(&music_path);
@@ -45,29 +53,29 @@ static int		load_music(t_data *data, char **songs)
 	while (i < nb)
 	{
 		name = ft_strjoin(music_path, songs[i]);
-		if (!(data->musics[i] = Mix_LoadMUS(name)))
-			return (ft_error("error lading : ", name, Mix_GetError()));
-				ft_strdel(&name);
+		if (!(data->musics[i] = Mix_LoadMUS(name)) && on_error(&name, &nb) == 1)
+			continue;
+		ft_strdel(&name);
 		i++;
 	}
 	ft_strdel(&music_path);
-	return (1);
+	return (nb);
 }
 
 int		sound_init(t_data *data)
 {
 	char		**songs;
 
-	//if (!(songs = ft_strsplit("music01.ogg\fmusic02.ogg\fmusic03.ogg\fmusic04.ogg\fmusic05.ogg", '\f')))
 	if (!(songs = ft_strsplit("music01.wav\fmusic02.wav\fmusic03.wav\fmusic04.wav\fmusic05.wav", '\f')))
 		return (-1);
-	load_music(data, songs);
+	if ((data->len_music = load_music(data, songs)) < 0)
+		ft_putstr("Load music Error\n");
 	ft_tabdel(&songs);
 	if (!data->musics)
 		return (-1);
 	if (!(songs = ft_strsplit("footstep_01.wav\floud_shot.wav", '\f')))
 		return (-1);
-	if (load_sound(data, songs) < 0)
+	if ((load_sound(data, songs)) < 0)
 		ft_putstr("sound loading error\n");
 	ft_tabdel(&songs);
 	if (!data->sounds)

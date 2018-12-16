@@ -83,6 +83,7 @@ typedef struct			s_data
 	Mix_Chunk	**sounds;
 	int			walk_channel;
 	Mix_Music	**musics;
+	int			len_music;
 	t_map		***map;
 	t_texture	*m_img;
 	t_texture	*hud;

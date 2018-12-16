@@ -1,30 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_keyboard.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/16 16:01:26 by fchevrey          #+#    #+#             */
+/*   Updated: 2018/12/16 16:01:27 by fchevrey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "event.h"
 #include <stdlib.h>
-
-/*static int		check_event(int key, int reapeat, int type, t_data *data)
-{
-	static t_funar_keyb		*tab_fct[3] = NULL;
-	static int				size_tab[3];
-	int						i;
-
-	if (tab_fct[0] == NULL)
-		tab_fct = fill_funar_key_press(&size_tab[0]);
-	if (tab_fct[1] == NULL)
-		tab_fct = fill_funar_key_release(&size_tab[1]);
-	if (tab_fct[2] == NULL)
-		tab_fct = fill_funar_key_repeat(&size_tab[2]);
-	i = 0;
-	if (key == SDLK_ESCAPE)
-	{
-		while (i < 3)
-			free(tab_fct[i++]);
-		return (-1);
-	}
-	if (type == KEY_PRESS)
-		return (do_event());
-	else 
-		return (do_event(tab_fct[2], key, ));
-}*/
 
 static int		keypress_do_event(int key, int repeat, t_data *data)
 {
