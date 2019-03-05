@@ -2,80 +2,49 @@
 #include "main.h"
 #include "raycast.h"
 
-void				return_pos_map(float x, float y, float *x_map, float *y_map)
+t_ptfl				return_pos_map(float x, float y)//float *x_map, float *y_map)
 {
-	*x_map = (x / SIZE_GRID);
-	*y_map = (y / SIZE_GRID);
+	t_ptfl	map;
+	/**x_map = (x / SIZE_GRID);
+	*y_map = (y / SIZE_GRID); */
+	map.x = (x / (float)SIZE_GRID);
+	map.y = (y / (float)SIZE_GRID);
+	return (map);
 }
 
-float		return_distance(t_point a, t_ptfl b)
+float				return_distance(t_point a, t_ptfl b)
 {
 	return (sqrt(pow((b.x - a.x),2) + pow((b.y - a.y), 2)));
 }
 
-/* 
+/*
 ** deg > 0 && deg < 90 || deg > 270
 */
 
-t_ptfl				look_for_collision(t_ptfl point, t_data *data, float xa, float ya)
+t_ptfl				look_for_collision(t_ptfl point, t_data *data, t_ptfl coeff)
 {
-	float x_map;
-	float y_map;
+	//float	x_map;
+	//float	y_map;
+	t_ptfl	pt_map;
 
-	return_pos_map(point.x, point.y, &x_map, &y_map);
-	if (!is_in_map(x_map, y_map, data))
+	pt_map = return_pos_map(point.x, point.y);//, &x_map, &y_map);
+	if (is_in_map(pt_map.x, pt_map.y, data) == 0)//x_map, y_map, data) == 0)
 		return (point);
-	while (data->map[(int)y_map][(int)x_map]->content == 0)
+	while (data->map[(int)(ceil(pt_map.y))][(int)ceil(pt_map.x)]->content != 1)//(data->map[(int)y_map][(int)x_map]->content == 0)
 	{
-		point.y += ya;
-		point.x += xa;
-		return_pos_map(point.x, point.y, &x_map, &y_map);
-		if (!is_in_map(x_map, y_map, data))
+		//printf(" point.x = %f -- point.y = %f -- i = %d \n", point.x, point.y, i);
+		//&x_map, &y_map);
+
+		point.x += coeff.x;
+		point.y += coeff.y;
+		pt_map = return_pos_map(point.x, point.y);
+		if (is_in_map(ceil(pt_map.x), ceil(pt_map.y), data) == 0)
 			return (point);
 	}
 	return (point);
 }
 
-t_ptfl				horizon_right(t_data *data, float deg)
-{
-	t_ptfl		point;
-	float		ya;
-	float		xa;
 
-	ya = (deg > 0 && deg < 90) ? -SIZE_GRID : SIZE_GRID;
-	xa = SIZE_GRID / tan(deg_to_rad(deg));
-    if (xa < 0)
-        xa = -xa;
-	if (deg > 0 && deg < 90)
-		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.0001;
-	else
-		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID + 0.0001;
-	point.x = data->cam->crd_real->x + (data->cam->crd_real->y - point.y)
-	/ tan(deg_to_rad(deg));
-	return (look_for_collision(point, data, xa, ya));
-}
-
-/*
-** deg > 90 && deg < 270
-*/
-
-t_ptfl				horizon_left(t_data *data, float deg)
-{
-	t_ptfl		point;
-	float		ya;
-	float		xa;
-
-	ya = (deg > 90 && deg < 180) ? -SIZE_GRID : SIZE_GRID;
-	xa = SIZE_GRID / tan(deg_to_rad(deg));
-    if (xa > 0)
-        xa = -xa;
-	if (deg > 90 && deg < 180)
-		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.0001;
-	else
-		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID + 0.0001;
-	point.x = data->cam->crd_real->x + (data->cam->crd_real->y - point.y) / tan(deg_to_rad(deg));
-	return (look_for_collision(point, data, xa, ya));
-}
 
 /*
 ** deg > 0 && deg < 180
@@ -83,20 +52,21 @@ t_ptfl				horizon_left(t_data *data, float deg)
 
 t_ptfl				vertical_up(t_data *data, float deg)
 {
-	t_ptfl     point;
-	double		ya;
-	double		xa;
+	t_ptfl			point;
+	t_ptfl			coeff;
 
-	xa = (deg < 90) ? SIZE_GRID : -SIZE_GRID;
-	ya = (SIZE_GRID * tan(deg_to_rad(deg))) * -1;
-    if (ya > 0)
-        ya = -ya;
+printf("vertical up -- ");
+	coeff.x = (deg < 90) ? SIZE_GRID : -SIZE_GRID;
+	coeff.y = (SIZE_GRID * tan(deg_to_rad(deg))) * -1;
+    if (coeff.y > 0)
+        coeff.y = -coeff.y;
 	if (deg > 90)
 		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.0001;
 	else
-		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID + 0.0001;
+		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID;// + 0.00001;
 	point.y = data->cam->crd_real->y + (data->cam->crd_real->x - point.x) * tan(deg_to_rad(deg));
-	return (look_for_collision(point, data, xa, ya));
+	
+	return (look_for_collision(point, data, coeff));
 }
 
 
@@ -106,20 +76,23 @@ t_ptfl				vertical_up(t_data *data, float deg)
 
 t_ptfl				vertical_down(t_data *data, float deg)
 {
-	t_ptfl     point;
-	double		ya;
-	double		xa;
+	t_ptfl			point;
+	t_ptfl			coeff;
 
-	xa = (deg > 270) ? SIZE_GRID : -SIZE_GRID;
-	ya = SIZE_GRID * tan(deg_to_rad(deg));
-    if (ya < 0)
-        ya = -ya;
+printf("vertical down -- ");
+	coeff.x = (deg > 270) ? SIZE_GRID : -SIZE_GRID;
+	coeff.y = SIZE_GRID * tan(deg_to_rad(deg));
+    if (coeff.y < 0)
+        coeff.y = -coeff.y;
 	if (deg < 270)
 		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID - 0.0001;
 	else
 		point.x = data->cam->crd_real->x / SIZE_GRID * SIZE_GRID + SIZE_GRID;
 	point.y = data->cam->crd_real->y + (data->cam->crd_real->x - point.x) * tan(deg_to_rad(deg));
-	return (look_for_collision(point, data, xa, ya));
+//	printf("point.x = %f -- point.y = %f -- ", point.x, point.y);
+	point = look_for_collision(point, data, coeff);
+//	printf("point.x = %f -- point.y = %f -- ", point.x, point.y);
+	return (point);
 }
 
 int				set_FLOAToffset(t_ptfl hori, t_ptfl verti, float dist_h, float dist_v)
@@ -189,22 +162,30 @@ float			cast_ray(t_data *dt)
 		dt->ray->hori = special_cases(dt, dt->ray->deg);
 		return (dt->ray->dist_h = return_distance(*dt->cam->crd_real, dt->ray->hori));
 	}*/
-    /* Check horizon */
+    /* Check horizon 
     if ((dt->ray->deg > 0 && dt->ray->deg < 90) || (dt->ray->deg > 270))
         dt->ray->hori = horizon_right(dt, dt->ray->deg);
     else if (dt->ray->deg > 90 && dt->ray->deg < 270)
-        dt->ray->hori = horizon_left(dt, dt->ray->deg);
+        dt->ray->hori = horizon_left(dt, dt->ray->deg);*/
+	horizontal_raycasting(dt, dt->ray->deg);
     /* Check vertical */
     if (dt->ray->deg > 0 && dt->ray->deg < 180)
         dt->ray->verti = vertical_up(dt, dt->ray->deg);
     else if (dt->ray->deg > 180)
         dt->ray->verti = vertical_down(dt, dt->ray->deg);
-	dt->ray->dist_h = return_distance(*dt->cam->crd_real, dt->ray->hori);
+	//dt->ray->dist_h = return_distance(*dt->cam->crd_real, dt->ray->hori);
 	dt->ray->dist_v = return_distance(*dt->cam->crd_real, dt->ray->verti);
     /* Choisi la distance la plus petite */
     if (dt->ray->dist_h < 0 || dt->ray->dist_v < dt->ray->dist_h)
-        return (dt->ray->dist_v);
+    {
+		printf("degres = %f ------- VERTICALE = %f + valeur horizontale = %f\n", dt->ray->deg, dt->ray->dist_v, dt->ray->dist_h);
+		return (dt->ray->dist_v);
+	}
 	else if (dt->ray->dist_v < 0 || dt->ray->dist_h < dt->ray->dist_v)
+	{	
+		printf("degres = %f ------- HORIZONTALE = %f + valeur verticale = %f\n", dt->ray->deg, dt->ray->dist_h, dt->ray->dist_v);
         return (dt->ray->dist_h);
+	}
+	printf("degres = %f ------- HORIZONTALE = %f\n", dt->ray->deg, dt->ray->dist_h);
 	return (dt->ray->dist_h);
 }

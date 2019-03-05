@@ -3,9 +3,9 @@
 
 int         is_in_map(float x, float y, t_data *data)
 {
-	if (x > (float)data->xmax || x < 0)
+	if (x < 0.0 || x > (float)data->xmax)
 		return (0);
-	if (y > (float)data->ymax || y < 0)
+	if (y < 0.0 || y > (float)data->ymax)
 		return (0);
 	return (1);
 }
@@ -18,7 +18,14 @@ float       return_fish(float deg, float vision)
 void        loop(t_data *dt)
 {
 	float	distance_wall;
+/*	float	test;
 
+	test = 0.0;
+	while (test < 360)
+	{
+		printf("tan de %f = %f \n", test, tan(deg_to_rad(test)));
+		test += 0.1;
+	}*/
 	dt->ray->deg = dt->cam->theta + FOV / 2;
 	if (dt->ray->deg > 360)
 		dt->ray->deg = dt->ray->deg - 360;
@@ -38,5 +45,6 @@ void        loop(t_data *dt)
 	}
 	draw_mini_map2(dt);
 	put_tex_to_ren(dt->m_img, dt->win->ren, (t_point){0, 0}, 0);
+	put_tex_to_ren(dt->wall_texts[0], dt->win->ren, (t_point){0, 0}, 0);
 	put_tex_to_ren(dt->hud, dt->win->ren, pt_set(0, dt->m_img->size.y), 1);
 }

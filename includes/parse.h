@@ -19,7 +19,7 @@ int						ft_parse(char *str, t_map **map, t_parse *parse);
 int				        ft_lin_is_good(char *str);
 
 /*
-** Pars TGA
+** Parse TGA
 */
 
 
