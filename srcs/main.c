@@ -52,7 +52,7 @@ static int		lib_initialisation(void)
 	if ( Mix_OpenAudio( 22050, AUDIO_S16SYS, 2, 4096) == -1)
 		return (ft_error("SDL_Mixer  error :", Mix_GetError(), NULL));
 	return (1);
-}
+}3
 
 int				main(int ac, char **av)
 {
