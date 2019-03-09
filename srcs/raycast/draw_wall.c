@@ -44,7 +44,7 @@ static t_ptfl		set_coeff_x_y_verti(float deg)
 	return (a);
 }
 */
-void				ft_ciel_sol(t_data *data)
+void				sky_ground_rendering(t_data *data)
 {
     int				y;
 
@@ -62,7 +62,7 @@ void				ft_ciel_sol(t_data *data)
     }
 }
 
-static void			display_wall(t_data *data)
+static void			wall_rendering(t_data *data)
 {
 	t_point			px_to_color;
 	float			coeff;
@@ -221,19 +221,19 @@ static void		display_floor(t_data *data)
 //		}
 //		i++;
 	}
-}*/
+}
 
 static void		display_ceiling(t_data *data)
 {
     (void)data;
-}
+}*/
 
-void            display_column(t_data *data)
+void            column_rendering(t_data *data)
 {
     data->ray->wall_min = WIN_HEIGHT / 2 - (int)data->ray->wall_size / 2;
 	data->ray->wall_max = data->ray->wall_min + (int)data->ray->wall_size;
-	ft_ciel_sol(data);
-    display_ceiling(data);
-    display_wall(data);
+	sky_ground_rendering(data);
+   // display_ceiling(data);
+    wall_rendering(data);
    // display_floor(data);
 }

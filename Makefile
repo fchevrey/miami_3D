@@ -22,8 +22,8 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		event/look.c event/check_collision.c event/sound.c \
 		event/acrobatic.c \
 		\
-		raycast/calc_distance.c raycast/draw_wall.c raycast/ray.c \
-		raycast/calc_offset.c \
+		raycast/check_nearest_wall_distance.c raycast/rendering.c \
+		raycast/vertical_raycasting.c raycast/horizontal_raycasting.c\
 		\
 		math/deg_rad.c \
 		\
