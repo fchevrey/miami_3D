@@ -21,10 +21,9 @@ static t_ptfl		horizon_right(t_data *data, float deg)
     if (coeff.x < 0)
         coeff.x = -coeff.x;
 	if (deg > 0 && deg < 90)
-		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID;// - 0.0001;
+		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.0015;
 	else
-		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID;// + SIZE_GRID;// + 0.00001;
-	point.y += (point.y > data->cam->crd_real->y ) ? SIZE_GRID : - 0.0001;
+		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID;
 	point.x = data->cam->crd_real->x + (data->cam->crd_real->y - point.y)
 	/ tan(deg_to_rad(deg));
 	return (check_walls(point, data, coeff));
@@ -45,10 +44,9 @@ static t_ptfl		horizon_left(t_data *data, float deg)
     if (coeff.x > 0)
         coeff.x = -coeff.x;
 	if (deg > 90 && deg < 180)
-		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID;// - 0.0001;
+		point.y = data->cam->crd_real->y / SIZE_GRID * SIZE_GRID - 0.0015;
 	else
-		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID;// + SIZE_GRID;
-	point.y += (point.y > data->cam->crd_real->y ) ? SIZE_GRID : - 0.0001;
+		point.y = (data->cam->crd_real->y / SIZE_GRID) * SIZE_GRID + SIZE_GRID;
 	point.x = data->cam->crd_real->x + (data->cam->crd_real->y - point.y) / tan(deg_to_rad(deg));
 //	printf("point.x = %f -- point.y = %f -- ", point.x, point.y);
 	point = check_walls(point, data, coeff);
