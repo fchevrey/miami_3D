@@ -2,7 +2,7 @@
 # define STRUCT_H
 # include <stdint.h>
 # include "main.h"
-#include "SDL_mixer.h"
+# include "SDL_mixer.h"
 
 typedef struct			s_obj
 {
@@ -12,7 +12,7 @@ typedef struct			s_obj
 	struct s_obj		*prev;
 }						t_obj;
 
-typedef struct 			s_ray
+typedef struct			s_ray
 {
 	float				deg;
 	int					actual_ray;
@@ -69,13 +69,13 @@ typedef struct			s_map
 
 typedef struct			s_cam
 {
-	t_point				*crd_map;	// coordonnee sur le tableau
-	t_point				*crd_real;	// coordonnee sur la grille
-	t_point				act_inter; // point d'intersection entre le dernier rayon et le mur (utile pour le RayCasting des textures des murs)
-	float				theta;   	// position de la cam en degree par rapport a l'axe x
-	float				len_cam; 	// Distance camera / ecran
-	float				h_cam;   	// Hauteur camera
-	float				min_theta;  // angle entre chaque rayons
+	t_point				*crd_map;
+	t_point				*crd_real;
+	t_point				act_inter;
+	float				theta;
+	float				len_cam;
+	float				h_cam;
+	float				min_theta;
 }						t_cam;
 
 /*
@@ -99,7 +99,7 @@ typedef struct			s_data
 	t_texture			**wall_texts;
 	t_cam				*cam;
 	t_ray				*ray;
-	int					endian; //little = 0 and big = 1
+	int					endian;
 	uint8_t				walking;
 }						t_data;
 

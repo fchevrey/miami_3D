@@ -6,13 +6,14 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:51:06 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 18:07:38 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:16:37 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "parse.h"
 #include "event.h"
+#include "raycast.h"
 
 static int		lib_initialisation(void)
 {

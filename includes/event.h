@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:49:51 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 16:49:53 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:20:18 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 void			game_loop(t_data *data);
 int				ft_mouse(int x, int y, t_data *data);
-int				ft_keyboard(int key, int repeat, SDL_Event *event, t_data *data);
+int				ft_keyboard(int key, int repeat, SDL_Event *event,
+		t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
 t_funar_keyb	*fill_funar_keyrelease(int *size);

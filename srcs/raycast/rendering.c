@@ -1,5 +1,6 @@
 
 #include "main.h"
+#include "raycast.h"
 
 static int		set_offset(t_data *data, t_texture *img)
 {

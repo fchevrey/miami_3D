@@ -6,11 +6,12 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:16:09 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 16:27:45 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:16:58 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+#include "parse.h"
 
 static void			init_and_load_wall_textures(t_data *data)
 {

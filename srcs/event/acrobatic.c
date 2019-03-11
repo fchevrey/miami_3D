@@ -6,11 +6,12 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 16:00:59 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 14:09:12 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:18:16 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "event.h"
+#include "raycast.h"
 
 void	stand(t_data *data)
 {

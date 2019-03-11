@@ -1,9 +1,9 @@
 #ifndef PARSE_H
 # define PARSE_H
 
-#include "main.h"
-#include <fcntl.h>
-#include <unistd.h>
+# include "main.h"
+# include <fcntl.h>
+# include <unistd.h>
 
 /*
 ** List
@@ -34,28 +34,27 @@ typedef struct			s_header
 	short				y;
 }						t_header;
 
-typedef union		u_fill
+typedef union			u_fill
 {
-	short 			value;
-	struct			s_val
+	short				value;
+	struct				s_val
 	{
-		unsigned char a;
-		unsigned char b;
-	}				val;
-}					t_fill;
+		unsigned char	a;
+		unsigned char	b;
+	}					val;
+}						t_fill;
 
-void				ft_load_texture(int *endian, char *str, t_texture *img);
-unsigned char		*ft_decode_tga(int *endian, t_header *header,
+void					ft_load_texture(int *endian, char *str, t_texture *img);
+unsigned char			*ft_decode_tga(int *endian, t_header *header,
 		unsigned char *image);
 
 /*
 ** Free
 */
 
-void				free_list(t_map **list);
-void				freetab(t_map ***list);
-void				ft_free_exit(t_map **map, int fd, char *lin, int err);
-void				malloc_failed(char *str);
-
+void					free_list(t_map **list);
+void					freetab(t_map ***list);
+void					ft_free_exit(t_map **map, int fd, char *lin, int err);
+void					malloc_failed(char *str);
 
 #endif

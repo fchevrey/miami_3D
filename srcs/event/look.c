@@ -6,11 +6,12 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:00:07 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 14:00:08 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:17:54 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "event.h"
+#include "raycast.h"
 
 void	look_left_from_key(t_data *data)
 {

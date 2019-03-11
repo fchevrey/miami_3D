@@ -6,11 +6,12 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 13:58:41 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 14:08:47 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:17:20 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "event.h"
+#include "raycast.h"
 
 static int		ft_event(SDL_Event *event, t_data *data)
 {
