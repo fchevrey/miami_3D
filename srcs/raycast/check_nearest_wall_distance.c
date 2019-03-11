@@ -27,67 +27,14 @@ t_ptfl				check_walls(t_ptfl point, t_data *data, t_ptfl coeff)
 	pt_map = return_pos_map(point.x, point.y);
 	if (is_in_map(pt_map.x, pt_map.y, data) == 0)
 		return (point);
-/*	if (point.x < data->cam->crd_real->x && point.y < data->cam->crd_real->y)
-	{
-		while (data->map[(int)ceil(pt_map.y)][(int)ceil(pt_map.x)]->content != 1)
-		{
-			//printf(" point.x = %f -- point.y = %f -- i = %d \n", point.x, point.y, i);
-			point.x += coeff.x;
-			point.y += coeff.y;
-			pt_map = return_pos_map(point.x, point.y);
-			if (is_in_map(ceil(pt_map.x), pt_map.y, data) == 0)
-				return (point);
-		}
-	}
-	else if (point.x < data->cam->crd_real->x && point.y > data->cam->crd_real->y)
-	{
-		while (data->map[(int)(pt_map.y)][(int)ceil(pt_map.x)]->content != 1)
-		{
-			//printf(" point.x = %f -- point.y = %f -- i = %d \n", point.x, point.y, i);
-			point.x += coeff.x;
-			point.y += coeff.y;
-			pt_map = return_pos_map(point.x, point.y);
-			if (is_in_map((pt_map.x), (pt_map.y), data) == 0)
-				return (point);
-		}
-	}
-	else if (point.x > data->cam->crd_real->x && point.y > data->cam->crd_real->y)
-	{
-		while (data->map[(int)ceil(pt_map.y)][(int)(pt_map.x)]->content != 1)
-		{
-			//printf(" point.x = %f -- point.y = %f -- i = %d \n", point.x, point.y, i);
-			point.x += coeff.x;
-			point.y += coeff.y;
-			pt_map = return_pos_map(point.x, point.y);
-			if (is_in_map(pt_map.x, (pt_map.y), data) == 0)
-				return (point);
-		}
-	}
-	else if (point.x > data->cam->crd_real->x && point.y < data->cam->crd_real->y)
-	{
-		while (data->map[(int)ceil(pt_map.y)][(int)(pt_map.x)]->content != 1)
-		{
-			//printf(" point.x = %f -- point.y = %f -- i = %d \n", point.x, point.y, i);
-			point.x += coeff.x;
-			point.y += coeff.y;
-			pt_map = return_pos_map(point.x, point.y);
-			if (is_in_map(pt_map.x, (pt_map.y), data) == 0)
-				return (point);
-		}
-	}
-	else
-	{*/
-	//	printf("ELSE");
 		while (data->map[(int)(pt_map.y)][(int)(pt_map.x)]->content != 1)
 		{
-			//printf(" point.x = %f -- point.y = %f -- i = %d \n", point.x, point.y, i);
 			point.x += coeff.x;
 			point.y += coeff.y;
 			pt_map = return_pos_map(point.x, point.y);
 			if (is_in_map(pt_map.x, pt_map.y, data) == 0)
 				return (point);
 		}
-	//}
 	
 	return (point);
 }
