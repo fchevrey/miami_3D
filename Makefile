@@ -15,7 +15,8 @@ SRCS_DIR = srcs
 SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		sound_init.c\
 		\
-		parse/parse.c parse/parse2.c parse/free_parse.c \
+		parse/parse.c parse/parse2.c parse/free_parse.c parse/fill_map.c\
+		parse/malloc_failed.c\
 		\
 		event/ft_event.c event/ft_mouse.c event/ft_mouse_wheel.c \
 		event/ft_keyboard.c event/fill_funar_key_event.c event/move.c \
@@ -27,7 +28,7 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		\
 		math/deg_rad.c \
 		\
-		mini_map/mini_map.c mini_map/mini_map2.c \
+		mini_map/mini_map.c \
 		\
 		tga/parse_tga.c tga/decode_tga.c
 

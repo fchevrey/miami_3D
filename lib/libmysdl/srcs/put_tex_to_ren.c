@@ -6,13 +6,14 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/22 15:18:04 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/08/22 15:19:59 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:24:10 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmysdl.h"
 
-void	put_tex_to_ren(t_texture *tex, SDL_Renderer *ren, t_point crd, char put_render)
+void	put_tex_to_ren(t_texture *tex, SDL_Renderer *ren, t_point crd,
+		char put_render)
 {
 	SDL_Rect		rec;
 
