@@ -65,10 +65,10 @@ static void		wall_rendering(t_data *data)
 
 static void		column_rendering(t_data *data)
 {
-    data->ray->wall_min = WIN_HEIGHT / 2 - (int)data->ray->wall_size / 2;
+	data->ray->wall_min = WIN_HEIGHT / 2 - (int)data->ray->wall_size / 2;
 	data->ray->wall_max = data->ray->wall_min + (int)data->ray->wall_size;
 	sky_ground_rendering(data);
-    wall_rendering(data);
+	wall_rendering(data);
 }
 
 void        	rendering(t_data *dt)
@@ -92,8 +92,7 @@ void        	rendering(t_data *dt)
 			dt->ray->deg -= dt->cam->min_theta;
 		dt->ray->actual_ray++;
 	}
-	draw_mini_map2(dt);
-	put_tex_to_ren(dt->m_img, dt->win->ren, (t_point){0, 0}, 0);
-	put_tex_to_ren(dt->wall_texts[0], dt->win->ren, (t_point){0, 0}, 0);
+	draw_mini_map(dt);
+	put_tex_to_ren(dt->m_img, dt->win->ren, pt_set(0, 0), 0);
 	put_tex_to_ren(dt->hud, dt->win->ren, pt_set(0, dt->m_img->size.y), 1);
 }

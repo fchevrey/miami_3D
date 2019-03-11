@@ -1,15 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   data_init.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/11 16:16:09 by fchevrey          #+#    #+#             */
+/*   Updated: 2019/03/11 16:27:45 by fchevrey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "main.h"
 
-void			init_and_load_wall_textures(t_data *data)
+static void			init_and_load_wall_textures(t_data *data)
 {
 	int			i;
 	t_point		tiles_size;
+	char		**titles;
+	char		*tex_title;
 
 	i = 0;
 	tiles_size = pt_set(64, 64);
-	if (!(data->wall_texts = (t_texture**)malloc(sizeof(t_texture*) * WALL_TEXTS + 1)))
+	if (!(data->wall_texts = (t_texture**)malloc(sizeof(t_texture*) *
+			WALL_TEXTS + 1)))
 		malloc_failed("init wall_texts\n");
 	data->wall_texts[WALL_TEXTS] = NULL;
+	titles = ft_strsplit("lol.tga|space_invader.tga|rainbow.tga|doom.tga", '|');
 	while (i < WALL_TEXTS)
 	{
 		if (!(data->wall_texts[i] = texture_new(tiles_size, data->win->ren)))
@@ -17,49 +33,24 @@ void			init_and_load_wall_textures(t_data *data)
 			malloc_failed("init one wall_texture\n");
 			return ;
 		}
-		if (i == 0)
-			ft_load_texture(&data->endian, "assets/textures/doom.tga", data->wall_texts[i]);
-		else if (i == 1)
-			ft_load_texture(&data->endian, "assets/textures/lol.tga", data->wall_texts[i]);
-		else if (i == 2)
-			ft_load_texture(&data->endian, "assets/textures/rainbow.tga", data->wall_texts[i]);
-		else if (i == 3)
-			ft_load_texture(&data->endian, "assets/textures/space_invader.tga", data->wall_texts[i]);
+		tex_title = ft_strjoin("assets/textures/", titles[i]);
+		ft_load_texture(&data->endian, tex_title, data->wall_texts[i]);
 		i++;
+		ft_strdel(&tex_title);
 	}
+	ft_tabdel(&titles);
 }
-/*void			init_and_load_floor_textures(t_data *data)
-{
-	int			i;
-	t_point		tiles_size;
 
-	i = 0;
-	tiles_size = pt_set(64, 64);
-	if (!(data->floor_texts = (t_texture**)malloc(sizeof(t_texture*) * FLOOR_TEXTS + 1)))
-		malloc_failed("init floor_texts\n");
-	data->floor_texts[FLOOR_TEXTS] = NULL;
-	while (i < FLOOR_TEXTS)
-	{
-		if (!(data->floor_texts[i] = texture_new(tiles_size, data->win->ren)))
-		{
-			malloc_failed("init one floor_texture\n");
-			return ;
-		}
-		ft_load_texture(&data->endian, "assets/textures/2.tga", data->floor_texts[i]);
-		i++;
-	}
-}*/
-
-t_ray			*init_ray()
-
+static t_ray		*init_ray(void)
 {
 	t_ray		*new;
+
 	if (!(new = (t_ray*)malloc(sizeof(t_ray))))
 		malloc_failed("init ray\n");
 	new->deg = 0;
 	new->actual_ray = 0;
-	new->hori = (t_ptfl){0,0};
-	new->verti = (t_ptfl){0,0};
+	new->hori = (t_ptfl){0, 0};
+	new->verti = (t_ptfl){0, 0};
 	new->dist_h = 0;
 	new->dist_v = 0;
 	new->offset = 0;
@@ -69,7 +60,7 @@ t_ray			*init_ray()
 	return (new);
 }
 
-t_cam			*cam_init(t_parse parse)
+static t_cam		*cam_init(t_parse parse)
 {
 	t_cam		*new;
 
@@ -91,7 +82,37 @@ t_cam			*cam_init(t_parse parse)
 	return (new);
 }
 
-t_data		*data_init(t_map ***map, t_parse parse, char **av)
+static int			init_window_and_img(t_data *data, t_parse parse,
+		t_point *size)
+{
+	int i;
+
+	if (!(data->cam = cam_init(parse)))
+		return (-1);
+	if (!(data->win = win_new(*size, "Wolf 3D")))
+		return (-1);
+	if (!(data->win->ren = SDL_CreateRenderer(data->win->ptr, -1, 0)))
+		return (-1);
+	size->y -= HUD_HEIGHT;
+	if (!(data->m_img = texture_new(*size, data->win->ren)))
+		return (-1);
+	init_and_load_wall_textures(data);
+	data->musics = NULL;
+	data->sounds = NULL;
+	data->ray = init_ray();
+	size->y = HUD_HEIGHT;
+	if (!(data->hud = texture_new(*size, data->win->ren)))
+		return (-1);
+	i = 0;
+	while (i < size->x * size->y)
+		data->hud->tab_pxl[i++] = 0xA600A6;
+	data->xmax = parse.nb_elem_line;
+	data->ymax = parse.nb_line;
+	data->walk_channel = -12;
+	return (0);
+}
+
+t_data				*data_init(t_map ***map, t_parse parse, char **av)
 {
 	t_data		*data;
 	t_point		size;
@@ -106,30 +127,9 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	data->endian = -1;
 	chr = ft_strstr(av[0], "/wolf3d");
 	data->path = ft_strsub(av[0], 2, ft_strlen(av[0]) - (ft_strlen(chr) + 1));
-	if (!(data->cam = cam_init(parse)))
-		return (NULL);
-	if (!(data->win = win_new(size, "Wolf 3D")))
-		return (NULL);
-	if (!(data->win->ren = SDL_CreateRenderer(data->win->ptr, -1, 0)))
-		return (NULL);
-	size.y -= HUD_HEIGHT;
-	if (!(data->m_img = texture_new(size, data->win->ren)))
-		return (NULL);
-	//init_and_load_floor_textures(data);
-	init_and_load_wall_textures(data);
-	data->musics = NULL;
-	data->sounds = NULL;
-	data->musics = NULL;
 	data->map = map;
-	data->ray = init_ray();
-	size.y = HUD_HEIGHT;
-	if (!(data->hud = texture_new(size, data->win->ren)))
-		return (NULL);
-	for (int i = 0; i < size.x * size.y; i++)
-		data->hud->tab_pxl[i] = 0xA600A6;
-	data->xmax = parse.nb_elem_line;
-	data->ymax = parse.nb_line;
-	data->walk_channel = -12;
+	if (init_window_and_img(data, parse, &size) < 0)
+		ft_exit(&data);
 	if (sound_init(data) < 0)
 		ft_exit(&data);
 	return (data);

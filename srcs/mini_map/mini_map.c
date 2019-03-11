@@ -1,66 +1,65 @@
-
 #include "main.h"
 
-// pt_to_tex((t_point){j, i}, data->m_img, get_color(0, 140, 85, 0));
-
-void		draw_square_color(t_point up, t_point down, t_data *data, int color)
+void	draw_black_square(t_data *data)
 {
-	int x;
-	int y;
+	t_point	crd;
 
-	y = up.y;
-	while (y < down.y)
+	crd.y = -1;
+	while (++crd.y < HUD_HEIGHT)
 	{
-		x = up.x;
-		while (x < down.x)
-		{
-			pt_to_tex((t_point){x, y}, data->hud, color);
-			x++;
-		}
-		y++;
+		crd.x = data->hud->size.x - HUD_HEIGHT;
+		while (++crd.x < data->hud->size.x)
+			pt_to_tex(crd, data->hud, SQUARE_COLOR);
 	}
 }
 
-void		draw_mini_map(t_data *data)
+void	draw_square(t_data *data, t_point crd, int size, int color)
 {
-	t_point up;
-	t_point down;
-	int 	y;
-	int 	x;
-	int		y_tab;
-	int		x_tab;
-	// boucle sur la map et va print les carré
-	y = 0;
-	y_tab = 0;
-	while (y_tab <= data->ymax)
+	t_point	pt;
+	t_point tmp;
+	t_point added;
+
+	pt.x = HUD_HEIGHT / 2 - ((size * data->xmax + 1) / 2 + size / 2) \
+		+ (data->hud->size.x - HUD_HEIGHT + crd.x * size);
+	pt.y = (HUD_HEIGHT / 2 - ((size * data->ymax + 1) / 2 \
+		+ (((data->ymax + 1) % 2) * size / 2)) + (crd.y * size));
+	tmp.y = -1;
+	while (++tmp.y < size)
 	{
-		x_tab = 0;
-		x = data->hud->size.x - 210;
-		while (x_tab <= data->xmax)
+		tmp.x = -1;
+		while (++tmp.x < size)
 		{
-			up.x = x;
-			up.y = y;
-			down.x = x + 200 / data->xmax;
-			down.y = y + 200 / data->ymax;
-			if (data->map[y_tab][x_tab]->content == 1)
-				draw_square_color(up, down, data, get_color(125, 255, 0, 0));
-			else if (data->map[y_tab][x_tab]->content == 0)
-				draw_square_color(up, down, data, get_color(125, 125, 125, 0));
-			if (x_tab == data->cam->crd_map->x && y_tab == data->cam->crd_map->y)
-				draw_square_color(up, down, data, get_color(125, 0, 0, 255));
-			x += 200 / data->xmax;
-			x_tab++;
+			added.x = pt.x + tmp.x;
+			added.y = pt.y + tmp.y;
+			pt_to_tex(added, data->hud, color);
 		}
-		y_tab++;
-		y += 200 / data->ymax;
 	}
 }
 
-void		mini_map(t_data *data)
+void	draw_mini_map(t_data *data)
 {
-	// fct qui va dessiner la map avec mur et vide
-	draw_mini_map(data);
+	t_point crd;
+	int		size;
 
-	// fct qui va dessiner sur la map les objet/player
-
+	size = 12;
+	while (--size > 2)
+		if (((data->xmax + 1) * size) < HUD_HEIGHT - (size * 2) \
+			&& ((data->ymax + 1) * size) < HUD_HEIGHT - (size * 2))
+			break ;
+	draw_black_square(data);
+	crd.y = -1;
+	while (++crd.y <= data->ymax)
+	{
+		crd.x = -1;
+		while (++crd.x <= data->xmax)
+		{
+			if (crd.x == data->cam->crd_map->x \
+					&& crd.y == data->cam->crd_map->y)
+				draw_square(data, crd, size, 0x88A6);
+			else if (data->map[crd.y][crd.x]->content == 1)
+				draw_square(data, crd, size, 0xA6A6A6);
+			else
+				draw_square(data, crd, size, 0xFFFFFF);
+		}
+	}
 }

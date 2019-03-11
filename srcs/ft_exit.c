@@ -6,7 +6,7 @@
 /*   By: fchevrey <fchevrey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 16:28:06 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 15:58:16 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:34:35 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "main.h"
 #include "event.h"
 
-static void free_sounds(t_data *data)
+static void		free_sounds(t_data *data)
 {
 	int		i;
 
@@ -31,6 +31,7 @@ static void free_sounds(t_data *data)
 		data->sounds = NULL;
 	}
 }
+
 static void		free_music(t_data *data)
 {
 	int		i;

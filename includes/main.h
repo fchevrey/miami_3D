@@ -40,7 +40,7 @@ t_point			get_real_from_map(t_point *map);
 ** mini_map
 */
 
-void			mini_map(t_data *data);
-void			draw_mini_map2(t_data *data);
+//void			mini_map(t_data *data);
+void			draw_mini_map(t_data *data);
 
 #endif

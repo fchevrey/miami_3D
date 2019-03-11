@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 16:00:00 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 15:48:40 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:48:32 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,9 @@ void	move_foreward(t_data *data, float deltatime, const int speed)
 	dist.x = return_distance(*cam->crd_real, wall_h);
 	dist.y = return_distance(*cam->crd_real, wall_v);
 	if (dist.x < 20.0 && dist.y > 20.0)
-	{
 		cam->crd_real->x = new_pos.x;
-		printf("--- only x --- \n");
-	}
 	else if (dist.x > 20.0 && dist.y < 20.0)
-	{
-		printf("--- only y --- \n");
 		cam->crd_real->y = new_pos.y;
-	}
 	else if (dist.y > 20.0 && dist.y > 20.0)
 	{
 		cam->crd_real->x = new_pos.x;
