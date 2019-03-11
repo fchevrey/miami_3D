@@ -1,67 +1,6 @@
 
 #include "parse.h"
 
-/*int		ft_rank(int nb)
-{
-	int i;
-
-	i = 0;
-	if (nb == 0)
-		return (1);
-	if (nb < 0)
-	{
-		nb = -nb;
-		i++;
-	}
-	while (nb > 0)
-	{
-		nb /= 10;
-		i++;
-	}
-	return (i);
-}
-
-int		ft_count_before_space(char *str)
-{
-	int i;
-
-	i = 0;
-	while (*str == ' ')
-		str++;
-	while (str[i] >= '0' && str[i] <= '9')
-		i++;
-	if (i > 3)
-		return (0);
-	return (1);
-}*/
-
-/*static int		ft_add_list(char *str, t_map **map, int y)
-{
-	int i;
-	int nb;
-	int x;
-
-	x = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-		{
-			if (ft_count_before_space(str + i) == 0)
-				return (*map ? -1 : -2);
-			nb = ft_atoi(str + i);
-			if (nb > 255)
-				return (*map ? -1 : -2);
-			ft_add(x, y, nb, map);
-			i += ft_rank(nb) - 1;
-			if (str[i] != ' ')
-			x++;
-		}
-		i++;
-	}
-	return (x);
-}*/
-
 static int		ft_only_one_space(char *str)
 {
 	int i;
