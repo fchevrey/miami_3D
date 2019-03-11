@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 16:00:00 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/12/16 16:00:40 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 12:43:44 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ void			move_foreward(t_data *data, float deltatime, const int speed)
 	play_walk_song(data);
 	new_pos.y = cam->crd_real->y - (int)(sinf(rad) * speed * deltatime);
     if ((cam->theta > 0 && cam->theta < 90) || (cam->theta > 270))
-        wall_h = horizon_right(data, cam->theta, 1);
+        wall_h = horizon_right(data, cam->theta);
     else //(cam->theta >= 90 && cam->theta < 270)
-        wall_h = horizon_left(data, cam->theta, 1);
+        wall_h = horizon_left(data, cam->theta);
     /* Check vertical */
     if (cam->theta >= 0 && cam->theta < 180)
-        wall_v = vertical_up(data, cam->theta, 1);
+        wall_v = vertical_up(data, cam->theta);
     else //(cam->theta >= 180)
-        wall_v = vertical_down(data, cam->theta, 1);
+        wall_v = vertical_down(data, cam->theta);
     dist.x = return_distance(*cam->crd_real, wall_h);
     dist.y = return_distance(*cam->crd_real, wall_v);
     //printf("wall_v.x = %f .y = %f \nwall_h.x = %f y = %f \n", wall_v.x, wall_v.y, wall_h.x, wall_h.y);
@@ -81,6 +81,7 @@ void			move_foreward(t_data *data, float deltatime, const int speed)
 		cam->crd_real->y = new_pos.y;
 	}
 	set_real_to_map(cam->crd_real, cam->crd_map);
+	rendering(data);
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
@@ -99,6 +100,7 @@ void	move_backward(t_data *data, float deltatime, const int speed)
 		cam->crd_real->y += (sinf(rad) * speed * deltatime);
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	play_walk_song(data);
+	rendering(data);
 	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
@@ -125,6 +127,8 @@ void	move_left(t_data *data, float deltatime, const int speed)
 	cam->crd_real->x = new_pos.x;
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
+	rendering(data);
+	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }
 
 void	move_right(t_data *data, float deltatime, const int speed)
@@ -150,4 +154,6 @@ void	move_right(t_data *data, float deltatime, const int speed)
 	cam->crd_real->x = new_pos.x;
 	cam->crd_real->y = new_pos.y;
 	set_real_to_map(cam->crd_real, cam->crd_map);
+	rendering(data);
+	//printf("theta = %f real x = %d y = %d, mapx = %d y = %d\n", cam->theta, cam->crd_real->x, cam->crd_real->y, cam->crd_map->x, cam->crd_map->y);
 }

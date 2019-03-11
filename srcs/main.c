@@ -54,18 +54,6 @@ static int		lib_initialisation(void)
 		return (ft_error("SDL_Mixer  error :", Mix_GetError(), NULL));
 	return (1);
 }
-/*
-void			test_tan(void)
-{
-	int		i;
-
-	i = -360;
-	while (i < 361)
-	{
-		printf("valeur de tan %d = %f\n", i, tanf(deg_to_rad(i)));
-		i++;
-	}
-}*/
 
 int				main(int ac, char **av)
 {
@@ -87,14 +75,7 @@ int				main(int ac, char **av)
 			return (0);
 		if (!(data = data_init(map2, parse, av)))
 			return (0);
-		//display_map(map2, data->cam->crd_map->x, data->cam->crd_map->y, data);
-		/* Fonction qui va load une texture, prend le chemin relatif et une structure image qu'on veut remplir*/
-		/* PAY ATTENTION PLEASE */
-		/* SI vous voulez importez vos texture il faut : */
-		/* Un fichier Targa ou .tga */
-		/* Il fera 32bits et sera sans compression RLE */
-		ft_load_texture("assets/textures/doom.tga", data->b_and_g_tiles);
-		loop(data);
+		rendering(data);
 		game_loop(data);
 	}
 	else

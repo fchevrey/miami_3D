@@ -19,7 +19,7 @@ int						ft_parse(char *str, t_map **map, t_parse *parse);
 int				        ft_lin_is_good(char *str);
 
 /*
-** Pars TGA
+** Parse TGA
 */
 
 
@@ -45,7 +45,9 @@ typedef union		u_fill
 	}				val;
 }					t_fill;
 
-void			ft_load_texture(char *str, t_texture *img);
+void			ft_load_texture(int *endian, char *str, t_texture *img);
+
+unsigned char	*ft_decode_tga(int *endian, t_header *header, unsigned char *image);
 
 /*
 ** Free

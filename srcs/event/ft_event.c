@@ -6,13 +6,13 @@
 /*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/19 18:27:24 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/12/16 16:04:17 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 12:46:47 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "event.h"
 
-static int 	ft_event(SDL_Event *event, t_data *data)
+static int		ft_event(SDL_Event *event, t_data *data)
 {
 	while (SDL_PollEvent(event))
 	{
@@ -57,7 +57,7 @@ void			game_loop(t_data *data)
 			delta = 0.0;
 		}
 		last_time = SDL_GetTicks();
-		loop(data);
+		rendering(data);
 	}
 	ft_exit(&data);
 }

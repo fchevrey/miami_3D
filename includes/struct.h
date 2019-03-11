@@ -4,20 +4,28 @@
 # include "main.h"
 #include "SDL_mixer.h"
 
-typedef struct 				s_ray
+typedef struct			s_obj
 {
-	float					deg;
-	int						actual_ray;
-	t_ptfl					hori;
-	t_ptfl					verti;
-	float					dist_h;
-	float					dist_v;
-	float					dist_w_d;
-	int						offset;
-	float					wall_size;
-	int						wall_min;			
-	int						wall_max;			
-}							t_ray;
+	t_ptfl				obj;
+	int					content;
+	struct s_obj		*next;
+	struct s_obj		*prev;
+}						t_obj;
+
+typedef struct 			s_ray
+{
+	float				deg;
+	int					actual_ray;
+	t_ptfl				hori;
+	t_ptfl				verti;
+	float				dist_h;
+	float				dist_v;
+	float				dist_w_d;
+	int					offset;
+	float				wall_size;
+	int					wall_min;
+	int					wall_max;
+}						t_ray;
 
 typedef union			u_color
 {
@@ -76,22 +84,23 @@ typedef struct			s_cam
 
 typedef struct			s_data
 {
-	t_win		*win;
-	char		*path;
-	int			xmax;
-	int			ymax;
-	Mix_Chunk	**sounds;
-	int			walk_channel;
-	Mix_Music	**musics;
-	int			len_music;
-	t_map		***map;
-	t_texture	*m_img;
-	t_texture	*hud;
-	t_texture	*b_and_w_tiles;
-	t_texture	*b_and_g_tiles;
-	t_cam		*cam;
-	t_ray 		*ray;
-	uint8_t		walking;
+	t_win				*win;
+	char				*path;
+	int					xmax;
+	int					ymax;
+	Mix_Chunk			**sounds;
+	int					walk_channel;
+	int					len_music;
+	Mix_Music			**musics;
+	t_map				***map;
+	t_texture			*m_img;
+	t_texture			*hud;
+	t_texture			**floor_texts;
+	t_texture			**wall_texts;
+	t_cam				*cam;
+	t_ray				*ray;
+	int					endian; //little = 0 and big = 1
+	uint8_t				walking;
 }						t_data;
 
 typedef struct			s_funar_keyb

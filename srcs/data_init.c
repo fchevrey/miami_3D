@@ -1,8 +1,63 @@
 #include "main.h"
 
-t_ray		*init_ray()
+void			init_and_load_wall_textures(t_data *data)
 {
-	t_ray *new;
+	int			i;
+	t_point		tiles_size;
+
+	printf("DEBUT DE INIT WALL\n");
+	i = 0;
+	tiles_size = pt_set(64, 64);
+	if (!(data->wall_texts = (t_texture**)malloc(sizeof(t_texture*) * WALL_TEXTS + 1)))
+		malloc_failed("init wall_texts\n"); //malloc error
+	data->wall_texts[WALL_TEXTS] = NULL;
+	while (i < WALL_TEXTS)
+	{
+		if (!(data->wall_texts[i] = texture_new(tiles_size, data->win->ren)))
+		{
+			malloc_failed("init one wall_texture\n"); //malloc error
+			return ;
+		}
+		if (i == 0)
+			ft_load_texture(&data->endian, "assets/textures/doom.tga", data->wall_texts[i]);
+		else if (i == 1)
+			ft_load_texture(&data->endian, "assets/textures/lol.tga", data->wall_texts[i]);
+		else if (i == 2)
+			ft_load_texture(&data->endian, "assets/textures/rainbow.tga", data->wall_texts[i]);
+		else if (i == 3)
+			ft_load_texture(&data->endian, "assets/textures/space_invader.tga", data->wall_texts[i]);
+		i++;
+	}
+	printf("FIN DE INIT WALL\n");
+}
+void			init_and_load_floor_textures(t_data *data)
+{
+	int			i;
+	t_point		tiles_size;
+
+	i = 0;
+	printf("DEBUT DE INIT FLOOR\n");
+	tiles_size = pt_set(64, 64);
+	if (!(data->floor_texts = (t_texture**)malloc(sizeof(t_texture*) * FLOOR_TEXTS + 1)))
+		malloc_failed("init floor_texts\n"); //malloc error
+	data->floor_texts[FLOOR_TEXTS] = NULL;
+	while (i < FLOOR_TEXTS)
+	{
+		if (!(data->floor_texts[i] = texture_new(tiles_size, data->win->ren)))
+		{
+			malloc_failed("init one floor_texture\n"); //malloc error
+			return ;
+		}
+		ft_load_texture(&data->endian, "assets/textures/2.tga", data->floor_texts[i]);
+		i++;
+	}
+	printf("FIN DE INIT FLOOR\n");
+}
+
+t_ray			*init_ray()
+
+{
+	t_ray		*new;
 	if (!(new = (t_ray*)malloc(sizeof(t_ray))))
 		malloc_failed("init ray\n"); //malloc error
 	new->deg = 0;
@@ -18,9 +73,9 @@ t_ray		*init_ray()
 	return (new);
 }
 
-t_cam		*cam_init(t_parse parse)
+t_cam			*cam_init(t_parse parse)
 {
-	t_cam *new;
+	t_cam		*new;
 
 	if (!(new = (t_cam*)malloc(sizeof(t_cam))))
 		return (NULL);
@@ -34,7 +89,7 @@ t_cam		*cam_init(t_parse parse)
 	new->crd_real->y = new->crd_map->y * SIZE_GRID + SIZE_GRID * 0.5;
 	printf("real x : %d | real y : %d\n",new->crd_real->x, new->crd_real->y);
 	new->act_inter = pt_set(0, 0);
-	new->theta = 90;
+	new->theta = 180;
 	new->h_cam = 0.5;
 	new->len_cam = (WIN_WIDTH * new->h_cam) / tan(deg_to_rad(FOV * new->h_cam));
 	new->min_theta = FOV / (float)WIN_WIDTH;
@@ -48,11 +103,13 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	t_point		tiles_size;
 	char		*chr;
 
-	size = pt_set(WIN_WIDTH, WIN_HEIGHT);
+	size = pt_set(WIN_WIDTH, WIN_HEIGHT + HUD_HEIGHT);
 	tiles_size = pt_set(64, 64);
 	if (!(data = (t_data*)malloc(sizeof(t_data))))
 		return (NULL);
 	data->map = map;
+	data->endian = -1;
+	printf("DATA->ENDIAN = %d\n", data->endian);
 	chr = ft_strstr(av[0], "/wolf3d");
 	//printf("\n  == chr = %s\n  ==", chr);
 	data->path = ft_strsub(av[0], 2, ft_strlen(av[0]) - (ft_strlen(chr) + 1));
@@ -65,10 +122,8 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	size.y -= HUD_HEIGHT;
 	if (!(data->m_img = texture_new(size, data->win->ren)))
 		return (NULL);
-	if (!(data->b_and_w_tiles = texture_new(tiles_size, data->win->ren)))
-		return (NULL);
-	if (!(data->b_and_g_tiles = texture_new(tiles_size, data->win->ren)))
-		return (NULL);
+	init_and_load_floor_textures(data);
+	init_and_load_wall_textures(data);
 	data->musics = NULL;
 	data->sounds = NULL;
 	data->musics = NULL;

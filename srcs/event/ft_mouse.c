@@ -18,7 +18,7 @@ int		ft_mouse(int x, int y, t_data *data)
 	if (data->cam->theta >= 360)
 		data->cam->theta -= 360;
 	display_map(data->map, data->cam->crd_map->x, data->cam->crd_map->y, data);
-	loop(data);
+	rendering(data);
 	printf("theta = %f\n", data->cam->theta);*/
 	if (x == y && !data)
 		return (0);
