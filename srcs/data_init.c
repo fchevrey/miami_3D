@@ -103,7 +103,7 @@ t_data		*data_init(t_map ***map, t_parse parse, char **av)
 	t_point		tiles_size;
 	char		*chr;
 
-	size = pt_set(WIN_WIDTH, WIN_HEIGHT);
+	size = pt_set(WIN_WIDTH, WIN_HEIGHT + HUD_HEIGHT);
 	tiles_size = pt_set(64, 64);
 	if (!(data = (t_data*)malloc(sizeof(t_data))))
 		return (NULL);
