@@ -3,30 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   event.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/08 16:07:31 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/12/16 17:20:42 by fchevrey         ###   ########.fr       */
+/*   Created: 2019/03/11 16:49:51 by fchevrey          #+#    #+#             */
+/*   Updated: 2019/03/11 18:20:18 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EVENT_H
 # define EVENT_H
 
-#include "main.h"
+# include "main.h"
 
 void			game_loop(t_data *data);
 int				ft_mouse(int x, int y, t_data *data);
-int				ft_keyboard(int key, int repeat, SDL_Event *event, t_data *data);
+int				ft_keyboard(int key, int repeat, SDL_Event *event,
+		t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
 t_funar_keyb	*fill_funar_keyrelease(int *size);
 t_funar_keyb	*fill_funar_keypress(int *size);
-
+void			play_walk_song(t_data *data);
 
 /*
 ** functions that modify data
 */
+
 void			move(t_data *data, float deltatime);
 void			move_foreward(t_data *data, float deltatime, const int speed);
 void			move_backward(t_data *data, float deltatime, const int speed);
@@ -42,6 +44,7 @@ void			next_song(t_data *data);
 /*
 ** Jump - stand - crouch
 */
+
 void			check_stand(t_data *data);
 void			jump(t_data *data);
 void			crouch(t_data *data);

@@ -1,14 +1,13 @@
 #ifndef RAYCAST_H
-#define RAYCAST_H
+# define RAYCAST_H
 
-#include "main.h"
+# include "main.h"
 
 /*
 ** Draw
 */
 
-//void		ft_ciel_sol(t_data *data);
-void            rendering(t_data *dt);
+void			rendering(t_data *dt);
 
 /*
 ** Detect wall, return distance
@@ -23,12 +22,5 @@ t_ptfl			vertical_down(t_data *data, float deg);
 t_ptfl			horizon_right(t_data *data, float deg);
 t_ptfl			horizon_left(t_data *data, float deg);
 float			return_distance(t_point a, t_ptfl b);
-
-/*
-** Set offset for applying textures
-*/
-
-//int				set_offset(t_data *data, t_texture *img);
-//float		    return_distance(t_point a, t_ptfl b);
 
 #endif

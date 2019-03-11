@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 12:28:40 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/08/09 12:34:20 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:26:00 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_vecfl		ft_div_pt(t_vecfl crd1, char operand, t_vecfl crd2)
 	return (result);
 }
 
-t_vecfl			vecfl_op(t_vecfl crd1, char operand, t_vecfl crd2)
+t_vecfl				vecfl_op(t_vecfl crd1, char operand, t_vecfl crd2)
 {
 	t_vecfl		result;
 

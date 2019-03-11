@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "main.h"
+#include "raycast.h"
 
 static int			set_offset(t_data *data, t_texture *img)
 {
@@ -103,8 +104,7 @@ void				rendering(t_data *dt)
 			dt->ray->deg -= dt->cam->min_theta;
 		dt->ray->actual_ray++;
 	}
-	draw_mini_map2(dt);
-	put_tex_to_ren(dt->m_img, dt->win->ren, (t_point){0, 0}, 0);
-	put_tex_to_ren(dt->wall_texts[0], dt->win->ren, (t_point){0, 0}, 0);
+	draw_mini_map(dt);
+	put_tex_to_ren(dt->m_img, dt->win->ren, pt_set(0, 0), 0);
 	put_tex_to_ren(dt->hud, dt->win->ren, pt_set(0, dt->m_img->size.y), 1);
 }

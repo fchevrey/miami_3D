@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 19:49:08 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/08/09 12:35:28 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:25:11 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_vec		ft_div_pt(t_vec crd1, char operand, t_vec crd2)
 	return (result);
 }
 
-t_vec			vec_op(t_vec crd1, char operand, t_vec crd2)
+t_vec				vec_op(t_vec crd1, char operand, t_vec crd2)
 {
 	t_vec		result;
 

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sound_init.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/11 16:28:56 by fchevrey          #+#    #+#             */
+/*   Updated: 2019/03/11 16:33:43 by fchevrey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "main.h"
 
 static int		on_error(char **name, int *nb)
 {
 	ft_error("error lading : ", *name, Mix_GetError());
-	*nb = *nb -1;
+	*nb = *nb - 1;
 	ft_strdel(name);
 	return (1);
 }
@@ -12,8 +24,8 @@ static int		load_sound(t_data *data, char **songs)
 {
 	int			nb;
 	int			i;
-	char 		*music_path;
-	char 		*name;
+	char		*music_path;
+	char		*name;
 
 	nb = 0;
 	while (songs[nb])
@@ -39,8 +51,8 @@ static int		load_music(t_data *data, char **songs)
 {
 	int			nb;
 	int			i;
-	char 		*music_path;
-	char 		*name;
+	char		*music_path;
+	char		*name;
 
 	nb = 0;
 	while (songs[nb])
@@ -62,12 +74,16 @@ static int		load_music(t_data *data, char **songs)
 	return (nb);
 }
 
-int		sound_init(t_data *data)
+int				sound_init(t_data *data)
 {
 	char		**songs;
 
-	if (!(songs = ft_strsplit("music01.wav\fmusic02.wav\fmusic03.wav\fmusic04.wav\fmusic05.wav", '\f')))
+	if (!(songs = ft_strsplit(
+		"music01.wav\fmusic02.wav\fmusic03.wav\fmusic04.wav\fmusic05.wav",
+		'\f')))
+	{
 		return (-1);
+	}
 	if ((data->len_music = load_music(data, songs)) < 0)
 		ft_putstr("Load music Error\n");
 	ft_tabdel(&songs);
@@ -82,4 +98,3 @@ int		sound_init(t_data *data)
 		return (-1);
 	return (1);
 }
-
