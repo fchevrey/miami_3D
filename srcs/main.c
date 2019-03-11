@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/11 15:51:06 by fchevrey          #+#    #+#             */
+/*   Updated: 2019/03/11 15:51:11 by fchevrey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "main.h"
 #include "parse.h"
@@ -67,7 +78,7 @@ int				main(int ac, char **av)
 	{
 		if (!ft_parse(av[1], &map, &parse) || !map)
 		{
-			ft_putendl_fd("Le fichier est pas bon", 2);
+			ft_putendl_fd("invalid file.", 2);
 			return (1);
 		}
 		map2 = ft_fill_tab(parse, &map);

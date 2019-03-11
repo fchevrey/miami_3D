@@ -6,7 +6,7 @@
 /*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/08 16:07:31 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/12/16 17:20:42 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/11 14:03:40 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int				ft_mouse_wheel(int y, t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
 t_funar_keyb	*fill_funar_keyrelease(int *size);
 t_funar_keyb	*fill_funar_keypress(int *size);
+void			play_walk_song(t_data *data);
 
 
 /*

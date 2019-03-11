@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_event.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gaetanolliet <gaetanolliet@student.42.f    +#+  +:+       +#+        */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/19 18:27:24 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 12:46:47 by fchevrey         ###   ########.fr       */
+/*   Created: 2019/03/11 13:58:41 by fchevrey          #+#    #+#             */
+/*   Updated: 2019/03/11 14:08:47 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int		ft_event(SDL_Event *event, t_data *data)
 			ft_mouse(event->motion.x, event->motion.y, data);
 		else if (event->type == SDL_MOUSEWHEEL)
 			ft_mouse_wheel(event->wheel.y, data);
-		else if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_CLOSE)
+		else if (event->type == SDL_WINDOWEVENT && event->window.event
+				== SDL_WINDOWEVENT_CLOSE)
 		{
 			event->type = SDL_KEYDOWN;
 			event->key.keysym.sym = SDLK_ESCAPE;
@@ -36,11 +37,11 @@ static int		ft_event(SDL_Event *event, t_data *data)
 
 void			game_loop(t_data *data)
 {
-	SDL_Event 			event;
+	SDL_Event			event;
 	int					quit;
 	const unsigned int	fixdelta = 20;
-	unsigned int 		last_time;
-	unsigned int 		delta;
+	unsigned int		last_time;
+	unsigned int		delta;
 
 	quit = 0;
 	data->walking = 0;
@@ -52,8 +53,8 @@ void			game_loop(t_data *data)
 		if (delta >= fixdelta)
 		{
 			if (data->walking != MOVE_NONE)
-				move(data, ((float)delta /100));
-			sound(data); 
+				move(data, ((float)delta / 100));
+			sound(data);
 			delta = 0.0;
 		}
 		last_time = SDL_GetTicks();

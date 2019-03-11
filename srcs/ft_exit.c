@@ -6,7 +6,7 @@
 /*   By: fchevrey <fchevrey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 16:28:06 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/08/22 17:43:05 by mlantonn         ###   ########.fr       */
+/*   Updated: 2019/03/11 15:58:16 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 #include "main.h"
 #include "event.h"
 
+static void free_sounds(t_data *data)
+{
+	int		i;
+
+	if (data->sounds)
+	{
+		i = 0;
+		while (data->sounds[i])
+		{
+			Mix_FreeChunk((Mix_Chunk*)data->sounds[i]);
+			data->sounds[i] = NULL;
+			i++;
+		}
+		free(data->sounds);
+		data->sounds = NULL;
+	}
+}
 static void		free_music(t_data *data)
 {
 	int		i;
@@ -30,22 +47,11 @@ static void		free_music(t_data *data)
 		free(data->musics);
 		data->musics = NULL;
 	}
-	if (data->sounds)
-	{
-		i = 0;
-		while (data->sounds[i])
-		{
-			Mix_FreeChunk((Mix_Chunk*)data->sounds[i]);
-			data->sounds[i] = NULL;
-			i++;
-		}
-		free(data->sounds);
-		data->sounds = NULL;
-	}
+	free_sounds(data);
 	Mix_Quit();
 }
 
-void		ft_exit(t_data **data)
+void			ft_exit(t_data **data)
 {
 	if (!data || !*data)
 		exit(1);
