@@ -95,8 +95,8 @@ typedef struct			s_data
 	t_map				***map;
 	t_texture			*m_img;
 	t_texture			*hud;
-	t_texture			**floor_texts;
 	t_texture			**wall_texts;
+	t_texture			**texts;
 	t_cam				*cam;
 	t_ray				*ray;
 	int					endian;

@@ -13,18 +13,19 @@ ORANGE = [038;2;239;138;5
 SRCS_DIR = srcs
 
 SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
-		sound_init.c\
+		sound_init.c load_textures.c\
 		\
 		parse/parse.c parse/parse2.c parse/free_parse.c parse/fill_map.c\
 		parse/malloc_failed.c\
 		\
 		event/ft_event.c event/ft_mouse.c event/ft_mouse_wheel.c \
 		event/ft_keyboard.c event/fill_funar_key_event.c event/move.c \
-		event/look.c event/check_collision.c event/sound.c \
+		event/look.c event/sound.c \
 		event/move_stop.c \
 		\
 		raycast/check_nearest_wall_distance.c raycast/rendering.c \
 		raycast/vertical_raycasting.c raycast/horizontal_raycasting.c\
+		raycast/render_hud.c \
 		\
 		math/deg_rad.c \
 		\
@@ -144,7 +145,6 @@ re_MODE_DEBUG: rm_obj MODE_DEBUG
 
 change_cflag:
 	@$(eval CFLAGS = -fsanitize=address)
-https://ftp.osuosl.org/pub/xiph/releases/ogg/
 
 SDL2 :
 	@if [ ! -d "./lib/sdl2" ]; then \

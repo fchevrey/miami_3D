@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:28:56 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 16:33:43 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:41:08 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int				sound_init(t_data *data)
 	ft_tabdel(&songs);
 	if (!data->sounds)
 		return (-1);
+	Mix_VolumeMusic(60);
 	return (1);
 }

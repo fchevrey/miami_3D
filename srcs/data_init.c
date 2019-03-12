@@ -6,41 +6,13 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:16:09 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 18:16:58 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 14:11:06 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "parse.h"
 
-static void			init_and_load_wall_textures(t_data *data)
-{
-	int			i;
-	t_point		tiles_size;
-	char		**titles;
-	char		*tex_title;
-
-	i = 0;
-	tiles_size = pt_set(64, 64);
-	if (!(data->wall_texts = (t_texture**)malloc(sizeof(t_texture*) *
-			WALL_TEXTS + 1)))
-		malloc_failed("init wall_texts\n");
-	data->wall_texts[WALL_TEXTS] = NULL;
-	titles = ft_strsplit("lol.tga|space_invader.tga|rainbow.tga|doom.tga", '|');
-	while (i < WALL_TEXTS)
-	{
-		if (!(data->wall_texts[i] = texture_new(tiles_size, data->win->ren)))
-		{
-			malloc_failed("init one wall_texture\n");
-			return ;
-		}
-		tex_title = ft_strjoin("assets/textures/", titles[i]);
-		ft_load_texture(&data->endian, tex_title, data->wall_texts[i]);
-		i++;
-		ft_strdel(&tex_title);
-	}
-	ft_tabdel(&titles);
-}
 
 static t_ray		*init_ray(void)
 {
@@ -83,35 +55,6 @@ static t_cam		*cam_init(t_parse parse)
 	return (new);
 }
 
-static int			init_window_and_img(t_data *data, t_parse parse,
-		t_point *size)
-{
-	int i;
-
-	if (!(data->cam = cam_init(parse)))
-		return (-1);
-	if (!(data->win = win_new(*size, "Wolf 3D")))
-		return (-1);
-	if (!(data->win->ren = SDL_CreateRenderer(data->win->ptr, -1, 0)))
-		return (-1);
-	size->y -= HUD_HEIGHT;
-	if (!(data->m_img = texture_new(*size, data->win->ren)))
-		return (-1);
-	init_and_load_wall_textures(data);
-	data->musics = NULL;
-	data->sounds = NULL;
-	data->ray = init_ray();
-	size->y = HUD_HEIGHT;
-	if (!(data->hud = texture_new(*size, data->win->ren)))
-		return (-1);
-	i = 0;
-	while (i < size->x * size->y)
-		data->hud->tab_pxl[i++] = 0xA600A6;
-	data->xmax = parse.nb_elem_line;
-	data->ymax = parse.nb_line;
-	data->walk_channel = -12;
-	return (0);
-}
 
 t_data				*data_init(t_map ***map, t_parse parse, char **av)
 {
@@ -129,8 +72,13 @@ t_data				*data_init(t_map ***map, t_parse parse, char **av)
 	chr = ft_strstr(av[0], "/wolf3d");
 	data->path = ft_strsub(av[0], 2, ft_strlen(av[0]) - (ft_strlen(chr) + 1));
 	data->map = map;
+	data->musics = NULL;
+	data->sounds = NULL;
+	if (!(data->cam = cam_init(parse)))
+		ft_exit(&data);
 	if (init_window_and_img(data, parse, &size) < 0)
 		ft_exit(&data);
+	data->ray = init_ray();
 	if (sound_init(data) < 0)
 		ft_exit(&data);
 	return (data);

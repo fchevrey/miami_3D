@@ -6,14 +6,14 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:49:59 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 16:50:01 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:59:04 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
-# define WIN_WIDTH		1000
-# define WIN_HEIGHT		800
+# define WIN_WIDTH		1280
+# define WIN_HEIGHT		720
 # define HUD_HEIGHT		150
 # define FOV			66
 # define WALL_H			64

@@ -6,7 +6,7 @@
 #    By: fchevrey <fchevrey@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 17:05:18 by fchevrey          #+#    #+#              #
-#    Updated: 2018/08/22 16:56:21 by fchevrey         ###   ########.fr        #
+#    Updated: 2019/03/12 17:33:40 by fchevrey         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ ORANGE = [038;2;239;138;5
 ## Sources ##
 SRCS_DIR = srcs/
 SRCS_NAME = add_new_tex.c \
+			write_tex_in_tex.c \
 			fill_tex_in_color.c \
 			free_all_tex.c \
 			free_tex.c \

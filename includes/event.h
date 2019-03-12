@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:49:51 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 12:07:44 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 16:40:35 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int				ft_mouse_wheel(int y, t_data *data);
 int				ft_mouse_wheel(int y, t_data *data);
 t_funar_keyb	*fill_funar_keyrelease(int *size);
 t_funar_keyb	*fill_funar_keypress(int *size);
-void			play_walk_song(t_data *data);
+void			play_walk_sound(t_data *data);
+void			play_shot_sound(t_data *data);
 
 /*
 ** functions that modify data
@@ -37,7 +38,6 @@ void			move_right(t_data *data, float deltatime, const int speed);
 void			check_move(t_data *data);
 void			look_left_from_key(t_data *data);
 void			look_right_from_key(t_data *data);
-t_point			check_collision(t_point old, t_point new, t_data *data);
 void			sound(t_data *data);
 void			next_song(t_data *data);
 

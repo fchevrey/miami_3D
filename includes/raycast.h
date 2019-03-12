@@ -22,5 +22,6 @@ t_ptfl			vertical_down(t_data *data, float deg);
 t_ptfl			horizon_right(t_data *data, float deg);
 t_ptfl			horizon_left(t_data *data, float deg);
 float			return_distance(t_point a, t_ptfl b);
+void			render_hud(t_data *dt);
 
 #endif

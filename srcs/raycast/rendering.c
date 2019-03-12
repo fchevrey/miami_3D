@@ -6,7 +6,7 @@
 /*   By: cbenetea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 19:46:05 by cbenetea          #+#    #+#             */
-/*   Updated: 2019/03/11 19:46:11 by cbenetea         ###   ########.fr       */
+/*   Updated: 2019/03/12 19:24:49 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void			sky_ground_rendering(t_data *data)
 	int				beige;
 
 	y = 0;
-	blue = 0x0087CEEB;
-	beige = 0x00EED5B7;
+	blue = 0xFF87CEEB;
+	beige = 0xFFEED5B7;
 	if (data->ray->wall_max < WIN_HEIGHT)
 	{
 		while (y < data->ray->wall_min && y < WIN_HEIGHT)
@@ -105,6 +105,9 @@ void				rendering(t_data *dt)
 		dt->ray->actual_ray++;
 	}
 	draw_mini_map(dt);
+	ft_putendl("b4render");
 	put_tex_to_ren(dt->m_img, dt->win->ren, pt_set(0, 0), 0);
-	put_tex_to_ren(dt->hud, dt->win->ren, pt_set(0, dt->m_img->size.y), 1);
+	ft_putendl("b4 hud");
+	render_hud(dt);
+	ft_putendl("after hud");
 }

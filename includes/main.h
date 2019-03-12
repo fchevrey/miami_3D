@@ -25,6 +25,8 @@ int				is_in_map(float x, float y, t_data *data);
 int				ft_error(const char *str1, const char *str2,
 		const char *str3);
 int				sound_init(t_data *data);
+int				init_window_and_img(t_data *data, t_parse parse,
+		t_point *size);
 
 /*
 ** tool to pass from real scale from map scale

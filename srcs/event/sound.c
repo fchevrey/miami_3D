@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 16:00:54 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 14:05:55 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 19:49:26 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	next_song(t_data *data)
 {
 	static int	i = 0;
 
-	if (!data || !data->musics)
+	if (!data || !data->musics || !data->musics[i])
 		return ;
 	if (i >= data->len_music)
 		i = 0;
@@ -30,8 +30,10 @@ void	next_song(t_data *data)
 	i++;
 }
 
-void	play_walk_song(t_data *data)
+void	play_walk_sound(t_data *data)
 {
+	if (!data->sounds || !data->sounds[0])
+		return ;
 	if (data->walk_channel == -12)
 		data->walk_channel = Mix_PlayChannel(-1, data->sounds[0], -1);
 	else
@@ -40,6 +42,14 @@ void	play_walk_song(t_data *data)
 			Mix_Resume(data->walk_channel);
 	}
 }
+
+void	play_shot_sound(t_data *data)
+{
+	if (!data->sounds || !data->sounds[1])
+		return ;
+	 Mix_PlayChannel(-1, data->sounds[1], 0);
+}
+
 
 void	sound(t_data *data)
 {

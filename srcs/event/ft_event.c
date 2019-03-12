@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 13:58:41 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 18:17:20 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:55:16 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			game_loop(t_data *data)
 {
 	SDL_Event			event;
 	int					quit;
-	const unsigned int	fixdelta = 20;
+	const unsigned int	fixdelta = 5;
 	unsigned int		last_time;
 	unsigned int		delta;
 
@@ -54,7 +54,7 @@ void			game_loop(t_data *data)
 		if (delta >= fixdelta)
 		{
 			if (data->walking != MOVE_NONE)
-				move(data, ((float)delta / 100));
+				move(data, ((float)delta / 70));
 			sound(data);
 			delta = 0.0;
 		}

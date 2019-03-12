@@ -55,11 +55,11 @@ void	draw_mini_map(t_data *data)
 		{
 			if (crd.x == data->cam->crd_map->x \
 					&& crd.y == data->cam->crd_map->y)
-				draw_square(data, crd, size, 0x88A6);
+				draw_square(data, crd, size, 0xFFFF88A6);
 			else if (data->map[crd.y][crd.x]->content == 1)
-				draw_square(data, crd, size, 0xA6A6A6);
+				draw_square(data, crd, size, 0xFFA6A6A6);
 			else
-				draw_square(data, crd, size, 0xFFFFFF);
+				draw_square(data, crd, size, 0xFFFFFFFF);
 		}
 	}
 }

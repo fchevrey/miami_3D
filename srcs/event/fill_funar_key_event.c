@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 14:09:38 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 12:08:33 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 13:53:01 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_funar_keyb			*fill_funar_keypress(int *size)
 
 	i = 0;
 	*size = 0;
-	nb_fct = 10;
+	nb_fct = 11;
 	if (!(tab = (t_funar_keyb*)malloc(sizeof(t_funar_keyb) * nb_fct)))
 		return (NULL);
 	*size = nb_fct;
@@ -45,6 +45,7 @@ t_funar_keyb			*fill_funar_keypress(int *size)
 	tab[i++] = add_one(SDLK_d, 0, &check_move);
 	tab[i++] = add_one(SDLK_j, 0, &sound);
 	tab[i++] = add_one(SDLK_k, 0, &next_song);
+	tab[i++] = add_one(SDLK_SPACE, 0, &play_shot_sound);
 	return (tab);
 }
 
