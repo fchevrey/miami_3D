@@ -18,10 +18,10 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		parse/parse.c parse/parse2.c parse/free_parse.c parse/fill_map.c\
 		parse/malloc_failed.c\
 		\
-		event/ft_event.c event/ft_mouse.c event/ft_mouse_wheel.c \
+		event/ft_event.c event/ft_mouse.c \
 		event/ft_keyboard.c event/fill_funar_key_event.c event/move.c \
 		event/look.c event/sound.c \
-		event/move_stop.c \
+		event/move_directions.c \
 		\
 		raycast/check_nearest_wall_distance.c raycast/rendering.c \
 		raycast/vertical_raycasting.c raycast/horizontal_raycasting.c\

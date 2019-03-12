@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 13:58:41 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 18:55:16 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 20:46:09 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ static int		ft_event(SDL_Event *event, t_data *data)
 			ft_keyboard(event->key.keysym.sym, event->key.repeat, event, data);
 		else if (event->type == SDL_MOUSEMOTION)
 			ft_mouse(event->motion.x, event->motion.y, data);
-		else if (event->type == SDL_MOUSEWHEEL)
-			ft_mouse_wheel(event->wheel.y, data);
+		else if (event->type == SDL_MOUSEBUTTONDOWN && 
+				event->button.button == SDL_BUTTON_LEFT)
+			play_shot_sound(data);
 		else if (event->type == SDL_WINDOWEVENT && event->window.event
 				== SDL_WINDOWEVENT_CLOSE)
 		{
@@ -40,7 +41,7 @@ void			game_loop(t_data *data)
 {
 	SDL_Event			event;
 	int					quit;
-	const unsigned int	fixdelta = 5;
+	const unsigned int	fixdelta = 20;
 	unsigned int		last_time;
 	unsigned int		delta;
 
@@ -57,9 +58,9 @@ void			game_loop(t_data *data)
 				move(data, ((float)delta / 70));
 			sound(data);
 			delta = 0.0;
+			rendering(data);
 		}
 		last_time = SDL_GetTicks();
-		rendering(data);
 	}
 	ft_exit(&data);
 }

@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 16:00:54 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 19:49:26 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 20:14:35 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ void	play_shot_sound(t_data *data)
 {
 	if (!data->sounds || !data->sounds[1])
 		return ;
-	 Mix_PlayChannel(-1, data->sounds[1], 0);
+	Mix_PlayChannel(-1, data->sounds[1], 0);
 }
-
 
 void	sound(t_data *data)
 {

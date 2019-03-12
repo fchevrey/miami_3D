@@ -6,21 +6,44 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 20:15:31 by fchevrey          #+#    #+#             */
-/*   Updated: 2018/08/11 18:56:47 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 20:30:12 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "event.h"
+#include "raycast.h"
+
+static void		look_left(t_data *data, int delta)
+{
+	data->cam->theta += ((float)delta) / 5;
+	if (data->cam->theta >= 360)
+		data->cam->theta -= 360;
+//	rendering(data);
+}
+
+static void		look_right(t_data *data, int delta)
+{
+	data->cam->theta -= ((float)delta) / 5;
+	if (data->cam->theta < 0)
+		data->cam->theta += 360;
+//	rendering(data);
+}
 
 int		ft_mouse(int x, int y, t_data *data)
 {
-	/*data->cam->theta += 1;
-	if (data->cam->theta >= 360)
-		data->cam->theta -= 360;
-	display_map(data->map, data->cam->crd_map->x, data->cam->crd_map->y, data);
-	rendering(data);
-	printf("theta = %f\n", data->cam->theta);*/
-	if (x == y && !data)
+	static int		_x = 0;
+
+	if (!data)
 		return (0);
+	if (x < _x)
+	{
+		look_left(data, _x - x);
+	}
+	else if (x > _x)
+	{
+		look_right(data, x - _x);
+	}
+	y = x;
+	_x = x;
 	return (0);
 }
