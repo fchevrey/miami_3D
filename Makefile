@@ -21,7 +21,7 @@ SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
 		event/ft_event.c event/ft_mouse.c event/ft_mouse_wheel.c \
 		event/ft_keyboard.c event/fill_funar_key_event.c event/move.c \
 		event/look.c event/check_collision.c event/sound.c \
-		event/acrobatic.c event/move_stop.c event/stand.c\
+		event/move_stop.c \
 		\
 		raycast/check_nearest_wall_distance.c raycast/rendering.c \
 		raycast/vertical_raycasting.c raycast/horizontal_raycasting.c\
@@ -66,15 +66,12 @@ LIB_INCS =	-I $(LIBFT_DIR)/includes/ \
 			-I $(SDL_MIXER_PATH)/include/SDL2 \
 			-I $(SDL_TTF_PATH)/include/SDL2 \
 			$(SDL2_INC) 
-			#- I $(VORBIS_PATH)/include 
-			#- I $(LIBOGG_PATH)/include 
 
 INCS = $(INC) $(LIB_INCS)
 
 ## FLAGS ##
 CC = gcc
 SDL2_LFLAGS = $(shell sh ./lib/sdl2/bin/sdl2-config --libs)
-#SDL_MIXER_LFLAGS = $(shell pkg-config --libs SDL2_mixer)
 
 LFLAGS =	-L $(LIBFT_DIR) -lft \
 			-L $(LIBPT_DIR) -lpt \
@@ -82,9 +79,6 @@ LFLAGS =	-L $(LIBFT_DIR) -lft \
 			-lm \
 			$(SDL2_LFLAGS) \
 			-L $(SDL_MIXER_PATH)/lib/ -lSDL2_mixer
-			#$(SDL_MIXER_LFLAGS) 
-			#-L $(SDL_MIXER_PATH)/lib -lSDL2_mixer
-#			-L $(SDL_TTF_PATH)/lib -lSDL2_ttf
 CFLAGS = -Wall -Wextra -Werror -g3
 
 MESSAGE = "make[1]: Nothing to be done for 'all'"
@@ -151,49 +145,8 @@ re_MODE_DEBUG: rm_obj MODE_DEBUG
 change_cflag:
 	@$(eval CFLAGS = -fsanitize=address)
 https://ftp.osuosl.org/pub/xiph/releases/ogg/
-VORBIS :
-		@if [ ! -d "./lib/ogg" ]; then \
-		echo "\033$(PINK)m⚠\tlibogg is not installed ! ...\033[0m"; \
-		echo "\033$(CYAN)m➼\tCompiling libogg-$(LIBOGG_VER) ...\033[0m"; \
-		printf "\r\033$(YELLOW)m\tIn 3 ...\033[0m"; sleep 1; \
-		printf "\r\033$(YELLOW)m\tIn 2 ...\033[0m"; sleep 1; \
-		printf "\r\033$(YELLOW)3m\tIn 1 ...\033[0m"; sleep 1; printf "\n"; \
-		curl -OL https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-$(LIBOGG_VER).tar.gz && \
-		tar -zxvf libogg-$(LIBOGG_VER).tar.gz && \
-		rm libogg-$(LIBOGG_VER).tar.gz && \
-		mkdir -p $(LIBOGG_PATH) && \
-		cd libogg-$(LIBOGG_VER) && \
-			sh configure --prefix=$(LIBOGG_PATH) && \
-			make && \
-			make install && \
-		cd .. && \
-		rm -rf libogg-$(LIBOGG_VER);\
-		echo "\033$(GREEN)m✓\tlibogg-$(VORBIS_VER) installed !\033[0m"; \
-	else \
-		echo "\033$(GREEN)m✓\tlibogg-$(VORBIS_VER) already installed\033[0m"; \
-	fi
-	@if [ ! -d "./lib/vorbis" ]; then \
-		echo "\033$(PINK)m⚠\tlibvorbis is not installed ! ...\033[0m"; \
-		echo "\033$(CYAN)m➼\tCompiling libvorbis-$(VORBIS_VER) ...\033[0m"; \
-		printf "\r\033$(YELLOW)m\tIn 3 ...\033[0m"; sleep 1; \
-		printf "\r\033$(YELLOW)m\tIn 2 ...\033[0m"; sleep 1; \
-		printf "\r\033$(YELLOW)3m\tIn 1 ...\033[0m"; sleep 1; printf "\n"; \
-		curl -OL https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-$(VORBIS_VER).tar.gz && \
-		tar -zxvf libvorbis-$(VORBIS_VER).tar.gz && \
-		rm libvorbis-$(VORBIS_VER).tar.gz && \
-		mkdir -p $(VORBIS_PATH) && \
-		cd libvorbis-$(VORBIS_VER) && \
-			sh configure --prefix=$(VORBIS_PATH) && \
-			make && \
-			make install && \
-		cd .. && \
-		rm -rf SDL2-$(VORBIS_VER);\
-		echo "\033$(GREEN)m✓\tlibvorbis-$(VORBIS_VER) installed !\033[0m"; \
-	else \
-		echo "\033$(GREEN)m✓\tlibvorbis-$(VORBIS_VER) already installed\033[0m"; \
-	fi
 
-SDL2 : VORBIS
+SDL2 :
 	@if [ ! -d "./lib/sdl2" ]; then \
 		echo "\033$(PINK)m⚠\tSDL2 is not installed ! ...\033[0m"; \
 		echo "\033$(CYAN)m➼\tCompiling SDL2-$(SDL_VER) ...\033[0m"; \

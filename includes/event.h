@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:49:51 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 18:20:18 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/12 12:07:44 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,5 @@ void			look_right_from_key(t_data *data);
 t_point			check_collision(t_point old, t_point new, t_data *data);
 void			sound(t_data *data);
 void			next_song(t_data *data);
-
-/*
-** Jump - stand - crouch
-*/
-
-void			check_stand(t_data *data);
-void			jump(t_data *data);
-void			crouch(t_data *data);
-void			stand(t_data *data);
 
 #endif
