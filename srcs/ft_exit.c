@@ -6,7 +6,7 @@
 /*   By: fchevrey <fchevrey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 16:28:06 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 12:38:15 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:52:46 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,13 @@ static void		free_music(t_data *data)
 	Mix_Quit();
 }
 
-static void			free_all_texts(t_data *data)
+static void		free_all_texts(t_data *data)
 {
 	int i;
 
 	i = 0;
 	free_tex(&data->m_img);
 	free_tex(&data->hud);
-
 	while (i < WALL_TEXTS)
 	{
 		free_tex(&data->wall_texts[i]);
@@ -77,7 +76,7 @@ static void			free_all_texts(t_data *data)
 	data->texts = NULL;
 }
 
-/*static void		destroy_map(t_data *data)
+static void		destroy_map(t_data *data)
 {
 	int		i;
 	int		j;
@@ -85,11 +84,22 @@ static void			free_all_texts(t_data *data)
 	if (!data || !data->map)
 		return ;
 	i = 0;
-	while (map[i])
+	while (data->map[i])
 	{
 		j = 0;
+		while (data->map[i][j])
+		{
+			free(data->map[i][j]);
+			data->map[i][j] = NULL;
+			j++;
+		}
+		free(data->map[i]);
+		data->map[i] = NULL;
+		i++;
 	}
-}*/
+	free(data->map);
+	data->map = NULL;
+}
 
 void			ft_exit(t_data **data)
 {
@@ -101,11 +111,13 @@ void			ft_exit(t_data **data)
 	(*data)->win = NULL;
 	(*data)->m_img = NULL;
 	ft_strdel(&(*data)->path);
+	free((*data)->cam->crd_map);
+	free((*data)->cam->crd_real);
 	free((*data)->cam);
 	free((*data)->ray);
+	destroy_map(*data);
 	free(*data);
 	*data = NULL;
 	SDL_Quit();
-	ft_putstr("J'ai quitté proprement\n");
-	exit(0);
+	exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 18:57:28 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 13:09:55 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:43:21 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void				fill_real_size(t_header *header)
 	header->y = y.value;
 }
 
-int					ft_load_texture(int *endian, char *str, t_texture *img)
+int						ft_load_texture(int *endian, char *str, t_texture *img)
 {
 	int					fd;
 	unsigned char		*image;

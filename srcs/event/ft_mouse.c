@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 20:15:31 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 11:03:52 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:47:55 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void		look_left(t_data *data, int delta)
 	data->cam->theta += ((float)delta) / 3;
 	while (data->cam->theta >= 360)
 		data->cam->theta -= 360;
-//	rendering(data);
 }
 
 static void		look_right(t_data *data, int delta)
@@ -26,24 +25,23 @@ static void		look_right(t_data *data, int delta)
 	data->cam->theta -= ((float)delta) / 3;
 	while (data->cam->theta < 0)
 		data->cam->theta += 360;
-//	rendering(data);
 }
 
-int		ft_mouse(int x, int y, t_data *data)
+int				ft_mouse(int x, int y, t_data *data)
 {
-	static int		_x = 0;
+	static int		static_x = 0;
 
 	if (!data)
 		return (0);
-	if (x < _x)
+	if (x < static_x)
 	{
-		look_left(data, _x - x);
+		look_left(data, static_x - x);
 	}
-	else if (x > _x)
+	else if (x > static_x)
 	{
-		look_right(data, x - _x);
+		look_right(data, x - static_x);
 	}
 	y = x;
-	_x = x;
+	static_x = x;
 	return (0);
 }

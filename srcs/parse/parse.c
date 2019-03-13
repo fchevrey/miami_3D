@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/13 14:45:03 by fchevrey          #+#    #+#             */
+/*   Updated: 2019/03/13 14:45:06 by fchevrey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "parse.h"
 
@@ -40,7 +51,8 @@ static int		ft_add_list(char *str, t_map **map, int y)
 		return (*map ? -1 : -2);
 	if (!ft_only_num(str))
 		return (*map ? -1 : -2);
-	tab = ft_strsplit(str, ' ');
+	if (!(tab = ft_strsplit(str, ' ')))
+		malloc_failed("strsplit");
 	while (tab[x])
 	{
 		nb = ft_atoi(tab[x]);
@@ -49,6 +61,7 @@ static int		ft_add_list(char *str, t_map **map, int y)
 		ft_add(x, y, nb, map);
 		x++;
 	}
+	ft_tabdel(&tab);
 	return (x);
 }
 

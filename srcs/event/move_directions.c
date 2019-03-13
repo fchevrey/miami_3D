@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 16:00:00 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 20:31:34 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:48:06 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void		apply_real_move(t_data *data, t_ptfl wall_h, t_ptfl wall_v,
 	}
 	set_real_to_map(cam->crd_real, cam->crd_map);
 	play_walk_sound(data);
-	//rendering(data);
 }
 
 void			move_foreward(t_data *data, float deltatime, const int speed)

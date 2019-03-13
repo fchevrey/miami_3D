@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:28:56 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 18:41:08 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:09:07 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int		load_music(t_data *data, char **songs)
 	{
 		name = ft_strjoin(music_path, songs[i]);
 		if (!(data->musics[i] = Mix_LoadMUS(name)) && on_error(&name, &nb) == 1)
-			continue;
+			return (-1);
 		ft_strdel(&name);
 		i++;
 	}
@@ -85,14 +85,14 @@ int				sound_init(t_data *data)
 		return (-1);
 	}
 	if ((data->len_music = load_music(data, songs)) < 0)
-		ft_putstr("Load music Error\n");
+		return (-1);
 	ft_tabdel(&songs);
 	if (!data->musics)
 		return (-1);
 	if (!(songs = ft_strsplit("footstep_01.wav\floud_shot.wav", '\f')))
 		return (-1);
 	if ((load_sound(data, songs)) < 0)
-		ft_putstr("sound loading error\n");
+		return (-1);
 	ft_tabdel(&songs);
 	if (!data->sounds)
 		return (-1);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/13 14:40:58 by fchevrey          #+#    #+#             */
+/*   Updated: 2019/03/13 14:41:00 by fchevrey         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSE_H
 # define PARSE_H
 
@@ -44,7 +56,7 @@ typedef union			u_fill
 	}					val;
 }						t_fill;
 
-void					ft_load_texture(int *endian, char *str, t_texture *img);
+int						ft_load_texture(int *endian, char *str, t_texture *img);
 unsigned char			*ft_decode_tga(int *endian, t_header *header,
 		unsigned char *image);
 

@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 13:58:41 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 20:46:09 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:48:20 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int		ft_event(SDL_Event *event, t_data *data)
 			ft_keyboard(event->key.keysym.sym, event->key.repeat, event, data);
 		else if (event->type == SDL_MOUSEMOTION)
 			ft_mouse(event->motion.x, event->motion.y, data);
-		else if (event->type == SDL_MOUSEBUTTONDOWN && 
+		else if (event->type == SDL_MOUSEBUTTONDOWN &&
 				event->button.button == SDL_BUTTON_LEFT)
 			play_shot_sound(data);
 		else if (event->type == SDL_WINDOWEVENT && event->window.event
@@ -48,6 +48,7 @@ void			game_loop(t_data *data)
 	quit = 0;
 	data->walking = 0;
 	last_time = SDL_GetTicks();
+	delta = 0.0;
 	while (!quit)
 	{
 		quit = ft_event(&event, data);

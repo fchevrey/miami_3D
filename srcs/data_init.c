@@ -6,13 +6,12 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:16:09 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 14:11:06 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:50:10 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 #include "parse.h"
-
 
 static t_ray		*init_ray(void)
 {
@@ -54,7 +53,6 @@ static t_cam		*cam_init(t_parse parse)
 	new->min_theta = FOV / (float)WIN_WIDTH;
 	return (new);
 }
-
 
 t_data				*data_init(t_map ***map, t_parse parse, char **av)
 {

@@ -6,7 +6,7 @@
 /*   By: cbenetea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 19:46:05 by cbenetea          #+#    #+#             */
-/*   Updated: 2019/03/13 12:56:48 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:46:22 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ static void			sky_ground_rendering(t_data *data)
 	{
 		while (y < data->ray->wall_min && y < WIN_HEIGHT)
 		{
-			pt_to_tex((t_point){data->ray->actual_ray, y}, data->m_img, blue);
+			pt_to_tex(pt_set((int)data->ray->actual_ray, y), data->m_img, blue);
 			y++;
 		}
 		y = data->ray->wall_max;
 		while (y < WIN_HEIGHT)
 		{
-			pt_to_tex((t_point){data->ray->actual_ray, y}, data->m_img, beige);
+			pt_to_tex(pt_set(
+						(int)data->ray->actual_ray, y), data->m_img, beige);
 			y++;
 		}
 	}
@@ -53,7 +54,7 @@ static void			wall_rendering(t_data *dt, float deg)
 	float			coeff;
 	t_texture		*actual_texture;
 
-	px_to_color = pt_set(dt->ray->actual_ray, dt->ray->wall_min);//cast ?
+	px_to_color = pt_set((int)dt->ray->actual_ray, (int)dt->ray->wall_min);
 	if ((deg >= 0 && deg < 180) && dt->ray->dist_h < dt->ray->dist_v)
 		actual_texture = dt->wall_texts[0];
 	else if ((deg >= 180 && deg < 360) && dt->ray->dist_h < dt->ray->dist_v)

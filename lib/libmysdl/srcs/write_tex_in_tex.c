@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 17:13:30 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/12 18:19:06 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:42:19 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	write_tex_in_tex(t_texture *to_write_in, t_texture *tex,
 	int				j;
 
 	if (!tex)
-		return;
+		return ;
 	crd_child = pt_set(0, 0);
 	crd = pt_set(begin.x, begin.y);
 	i = 0;
