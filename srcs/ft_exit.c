@@ -6,7 +6,7 @@
 /*   By: fchevrey <fchevrey@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/23 16:28:06 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/11 16:34:35 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 12:38:15 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,57 @@ static void		free_music(t_data *data)
 	Mix_Quit();
 }
 
+static void			free_all_texts(t_data *data)
+{
+	int i;
+
+	i = 0;
+	free_tex(&data->m_img);
+	free_tex(&data->hud);
+
+	while (i < WALL_TEXTS)
+	{
+		free_tex(&data->wall_texts[i]);
+		i++;
+	}
+	free(data->wall_texts);
+	data->wall_texts = NULL;
+	i = 0;
+	while (i < 3)
+	{
+		free_tex(&data->texts[i]);
+		i++;
+	}
+	free(data->texts);
+	data->texts = NULL;
+}
+
+/*static void		destroy_map(t_data *data)
+{
+	int		i;
+	int		j;
+
+	if (!data || !data->map)
+		return ;
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+	}
+}*/
+
 void			ft_exit(t_data **data)
 {
 	if (!data || !*data)
 		exit(1);
+	free_all_texts(*data);
 	free_music(*data);
 	free_win(&(*data)->win);
 	(*data)->win = NULL;
-	free_tex(&(*data)->m_img);
-	free_tex(&(*data)->hud);
 	(*data)->m_img = NULL;
+	ft_strdel(&(*data)->path);
+	free((*data)->cam);
+	free((*data)->ray);
 	free(*data);
 	*data = NULL;
 	SDL_Quit();

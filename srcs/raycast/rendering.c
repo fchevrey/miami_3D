@@ -6,7 +6,7 @@
 /*   By: cbenetea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 19:46:05 by cbenetea          #+#    #+#             */
-/*   Updated: 2019/03/12 19:24:49 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 12:56:48 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ static void			wall_rendering(t_data *dt, float deg)
 	float			coeff;
 	t_texture		*actual_texture;
 
-	px_to_color = pt_set(dt->ray->actual_ray, dt->ray->wall_min);
+	px_to_color = pt_set(dt->ray->actual_ray, dt->ray->wall_min);//cast ?
 	if ((deg >= 0 && deg < 180) && dt->ray->dist_h < dt->ray->dist_v)
 		actual_texture = dt->wall_texts[0];
 	else if ((deg >= 180 && deg < 360) && dt->ray->dist_h < dt->ray->dist_v)
 		actual_texture = dt->wall_texts[1];
-	if (((deg >= 0 && deg < 90) || (deg >= 270 && deg < 360))
+	else if (((deg >= 0 && deg < 90) || (deg >= 270 && deg < 360))
 	&& dt->ray->dist_v < dt->ray->dist_h)
 		actual_texture = dt->wall_texts[2];
-	if ((deg >= 90 && deg < 270) && dt->ray->dist_v < dt->ray->dist_h)
+	else
 		actual_texture = dt->wall_texts[3];
 	coeff = (float)actual_texture->size.y / dt->ray->wall_size;
 	set_offset(dt, actual_texture);
@@ -105,9 +105,6 @@ void				rendering(t_data *dt)
 		dt->ray->actual_ray++;
 	}
 	draw_mini_map(dt);
-	ft_putendl("b4render");
 	put_tex_to_ren(dt->m_img, dt->win->ren, pt_set(0, 0), 0);
-	ft_putendl("b4 hud");
 	render_hud(dt);
-	ft_putendl("after hud");
 }
