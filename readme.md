@@ -8,3 +8,4 @@ Wolf3D is a 42 school's project that use Raycasting to render 2D map in bird vie
    - collision
    - TGA file parser
   
+![alt text](https://github.com/fchevrey/miami_3D/blob/master/Screenshot.png)
