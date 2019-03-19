@@ -1,5 +1,17 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/03/13 16:05:39 by fchevrey          #+#    #+#              #
+#    Updated: 2019/03/14 11:05:02 by fchevrey         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = wolf3d
-DIR_NAME = Wolf3D
+DIR_NAME = wolf3d
 
 ## Colors ##
 PURPLE = [038;2;255;40;255
@@ -13,7 +25,7 @@ ORANGE = [038;2;239;138;5
 SRCS_DIR = srcs
 
 SRCS = main.c ft_exit.c data_init.c scale_map_and_real.c ft_error.c \
-		sound_init.c load_textures.c\
+		sound_init.c load_textures.c find_start.c\
 		\
 		parse/parse.c parse/parse2.c parse/free_parse.c parse/fill_map.c\
 		parse/malloc_failed.c\
@@ -55,11 +67,11 @@ LIBOGG_PATH = $(addprefix $(MAIN_DIR_PATH), /lib/ogg)
 SDL_VER = 2.0.8
 SDL_MIXER_VER = 2.0.2
 SDL_TTF_VER = 2.0.14
-LIBOGG_VER = 1.3.3
-VORBIS_VER = 1.3.6
+
+HEADER_DIR=includes/
 
 ## Includes ##
-INC = -I ./includes/
+INC = -I ./$(HEADER_DIR)
 SDL2_INC = $(shell sh ./lib/sdl2/bin/sdl2-config --cflags)
 LIB_INCS =	-I $(LIBFT_DIR)/includes/ \
 			-I $(LIBMYSDL_DIR)/includes/ \
@@ -68,6 +80,8 @@ LIB_INCS =	-I $(LIBFT_DIR)/includes/ \
 			-I $(SDL_TTF_PATH)/include/SDL2 \
 			$(SDL2_INC) 
 
+HEADER = defines.h event.h main.h mymath.h parse.h raycast.h struct.h 
+HEADERS = $(addprefix $(HEADER_DIR), $(HEADER))
 INCS = $(INC) $(LIB_INCS)
 
 ## FLAGS ##
@@ -80,7 +94,7 @@ LFLAGS =	-L $(LIBFT_DIR) -lft \
 			-lm \
 			$(SDL2_LFLAGS) \
 			-L $(SDL_MIXER_PATH)/lib/ -lSDL2_mixer
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 
 MESSAGE = "make[1]: Nothing to be done for 'all'"
 DONE_MESSAGE = "\033$(GREEN)2m✓\t\033$(GREEN)mDONE !\033[0m\
@@ -90,12 +104,12 @@ DONE_MESSAGE = "\033$(GREEN)2m✓\t\033$(GREEN)mDONE !\033[0m\
 
 all: SDL2 LIBFT LIBPT MYSDL print_name $(NAME) print_end
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADERS)
 	@echo "\033$(PURPLE)m⧖	Creating	$@\033[0m"
 	@export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(addprefix $(SDL_PATH), /lib/pkgconfig) &&\
 	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(addprefix $(SDL_MIXER_PATH), /lib/pkgconfig) &&\
 	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(SDL_MIXER_PATH), /lib) &&\
-	gcc $(CFLAGS) $(INCS) -c $^ -o $@
+	gcc -c -o $@ $< $(CFLAGS) $(INCS)
 	@#export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(VORBIS_MIXER_PATH), /lib) &&\
 
 $(OBJS_DIR):
@@ -104,7 +118,7 @@ $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
 	@mkdir -p $(addprefix $(OBJS_DIR)/, $(OBJS_SUB_DIRS))
 
-$(NAME): $(OBJS_DIR) $(OBJS_PRE)
+$(NAME): $(OBJS_DIR) $(OBJS_PRE) $(HEADERS)
 	@echo "\033$(GREEN)m➼\t\033$(GREEN)32m Creating $(DIR_NAME)'s executable\033[0m"
 	@$(CC) -o $(NAME) $(CFLAGS) $(OBJS_PRE) $(LFLAGS)
 	@$(eval MESSAGE = $(DONE_MESSAGE))
@@ -128,10 +142,6 @@ fclean: rm_obj
 re: fclean all
 
 exe: rm_obj all
-
-rm_vorbis:
-	@rm -rf $(VORBIS_PATH)
-	@echo "\033$(PINK)36m✗	libvorbis-$(VORBIS_VER) removed\033[0m"
 
 rm_SDL2:
 	@rm -rf $(SDL2_PATH) $(SDL_MIXER_PATH) $(SDL_TTF_PATH)
@@ -169,7 +179,6 @@ SDL2 :
 	fi
 	@if [ ! -d "./lib/sdl2_mixer" ]; then \
 		export SDL2_CONFIG=$(addprefix $(SDL_PATH), /bin/sdl2-config); \
-	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(addprefix $(VORBIS_MIXER_PATH), /lib) &&\
 		echo "\033$(CYAN)m➼\tCompiling SDL2_MIXER-$(SDL_MIXER_VER) ...\033[0m"; \
 		curl -OL http://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-$(SDL_MIXER_VER).tar.gz && \
 		tar -zxvf SDL2_mixer-$(SDL_MIXER_VER).tar.gz && \
@@ -184,22 +193,7 @@ SDL2 :
 	else \
 		echo "\033$(GREEN)m✓\tSDl2_mixer-$(SDL_MIXER_VER) already installed\033[0m"; \
 	fi
-	@if [ ! -d "./lib/sdl2_ttf" ]; then \
-		export SDL2_CONFIG=$(addprefix $(SDL_PATH), /bin/sdl2-config); \
-		echo "\033$(CYAN)m➼\tCompiling SDL2_TTF-$(SDL_TTF_VER) ...\033[0m"; \
-		curl -OL http://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-$(SDL_TTF_VER).tar.gz && \
-		tar -zxvf SDL2_ttf-$(SDL_TTF_VER).tar.gz && \
-		rm SDL2_ttf-$(SDL_TTF_VER).tar.gz && \
-		mkdir -p $(SDL_TTF_PATH) && \
-		cd SDL2_ttf-$(SDL_TTF_VER) && \
-			sh configure --prefix=$(SDL_TTF_PATH) && \
-			make && \
-			make install && \
-		cd .. && \
-		rm -rf SDL2_ttf-$(SDL_TTF_VER); \
-	else \
-		echo "\033$(GREEN)m✓\tSDl2_ttf-$(SDL_TTF_VER) already installed\033[0m"; \
-	fi
+
 LIBFT:
 	@echo "\033[033m➼\t\033[033mCompiling Libft ...\033[0m"
 	@make -C $(LIBFT_DIR)
