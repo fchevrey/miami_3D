@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:28:56 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 16:48:52 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/19 10:43:56 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int				sound_init(t_data *data)
 	char		**songs;
 
 	if (!(songs = ft_strsplit(
-		"music01.wav\fmusic02.wav\fmusic03.wav\fmusic04.wav\fmusic05.wav",
+		"music01.wav\fmusic02.wav",
 		'\f')))
 	{
 		return (-1);
