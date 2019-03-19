@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:45:03 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:45:06 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 17:52:20 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ static int		ft_only_num(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] < '0' || str[i] > '9') && str[i] != ' ')
+		if ((str[i] < '0' || str[i] > '1') && str[i] != ' ')
 			return (0);
 		i++;
 	}
+	if (str[0] != '1' || (i <= 0 || str[i - 1] != '1'))
+		return (0);
 	return (1);
 }
 

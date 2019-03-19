@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:28:56 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:09:07 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:48:52 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ static int		load_sound(t_data *data, char **songs)
 	if (!(data->sounds = (Mix_Chunk**)malloc(sizeof(Mix_Chunk*) * (nb + 1))))
 		return (-1);
 	data->sounds[nb] = NULL;
-	music_path = ft_strjoin(data->path, "assets/sounds/");
+	if (!(music_path = ft_strjoin(data->path, "assets/sounds/")))
+		return (-1);
 	while (i < nb)
 	{
-		name = ft_strjoin(music_path, songs[i]);
+		if (!(name = ft_strjoin(music_path, songs[i])))
+			return (-1);
 		if (!(data->sounds[i] = Mix_LoadWAV(name)) && on_error(&name, &nb) == 1)
 			continue ;
 		ft_strdel(&name);
@@ -61,10 +63,12 @@ static int		load_music(t_data *data, char **songs)
 	if (!(data->musics = (Mix_Music**)malloc(sizeof(Mix_Music*) * (nb + 1))))
 		return (-1);
 	data->musics[nb] = NULL;
-	music_path = ft_strjoin(data->path, "assets/sounds/");
+	if (!(music_path = ft_strjoin(data->path, "assets/sounds/")))
+		return (-1);
 	while (i < nb)
 	{
-		name = ft_strjoin(music_path, songs[i]);
+		if (!(name = ft_strjoin(music_path, songs[i])))
+			return (-1);
 		if (!(data->musics[i] = Mix_LoadMUS(name)) && on_error(&name, &nb) == 1)
 			return (-1);
 		ft_strdel(&name);
@@ -96,6 +100,6 @@ int				sound_init(t_data *data)
 	ft_tabdel(&songs);
 	if (!data->sounds)
 		return (-1);
-	Mix_VolumeMusic(60);
+	Mix_VolumeMusic(50);
 	return (1);
 }

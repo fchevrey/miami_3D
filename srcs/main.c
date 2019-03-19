@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 15:51:06 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:32:12 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 18:05:42 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,53 @@ static int		lib_initialisation(void)
 	return (1);
 }
 
+static void		destroy_map_and_quit(t_map ***map)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			free(map[i][j]);
+			map[i][j] = NULL;
+			j++;
+		}
+		free(map[i]);
+		map[i] = NULL;
+		i++;
+	}
+	free(map);
+	ft_putendl("invalid file");
+	exit(0);
+}
+
+static int		check_last_line_of_map(t_map ***map)
+{
+	int			x;
+	int			y;
+	t_point		crd;
+
+	y = 0;
+	x = 0;
+	while (map[y])
+		y++;
+	y--;
+	while (map[y][x])
+	{
+		if ((map[y][x])->content != 1)
+			return (-1);
+		x++;
+	}
+	crd = find_start(map);
+	if (crd.x == -1 || crd.y == -1)
+		return (-1);
+	return (0);
+}
+
 int				main(int ac, char **av)
 {
 	t_parse			parse;
@@ -37,11 +84,11 @@ int				main(int ac, char **av)
 	if (ac > 1 && av[1])
 	{
 		if (!ft_parse(av[1], &map, &parse) || !map)
-		{
-			ft_putendl_fd("invalid file.", 2);
-			return (1);
-		}
-		map2 = fill_map(parse, &map, parse.nb_elem_line);
+			return (ft_error("invalid file.", NULL, NULL));
+		if (!(map2 = fill_map(parse, &map, parse.nb_elem_line)))
+			return (ft_error("map error", NULL, NULL));
+		if (check_last_line_of_map(map2) < 0)
+			destroy_map_and_quit(map2);
 		if (lib_initialisation() < 0)
 			return (0);
 		if (!(data = data_init(map2, parse, av)))

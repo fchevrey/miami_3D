@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/16 16:00:00 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:48:06 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 16:43:45 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void			move_left(t_data *dt, float deltatime, const int speed)
 		theta -= 360;
 	rad = deg_to_rad(theta);
 	new_pos.x = dt->cam->crd_real->x + (int)(cosf(rad) * speed * deltatime);
-	if (theta < 54 || theta > 306)
+	if (theta < 30 || theta > 335)
 		new_pos.y = dt->cam->crd_real->y + (int)(sinf(rad) * speed * deltatime);
 	else
 		new_pos.y = dt->cam->crd_real->y - (int)(sinf(rad) * speed * deltatime);
@@ -128,7 +128,7 @@ void			move_right(t_data *dt, float deltatime, const int speed)
 		theta += 360;
 	rad = deg_to_rad(theta);
 	new_pos.x = dt->cam->crd_real->x + (int)(cosf(rad) * speed * deltatime);
-	if (theta < 54 || theta > 306)
+	if (((int)theta < 30 || (int)theta > 320))
 		new_pos.y = dt->cam->crd_real->y + (int)(sinf(rad) * speed * deltatime);
 	else
 		new_pos.y = dt->cam->crd_real->y - (int)(sinf(rad) * speed * deltatime);

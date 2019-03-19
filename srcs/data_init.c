@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/11 16:16:09 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:50:10 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 18:12:32 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ static t_ray		*init_ray(void)
 	return (new);
 }
 
-static t_cam		*cam_init(t_parse parse)
+static t_cam		*cam_init(t_map ***map)
 {
 	t_cam		*new;
+	t_point		start;
 
 	if (!(new = (t_cam*)malloc(sizeof(t_cam))))
 		return (NULL);
@@ -42,12 +43,13 @@ static t_cam		*cam_init(t_parse parse)
 		return (NULL);
 	if (!(new->crd_map = (t_point*)malloc(sizeof(t_point))))
 		return (NULL);
-	new->crd_map->x = parse.nb_elem_line * 0.5;
-	new->crd_map->y = parse.nb_line * 0.5;
+	start = find_start(map);
+	new->crd_map->x = start.x;
+	new->crd_map->y = start.y;
 	new->crd_real->x = new->crd_map->x * SIZE_GRID + SIZE_GRID * 0.5;
 	new->crd_real->y = new->crd_map->y * SIZE_GRID + SIZE_GRID * 0.5;
 	new->act_inter = pt_set(0, 0);
-	new->theta = 180;
+	new->theta = 310;
 	new->h_cam = 0.5;
 	new->len_cam = (WIN_WIDTH * new->h_cam) / tan(deg_to_rad(FOV * new->h_cam));
 	new->min_theta = FOV / (float)WIN_WIDTH;
@@ -72,7 +74,7 @@ t_data				*data_init(t_map ***map, t_parse parse, char **av)
 	data->map = map;
 	data->musics = NULL;
 	data->sounds = NULL;
-	if (!(data->cam = cam_init(parse)))
+	if (!(data->cam = cam_init(map)))
 		ft_exit(&data);
 	if (init_window_and_img(data, parse, &size) < 0)
 		ft_exit(&data);

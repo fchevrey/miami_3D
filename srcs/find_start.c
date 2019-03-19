@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   look.c                                             :+:      :+:    :+:   */
+/*   find_start.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/11 14:00:07 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 16:42:36 by fchevrey         ###   ########.fr       */
+/*   Created: 2019/03/13 17:58:56 by fchevrey          #+#    #+#             */
+/*   Updated: 2019/03/13 18:04:18 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "event.h"
-#include "raycast.h"
+#include "main.h"
 
-void	look_left_from_key(t_data *data)
+t_point		find_start(t_map ***map)
 {
-	data->cam->theta += 10;
-	if (data->cam->theta >= 360)
-		data->cam->theta -= 360;
-}
+	int		x;
+	int		y;
 
-void	look_right_from_key(t_data *data)
-{
-	data->cam->theta -= 10;
-	if (data->cam->theta < 0)
-		data->cam->theta += 360;
+	y = 1;
+	while (map[y])
+	{
+		x = 0;
+		while (map[y][x])
+		{
+			if ((map[y][x])->content == 0)
+				return (pt_set(x, y));
+			x++;
+		}
+		y++;
+	}
+	return (pt_set(-1, -1));
 }

@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/12 13:59:39 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:53:44 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 18:25:44 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int			init_and_load_wall_textures(t_data *data)
 	char		**titles;
 
 	if (!(titles = ft_strsplit(
-			"lol.tga|space_invader.tga|rainbow.tga|doom.tga", '|')))
+			"lol.tga|pizza.tga|space_invader.tga|doom.tga", '|')))
 		return (-1);
 	if (!(data->wall_texts = load_loop(data, titles,
 					WALL_TEXTS, pt_set(64, 64))))

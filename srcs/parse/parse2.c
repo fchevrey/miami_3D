@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:45:09 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:45:12 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 17:51:09 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,29 @@ void			ft_add(int x, int y, int content, t_map **map)
 	}
 }
 
-int				ft_lin_is_good(char *str)
+static int		check_first_line(char *str)
 {
-	int i;
+	int		i;
 
 	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '1' && str[i] != ' ')
+			return (-1);
+		i++;
+	}
+	return (1);
+}
+
+int				ft_lin_is_good(char *str)
+{
+	int			i;
+	static int	is_first = 0;
+
+	i = 0;
+	if (is_first == 0)
+		if (check_first_line(str) < 0)
+			return (0);
 	while (str[i])
 	{
 		if ((str[i] < '0' || str[i] > '9') && (str[i] != ' ')
@@ -53,5 +71,6 @@ int				ft_lin_is_good(char *str)
 			return (0);
 		i++;
 	}
+	is_first++;
 	return (1);
 }
