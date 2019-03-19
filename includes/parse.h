@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:40:58 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:41:00 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/14 11:05:09 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "main.h"
 # include <fcntl.h>
 # include <unistd.h>
+
+t_point					find_start(t_map ***map);
 
 /*
 ** List

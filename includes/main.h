@@ -6,7 +6,7 @@
 /*   By: fchevrey <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 14:40:08 by fchevrey          #+#    #+#             */
-/*   Updated: 2019/03/13 14:40:10 by fchevrey         ###   ########.fr       */
+/*   Updated: 2019/03/13 18:30:14 by fchevrey         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include "SDL_mixer.h"
-# include "SDL_ttf.h"
-# include <stdio.h>
 
 void			malloc_failed(char *str);
 void			ft_exit(t_data **data);
